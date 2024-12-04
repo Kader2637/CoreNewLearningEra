@@ -46,7 +46,7 @@
     <!-- Scroll-top-end-->
 
     <!-- header-area -->
-    @include('layouts.student.header')
+    @include('layouts.landingpage.header')
     <!-- header-area-end -->
 
 
@@ -60,7 +60,7 @@
 
 
     <!-- footer-area -->
-    @include('layouts.student.footer')
+    @include('layouts.landingpage.footer')
     <!-- footer-area-end -->
 
 

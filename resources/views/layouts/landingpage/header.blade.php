@@ -11,9 +11,15 @@
                             </div>
                             <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                                 <ul class="navigation">
-                                    <li class="menu-item active"><a href="/">Dashboard</a></li>
-                                    <li class="menu-item"><a href="#">Kelas</a></li>
-                                    <li class="menu-item"><a href="#">Tentang Kami</a></li>
+                                    <li class="menu-item {{ request()->is('/') ? 'active' : '' }}">
+                                        <a href="/">Dashboard</a>
+                                    </li>
+                                    <li class="menu-item {{ request()->is('classroom') ? 'active' : '' }}">
+                                        <a href="/classroom">Kelas</a>
+                                    </li>
+                                    <li class="menu-item {{ request()->is('about') ? 'active' : '' }}">
+                                        <a href="/about">Tentang Kami</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="tgmenu__action">
@@ -44,7 +50,6 @@
                                 </form>
                             </div>
                             <div class="tgmobile__menu-outer">
-                                <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
                             </div>
                             <div class="social-links">
                                 <ul class="list-wrap">
@@ -58,7 +63,6 @@
                         </nav>
                     </div>
                     <div class="tgmobile__menu-backdrop"></div>
-                    <!-- End Mobile Menu -->
                 </div>
             </div>
         </div>
