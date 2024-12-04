@@ -14,11 +14,11 @@
                                     <li class="menu-item {{ request()->is('/') ? 'active' : '' }}">
                                         <a href="/">Dashboard</a>
                                     </li>
-                                    <li class="menu-item {{ request()->is('classroom') ? 'active' : '' }}">
-                                        <a href="/classroom">Kelas</a>
-                                    </li>
                                     <li class="menu-item {{ request()->is('about') ? 'active' : '' }}">
                                         <a href="/about">Tentang Kami</a>
+                                    </li>
+                                    <li class="menu-item {{ request()->is('classroom') ? 'active' : '' }}">
+                                        <a href="/classroom">Kelas</a>
                                     </li>
                                 </ul>
                             </div>
