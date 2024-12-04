@@ -7,7 +7,7 @@
     <title>New Learning Era</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
 
     <!-- CSS here -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -33,7 +33,7 @@
     <div id="preloader">
         <div id="loader" class="loader">
             <div class="loader-container">
-                <div class="loader-icon"><img src="assets/img/logo/preloader.svg" alt="Preloader"></div>
+                <div class="loader-icon"><img src="{{ asset('favicon.png') }}" alt="Preloader"></div>
             </div>
         </div>
     </div>
