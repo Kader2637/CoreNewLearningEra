@@ -9,3 +9,6 @@ Route::get('/about', function () {
 Route::get('/classroom', function () {
     return view('pages.LandingPage.classroom.index');
 });
+Route::get('/admin', function () {
+    return view('pages.admin.dashboard.index');
+});
