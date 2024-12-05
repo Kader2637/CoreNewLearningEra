@@ -1,4 +1,4 @@
-@extends('layouts.student.app')
+@extends('layouts.landingpage.app')
 @section('style')
     <style>
         label {
