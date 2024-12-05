@@ -128,9 +128,9 @@
                         <span class="f-light">abdulkader0126@gmail.com</span>
                         <div class="mt-4">
                             <div class="">
-                                <button class="btn btn-info w-100">
+                                <a href="/admin/teacher/detail" class="btn btn-info w-100">
                                     Detail
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -158,9 +158,9 @@
                         <span class="f-light">abdulkader0126@gmail.com</span>
                         <div class="mt-4">
                             <div class="">
-                                <button class="btn btn-info w-100">
+                                <a href="/admin/teacher/detail" class="btn btn-info w-100">
                                     Detail
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -188,9 +188,9 @@
                         <span class="f-light">abdulkader0126@gmail.com</span>
                         <div class="mt-4">
                             <div class="">
-                                <button class="btn btn-info w-100">
+                                <a href="/admin/teacher/detail" class="btn btn-info w-100">
                                     Detail
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -218,9 +218,9 @@
                         <span class="f-light">abdulkader0126@gmail.com</span>
                         <div class="mt-4">
                             <div class="">
-                                <button class="btn btn-info w-100">
+                                <a href="/admin/teacher/detail" class="btn btn-info w-100">
                                     Detail
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
