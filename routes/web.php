@@ -9,6 +9,12 @@ Route::get('/', function () {
 Route::get('/teacher', function () {
     return view('pages.teacher.dashboard.index');
 });
+Route::get('/classroom', function () {
+    return view('pages.LandingPage.classroom.index');
+});
+Route::get('/testlogin', function () {
+    return view('test');
+});
 
 Route::get('/class', function () {
     return view('pages.teacher.class.class');

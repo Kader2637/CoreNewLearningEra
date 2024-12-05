@@ -10,21 +10,24 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/animate.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/flaticon-skillgro.css">
-    <link rel="stylesheet" href="assets/css/flaticon-skillgro-new.css">
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
-    <link rel="stylesheet" href="assets/css/default-icons.css">
-    <link rel="stylesheet" href="assets/css/select2.min.css">
-    <link rel="stylesheet" href="assets/css/odometer.css">
-    <link rel="stylesheet" href="assets/css/aos.css">
-    <link rel="stylesheet" href="assets/css/plyr.css">
-    <link rel="stylesheet" href="assets/css/spacing.css">
-    <link rel="stylesheet" href="assets/css/tg-cursor.css">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- CSS Assets -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/flaticon-skillgro.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/flaticon-skillgro-new.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/default-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/odometer.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/plyr.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/spacing.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/tg-cursor.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @yield('style')
 </head>
 
 <body>
@@ -67,29 +70,35 @@
 
 
     <!-- JS here -->
-    <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/jquery.odometer.min.js"></script>
-    <script src="assets/js/jquery.appear.js"></script>
-    <script src="assets/js/tween-max.min.js"></script>
-    <script src="assets/js/select2.min.js"></script>
-    <script src="assets/js/swiper-bundle.min.js"></script>
-    <script src="assets/js/jquery.marquee.min.js"></script>
-    <script src="assets/js/tg-cursor.min.js"></script>
-    <script src="assets/js/vivus.min.js"></script>
-    <script src="assets/js/ajax-form.js"></script>
-    <script src="assets/js/svg-inject.min.js"></script>
-    <script src="assets/js/jquery.circleType.js"></script>
-    <script src="assets/js/jquery.lettering.min.js"></script>
-    <script src="assets/js/plyr.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/aos.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- JS Assets -->
+    <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.odometer.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.appear.js') }}"></script>
+    <script src="{{ asset('assets/js/tween-max.min.js') }}"></script>
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.marquee.min.js') }}"></script>
+    <script src="{{ asset('assets/js/tg-cursor.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vivus.min.js') }}"></script>
+    <script src="{{ asset('assets/js/ajax-form.js') }}"></script>
+    <script src="{{ asset('assets/js/svg-inject.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.circleType.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.lettering.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plyr.min.js') }}"></script>
+    <script src="{{ asset('assets/js/wow.min.js') }}"></script>
+    <script src="{{ asset('assets/js/aos.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
     <script>
         SVGInject(document.querySelectorAll("img.injectable"));
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    @yield('script')
 </body>
 
 
