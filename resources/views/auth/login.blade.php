@@ -128,7 +128,7 @@
                 },
                 error: function(xhr) {
                     const errorResponse = JSON.parse(xhr.responseText);
-                    $('#responseMessage').html('<p>' + errorResponse.message + '</p>');
+                    toastr.error('Username atau password Salah', 'Error');
                 }
             });
         });
