@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Classroom;
 use App\Http\Requests\StoreClassroomRequest;
 use App\Http\Requests\UpdateClassroomRequest;
+use Illuminate\Support\Str;
 
 class ClassroomController extends Controller
 {
@@ -32,7 +33,7 @@ class ClassroomController extends Controller
     {
         $classroom = Classroom::create([
             'name' => $request->name,
-            'codeClass' => $request->codeClass,
+            'code_class' => date('y') . strtoupper(Str::random(4)),
             'limit' => $request->limit,
             'description' => $request->description,
             'thumbnail' => $request->file('thumbnail')->store('thumbnails'),
