@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,4 +15,17 @@ Route::prefix('admin')->group(function () {
     Route::get('/classroom', function () {
         return view('pages.admin.classroom.index');
     });
+
+    Route::get('/teacher', function () {
+        return view('pages.admin.teacher.index');
+    });
+
+    Route::get('/teacher/detail', function () {
+        return view('pages.admin.teacher.detail');
+    });
+
+    Route::get('/approval', function () {
+        return view('pages.admin.approval.index');
+    });
 });
+
