@@ -16,6 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->enum('role' , ['admin' , 'student' , 'teacher']);
+            $table->string('no_telephone');
+            $table->enum('gender' , ['male' , 'female']);
+            $table->string('school')->nullable();
+            $table->string('nip')->nullable();
+            $table->text('address')->nullable();
+            $table->enum('status' , ['pending' , 'reject' , 'accept']);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

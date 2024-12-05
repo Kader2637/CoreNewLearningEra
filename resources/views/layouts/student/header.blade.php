@@ -7,7 +7,8 @@
                     <div class="tgmenu__wrap">
                         <nav class="tgmenu__nav">
                             <div class="logo">
-                                <a href="index-2.html"><img src="{{ asset('logo.png') }}" width="200px" alt="Logo"></a>
+                                <a href="index-2.html"><img src="{{ asset('logo.png') }}" width="200px"
+                                        alt="Logo"></a>
                             </div>
                             <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                                 <ul class="navigation">
@@ -22,7 +23,7 @@
                             <div class="tgmenu__action">
                                 <ul class="list-wrap">
                                     <li class="header-btn login-btn">
-                                        <a href="{{ route('login') }}">Log in</a>
+                                        <button id="logoutButton" type="button" class="btn btn-primary">Logout</button>
                                     </li>
                                 </ul>
                             </div>
@@ -38,7 +39,8 @@
                         <nav class="tgmobile__menu-box">
                             <div class="close-btn"><i class="tg-flaticon-close-1"></i></div>
                             <div class="nav-logo">
-                                <a href="index-2.html"><img src="{{ asset('logo.png') }}" width="200px" alt="Logo"></a>
+                                <a href="index-2.html"><img src="{{ asset('logo.png') }}" width="200px"
+                                        alt="Logo"></a>
                             </div>
                             <div class="tgmobile__search">
                                 <form action="#">

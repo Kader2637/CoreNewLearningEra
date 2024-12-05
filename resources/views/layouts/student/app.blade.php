@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from html.themegenix.com/skillgro/student-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 25 Nov 2024 20:53:12 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -14,7 +15,7 @@
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome-all.min.css') }}">
@@ -84,7 +85,8 @@
                             </div>
                         </div>
                         <div class="dashboard__instructor-info-right">
-                            <a href="#" class="btn btn-two arrow-btn">Become an Instructor <img src="assets/img/icons/right_arrow.svg" alt="img" class="injectable"></a>
+                            <a href="#" class="btn btn-two arrow-btn">Become an Instructor <img
+                                    src="assets/img/icons/right_arrow.svg" alt="img" class="injectable"></a>
                         </div>
                     </div>
                 </div>
@@ -118,7 +120,8 @@
                                 <a href="index-2.html"><img src="assets/img/logo/secondary_logo.svg" alt="img"></a>
                             </div>
                             <div class="footer__content">
-                                <p>when an unknown printer took galley of type and scrambled it to make pspecimen bookt has.</p>
+                                <p>when an unknown printer took galley of type and scrambled it to make pspecimen bookt
+                                    has.</p>
                                 <ul class="list-wrap">
                                     <li>463 7th Ave, NY 10018, USA</li>
                                     <li>+123 88 9900 456</li>
@@ -163,27 +166,32 @@
                                 <ul class="list-wrap footer__social">
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/facebook.svg" alt="img" class="injectable">
+                                            <img src="assets/img/icons/facebook.svg" alt="img"
+                                                class="injectable">
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/twitter.svg" alt="img" class="injectable">
+                                            <img src="assets/img/icons/twitter.svg" alt="img"
+                                                class="injectable">
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/whatsapp.svg" alt="img" class="injectable">
+                                            <img src="assets/img/icons/whatsapp.svg" alt="img"
+                                                class="injectable">
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/instagram.svg" alt="img" class="injectable">
+                                            <img src="assets/img/icons/instagram.svg" alt="img"
+                                                class="injectable">
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/youtube.svg" alt="img" class="injectable">
+                                            <img src="assets/img/icons/youtube.svg" alt="img"
+                                                class="injectable">
                                         </a>
                                     </li>
                                 </ul>
@@ -245,8 +253,34 @@
     <script>
         SVGInject(document.querySelectorAll("img.injectable"));
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#logoutButton').on('click', function() {
+                $.ajax({
+                    url: '/api/ApiLogout',
+                    type: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem(
+                            'token')
+                    },
+                    success: function(response) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
+
+                        window.location.href = '/';
+                    },
+                    error: function(xhr) {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        alert('Logout gagal: ' + errorResponse.message);
+                    }
+                });
+            });
+        });
+    </script>
+    @yield('script')
 </body>
 
 
 <!-- Mirrored from html.themegenix.com/skillgro/student-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 25 Nov 2024 20:53:13 GMT -->
+
 </html>

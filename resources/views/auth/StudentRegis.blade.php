@@ -25,6 +25,38 @@
 @endsection
 
 @section('content')
+    <section class="breadcrumb__area breadcrumb__bg"
+        style="background-image: url('{{ asset('assets/img/bg/breadcrumb_bg.jpg') }}');">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb__content">
+                        <h3 class="title">Register Siswa</h3>
+                        <nav class="breadcrumb">
+                            <span property="itemListElement" typeof="ListItem">
+                                <a href="/">Home</a>
+                            </span>
+                            <span class="breadcrumb-separator">
+                                <i class="fas fa-angle-right"></i>
+                            </span>
+                            <span property="itemListElement" typeof="ListItem">Register Siswa</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb__shape-wrap">
+            <img src="{{ asset('assets/img/others/breadcrumb_shape01.svg') }}" alt="Shape" class="alltuchtopdown" />
+            <img src="{{ asset('assets/img/others/breadcrumb_shape02.svg') }}" alt="Shape" data-aos="fade-right"
+                data-aos-delay="300" />
+            <img src="{{ asset('assets/img/others/breadcrumb_shape03.svg') }}" alt="Shape" data-aos="fade-up"
+                data-aos-delay="400" />
+            <img src="{{ asset('assets/img/others/breadcrumb_shape04.svg') }}" alt="Shape" data-aos="fade-down-left"
+                data-aos-delay="400" />
+            <img src="{{ asset('assets/img/others/breadcrumb_shape05.svg') }}" alt="Shape" data-aos="fade-left"
+                data-aos-delay="400" />
+        </div>
+    </section>
     <section class="singUp-area section-py-120">
         <div class="container">
             <div class="row justify-content-center">

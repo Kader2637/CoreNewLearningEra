@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'Abdul Kader',
             'email' => 'abdulkader0126@gmail.com',
             'password' => '12345678',
-            'role' => 'student'
+            'role' => 'student',
+            'no_telephone' => '0098765432456',
+            'status' => 'accept'
         ]);
     }
 }
