@@ -9,3 +9,13 @@ Route::get('/register/student', function () {
 Route::get('/register/teacher', function () {
     return view('auth.TeacherRegis');
 });
+
+Route::prefix('student')->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('pages.student.index');
+    });
+
+
+});
+
