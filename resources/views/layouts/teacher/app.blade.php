@@ -2,7 +2,6 @@
 <html lang="en">
 
 
-<!-- Mirrored from vora.dexignlab.com/xhtml/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 05 Dec 2023 10:43:33 GMT -->
 <head>
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,14 +9,11 @@
 	<meta name="author" content="" />
 	<meta name="robots" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Vora : Crypto Trading UI Admin  Bootstrap 5 Template" />
-	<meta property="og:title" content="Vora : Crypto Trading UI Admin  Bootstrap 5 Template" />
-	<meta property="og:description" content="Vora : Crypto Trading UI Admin  Bootstrap 5 Template" />
 	<meta property="og:image" content="social-image.png" />
 	<meta name="format-detection" content="telephone=no">
 	
 	<!-- PAGE TITLE HERE -->
-	<title>Vora - Saas Bootstrap Admin Dashboard</title>
+	<title>NewLearningEra</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link href="assetsTeacher/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
