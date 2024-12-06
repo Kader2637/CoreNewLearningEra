@@ -130,7 +130,6 @@
     <script src="{{ asset('assetsTeacher/js/custom.min.js') }}"></script>
     <script src="{{ asset('assetsTeacher/js/dlabnav-init.js') }}"></script>
     <script src="{{ asset('assetsTeacher/js/demo.js') }}"></script>
-    <script src="{{ asset('assetsTeacher/js/styleSwitcher.js') }}"></script>
         @yield('script')
 </body>
 
