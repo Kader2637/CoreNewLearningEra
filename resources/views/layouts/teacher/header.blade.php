@@ -4,11 +4,11 @@
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
                             <div class="dashboard_bar">
-								Teacher
+								
                             </div>
                         </div>
                         <ul class="navbar-nav header-right">
-							
+
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
                                     <img src="{{ asset('assetsTeacher/images/profile/1.jpg') }}" width="20" alt=""/>
