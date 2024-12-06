@@ -19,26 +19,9 @@ class CheckRole
     {
         if (Auth::check()) {
             $user = Auth::user();
+            dd($user);
             if (!in_array($user->role, $roles)) {
-                switch ($user->role) {
-                    case 'admin':
-                        if ($user->role !== 'admin/dashboard') {
-                            return redirect()->route('admin/dashboard');
-                        }
-                        break;
-                    case 'student':
-                        if ($user->role !== 'student/dashboard') {
-                            return redirect()->route('student/dashboard');
-                        }
-                        break;
-                    case 'teacher':
-                        if ($user->role !== 'teacher') {
-                            return redirect()->route('teacher');
-                        }
-                        break;
-                    default:
-                        return redirect('/');
-                }
+                abort(403);
             }
         } else {
             return $next($request);
