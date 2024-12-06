@@ -134,4 +134,25 @@ class LoginController extends Controller
             'message' => 'Anda telah berhasil logout.'
         ]);
     }
+
+    public function accept(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+        $user->status = 'accept';
+        $user->save();
+        return response()->json([
+            'status' => true,
+            'message' => 'User berhasil diterima.'
+        ]);
+    }
+    public function reject(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+        $user->status = 'reject';
+        $user->save();
+        return response()->json([
+            'status' => true,
+            'message' => 'User berhasil diterima.'
+        ]);
+    }
 }

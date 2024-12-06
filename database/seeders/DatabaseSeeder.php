@@ -23,5 +23,29 @@ class DatabaseSeeder extends Seeder
             'no_telephone' => '0098765432456',
             'status' => 'accept'
         ]);
+        User::factory()->create([
+            'name' => 'Ivan maulana tjiptady',
+            'email' => 'ivan@gmail.com',
+            'password' => '12345678',
+            'role' => 'teacher',
+            'no_telephone' => '0098765432456',
+            'status' => 'pending'
+        ]);
+        User::factory()->create([
+            'name' => 'Erik Aditya Irvansya',
+            'email' => 'erik@gmail.com',
+            'password' => '12345678',
+            'role' => 'teacher',
+            'no_telephone' => '0098765432456',
+            'status' => 'accept'
+        ]);
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => '12345678',
+            'role' => 'admin',
+            'no_telephone' => '0098765432456',
+            'status' => 'accept'
+        ]);
     }
 }

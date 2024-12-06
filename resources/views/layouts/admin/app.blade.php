@@ -29,6 +29,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/style.css') }}">
     <link id="color" rel="stylesheet" href="{{ asset('assetsAdmin/assets/css/color-1.css') }}" media="screen">
     <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/responsive.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @yield('style')
 </head>
 
@@ -38,7 +41,6 @@
             <div class="loader-p"></div>
         </div>
     </div>
-
 
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
         @include('layouts.admin.header')
@@ -63,6 +65,8 @@
         </div>
     </div>
 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('assetsAdmin/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/icons/feather-icon/feather.min.js') }}"></script>
@@ -96,6 +100,30 @@
     <script src="{{ asset('assetsAdmin/assets/js/height-equal.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/script.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/theme-customizer/customizer.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#logoutButton').on('click', function() {
+                $.ajax({
+                    url: '/api/ApiLogout',
+                    type: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem(
+                            'token')
+                    },
+                    success: function(response) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
+
+                        window.location.href = '/';
+                    },
+                    error: function(xhr) {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        alert('Logout gagal: ' + errorResponse.message);
+                    }
+                });
+            });
+        });
+    </script>
     @yield('script')
 </body>
 

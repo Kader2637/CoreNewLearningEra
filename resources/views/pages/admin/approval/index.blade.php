@@ -3,7 +3,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-xl-4 col-sm-7 box-col-3">
-                <h3>Kelas</h3>
+                <h3>Approval</h3>
             </div>
             <div class="col-5 d-none d-xl-block">
 
@@ -19,23 +19,24 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="breadcrumb-item active">Kelas</li>
+                    <li class="breadcrumb-item active">Approval</li>
                 </ol>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12">
+            <div id="alert-container"></div>
             <div class="card">
                 <div class="card-header">
                     <h4>Data Guru Sedang Menunggu Approval</h4>
                 </div>
                 <div class="table-responsive custom-scrollbar">
-                    <table class="table">
+                    <table class="table" id="data-table">
                         <thead>
                             <tr class="border-bottom-primary">
-                                <th scope="col" class="text-center">Id</th>
-                                <th scope="col" class="text-center">Nama</th>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col">Nama</th>
                                 <th scope="col" class="text-center">Jenis Kelamin</th>
                                 <th scope="col" class="text-center">No Telephone</th>
                                 <th scope="col" class="text-center">Email</th>
@@ -43,30 +44,143 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-bottom-secondary">
-                                <td class="text-center" scope="row">1</td>
-                                <td class="text-center"> <img class="img-30 me-2" src="{{ asset('assets/img/others/kader.png') }}" alt="profile">
-                                    Abdul Kader
-                                </td>
-                                <td class="text-center">Laki-Laki</td>
-                                <td class="text-center">09876543223</td>
-                                <td class="text-center">abdulkader0126@gmail.com</td>
-                                <td class="d-flex justify-content-center">
-                                    <div class="d-fle gap-2">
-                                        <button class="btn btn-info btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M12 6.5a9.77 9.77 0 0 1 8.82 5.5c-1.65 3.37-5.02 5.5-8.82 5.5S4.83 15.37 3.18 12A9.77 9.77 0 0 1 12 6.5m0-2C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5m0 5a2.5 2.5 0 0 1 0 5a2.5 2.5 0 0 1 0-5m0-2c-2.48 0-4.5 2.02-4.5 4.5s2.02 4.5 4.5 4.5s4.5-2.02 4.5-4.5s-2.02-4.5-4.5-4.5"/></svg>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M21 19.1H3V5h18zM21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"/><path fill="currentColor" d="M14.59 8L12 10.59L9.41 8L8 9.41L10.59 12L8 14.59L9.41 16L12 13.41L14.59 16L16 14.59L13.41 12L16 9.41z"/></svg>                                        </button>
-                                        <button class="btn btn-success btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m0 16H5V5h14zM17.99 9l-1.41-1.42l-6.59 6.59l-2.58-2.57l-1.42 1.41l4 3.99z"/></svg>                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    @include('layouts.admin.loader')
+@endsection
+@section('script')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            function showAlert(message, type) {
+                Swal.fire({
+                    icon: type,
+                    title: message,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+            }
+
+            function fetchData() {
+                $('#loader').show();
+
+                $.ajax({
+                    url: '/api/teacher/pending',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#loader').hide();
+                        let tbody = $('#data-table tbody');
+                        tbody.empty();
+
+                        if (response.status === "success" && Array.isArray(response.data)) {
+                            if (response.data.length === 0) {
+                                tbody.append(`
+                                    <tr>
+                                        <td colspan="6" class="text-center">Data masih kosong</td>
+                                    </tr>
+                                `);
+                            } else {
+                                $.each(response.data, function(index, item) {
+                                    let profileImage = item.image || '{{ asset('user.png') }}';
+
+                                    tbody.append(`
+                                        <tr>
+                                            <td class="text-center" scope="row">${index + 1}</td>
+                                            <td>
+                                                <img class="img-30 me-2" src="${profileImage}" alt="profile">
+                                                ${item.name}
+                                            </td>
+                                            <td class="text-center">${item.gender}</td>
+                                            <td class="text-center">${item.no_telephone}</td>
+                                            <td class="text-center">${item.email}</td>
+                                            <td class="d-flex justify-content-center">
+                                                <div class="d-flex gap-2">
+                                                    <button class="btn btn-info btn-sm accept-button" data-id="${item.id}">Terima</button>
+                                                    <button class="btn btn-danger btn-sm reject-button" data-id="${item.id}">Tolak</button>
+                                                    <button class="btn btn-success btn-sm">View</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `);
+                                });
+
+                                $('.accept-button').off('click').on('click', function() {
+                                    const userId = $(this).data('id');
+                                    acceptUser(userId);
+                                });
+
+                                $('.reject-button').off('click').on('click', function() {
+                                    const userId = $(this).data('id');
+                                    rejectUser(userId);
+                                });
+                            }
+                        } else {
+                            tbody.append(`
+                                <tr>
+                                    <td colspan="6" class="text-center">Data masih kosong</td>
+                                </tr>
+                            `);
+                            showAlert('Data masih kosong.', 'info');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $('#loader').hide();
+                        showAlert('Kesalahan saat mengambil data.', 'danger');
+                    }
+                });
+            }
+
+            function acceptUser(userId) {
+                $('#loader').show();
+
+                $.ajax({
+                    url: `/api/accept/${userId}`,
+                    method: 'POST',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#loader').hide();
+                        showAlert('User berhasil diterima', 'success');
+
+                        fetchData();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $('#loader').hide();
+                        showAlert('Kesalahan saat menerima pengguna.', 'danger');
+                    }
+                });
+            }
+
+            function rejectUser(userId) {
+                $('#loader').show();
+
+                $.ajax({
+                    url: `/api/reject/${userId}`,
+                    method: 'POST',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#loader').hide();
+                        showAlert('User berhasil ditolak', 'success');
+
+                        fetchData();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $('#loader').hide();
+                        showAlert('Kesalahan saat menolak pengguna.', 'danger');
+                    }
+                });
+            }
+
+            fetchData();
+        });
+    </script>
 @endsection

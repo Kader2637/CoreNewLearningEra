@@ -53,7 +53,7 @@
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
                         <li><a href="user-profile.html"><i data-feather="user"></i><span>Account </span></a></li>
-                        <li><a href="login.html"> <i data-feather="log-in"></i><span>Log Out</span></a></li>
+                        <li><a id="logoutButton"> <i data-feather="log-in"></i><span>Log Out</span></a></li>
                     </ul>
                 </li>
             </ul>
