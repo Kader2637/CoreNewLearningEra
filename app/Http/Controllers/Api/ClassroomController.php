@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Classroom;
 use App\Http\Requests\StoreClassroomRequest;
 use App\Http\Requests\UpdateClassroomRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ClassroomController extends Controller
@@ -15,7 +16,15 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        //
+
+    }
+
+    public function classroomTeacher($id){
+        $classroom = Classroom::where('user_id' , $id)->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $classroom
+        ],200);
     }
 
     /**
@@ -33,8 +42,10 @@ class ClassroomController extends Controller
     {
         $classroom = Classroom::create([
             'name' => $request->name,
-            'code_class' => date('y') . strtoupper(Str::random(4)),
+            'user_id' => $request->user_id,
+            'codeClass' => $request->codeClass,
             'limit' => $request->limit,
+            'statusClass' => $request->statusClass,
             'description' => $request->description,
             'thumbnail' => $request->file('thumbnail')->store('thumbnails'),
         ]);
@@ -43,7 +54,6 @@ class ClassroomController extends Controller
             'status' => 'success',
             'data' => $classroom
         ], 200);
-
     }
 
     /**

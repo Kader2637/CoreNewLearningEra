@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('limit');
             $table->text('description');
             $table->text('thumbnail');
+            $table->enum('status' , ['accept' , 'pending' , 'reject'])->default('pending');
+            $table->enum('statusClass' , ['public' , 'private']);
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
