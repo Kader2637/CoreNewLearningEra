@@ -53,7 +53,16 @@
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
                         <li><a href="user-profile.html"><i data-feather="user"></i><span>Account </span></a></li>
-                        <li><a id="logoutButton"> <i data-feather="log-in"></i><span>Log Out</span></a></li>
+                        <li>
+                            <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display:none;">
+                                @csrf
+                            </form>
+                            <a href="#" id="logoutButton"
+                                onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+                                <i data-feather="log-in"></i>
+                                <span>Log Out</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

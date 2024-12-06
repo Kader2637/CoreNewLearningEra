@@ -33,6 +33,8 @@ Route::post('/post/login' , [LoginController::class , 'login']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 require_once __DIR__ . '/kader.php';
 require_once __DIR__ . '/erik.php';

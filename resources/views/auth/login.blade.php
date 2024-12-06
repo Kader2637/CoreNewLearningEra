@@ -62,7 +62,8 @@
                 <div class="col-xl-6 col-lg-8">
                     <div class="singUp-wrap">
                         <h2 class="title">Welcome back!</h2>
-                        <p>Hey there! Ready to log in? Just enter your username and password below and you'll be back in action in no time. Let's go!</p>
+                        <p>Hey there! Ready to log in? Just enter your username and password below and you'll be back in
+                            action in no time. Let's go!</p>
                         <form action="/post/login" method="POST" class="account__form" id="loginForm">
                             @csrf
                             <div class="form-grp">
@@ -79,7 +80,8 @@
                                     <label for="terms-check" class="form-check-label">Remember me</label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-two arrow-btn">Sign In<img src="assets/img/icons/right_arrow.svg" alt="img" class="injectable"></button>
+                            <button type="submit" class="btn btn-two arrow-btn">Sign In<img
+                                    src="assets/img/icons/right_arrow.svg" alt="img" class="injectable"></button>
                         </form>
                         <div id="responseMessage"></div>
                         <div class="account__switch">
@@ -95,12 +97,12 @@
 @section('script')
 <script>
     $(document).ready(function() {
-        @if(session('warning'))
-            toastr.warning('{{ session('warning') }}', 'Status Pending');
-        @elseif(session('error'))
-            toastr.error('{{ session('error') }}', 'Akses Ditolak');
-        @elseif(session('success'))
-            toastr.success('{{ session('success') }}', 'Login Berhasil');
+        @if (session('warning'))
+            toastr.warning('{!! session('warning') !!}', 'Status Pending');
+        @elseif (session('error'))
+            toastr.error('{!! session('error') !!}', 'Akses Ditolak');
+        @elseif (session('success'))
+            toastr.success('{!! session('success') !!}', 'Login Berhasil');
         @endif
     });
 </script>

@@ -88,60 +88,61 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-    {
-        // Validasi input
-        $this->validate($request, [
-            'email' => 'required|exists:users,email|max:225',
-            'password' => 'required|min:6|max:225',
-        ], [
-            'email.max' => 'Masukan 225 karakter!',
-            'password.max' => 'Masukan 225 karakter!',
-            'email.required' => 'Masukkan Email Anda !!',
-            'email.exists' => 'Email Yang Anda Masukkan Belum Terdaftar !!',
-            'password.required' => 'Masukkan Kata Sandi Anda !!',
-            'password.min' => 'Password Minimal 6 Huruf !!',
-        ]);
+{
+    // Validasi input
+    $this->validate($request, [
+        'email' => 'required|exists:users,email|max:225',
+        'password' => 'required|min:6|max:225',
+    ], [
+        'email.max' => 'Masukan 225 karakter!',
+        'password.max' => 'Masukan 225 karakter!',
+        'email.required' => 'Masukkan Email Anda !!',
+        'email.exists' => 'Email Yang Anda Masukkan Belum Terdaftar !!',
+        'password.required' => 'Masukkan Kata Sandi Anda !!',
+        'password.min' => 'Password Minimal 6 Huruf !!',
+    ]);
 
-        // Ambil email dan password dari request
-        $credentials = $request->only('email', 'password');
+    // Ambil kredensial dari input
+    $credentials = $request->only('email', 'password');
 
-        // Proses login
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+    // Cek kredensial
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
 
-            // Cek status pengguna
-            if ($user->status === 'pending') {
-                return redirect()->route('login')->with('warning', 'Harap tunggu konfirmasi dari admin.');
-            } elseif ($user->status === 'reject') {
-                return redirect()->route('login')->with('error', 'Anda diblokir dari sistem.');
+        // Cek status pengguna
+        if ($user->status === 'pending') {
+            Auth::logout(); // Logout pengguna jika status pending
+            return redirect()->route('login')->with('warning', 'Harap tunggu konfirmasi dari admin.');
+        } elseif ($user->status === 'reject') {
+            Auth::logout(); // Logout pengguna jika status ditolak
+            return redirect()->route('login')->with('error', 'Anda diblokir dari sistem.');
+        } elseif ($user->status === 'accept') {
+            switch ($user->role) {
+                case 'admin':
+                    return redirect('/admin/dashboard');
+                case 'student':
+                    return redirect('/student/dashboard');
+                case 'teacher':
+                    return redirect('/teacher');
+                default:
+                    return redirect('/login');
             }
-
-            if ($user->role === 'admin') {
-                return redirect('/admin/dashboard');
-            } elseif ($user->role === 'student') {
-                return redirect('/student/dashboard');
-            } elseif ($user->role === 'teacher') {
-                return redirect('/teacher');
-            } else {
-                return redirect('/login');
-            }
-        } else {
-            return redirect()->route('login')->with('error', 'Invalid credentials, please try again.');
         }
     }
 
+    // Jika autentikasi gagal
+    return redirect()->route('login')->with('error', 'Username atau password salah.');
+}
 
-
-    public function ApiLogout(Request $request)
+    public function logout(Request $request)
     {
-        Auth::guard('api')->logout();
+        Auth::logout();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Anda telah berhasil logout.'
-        ]);
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login')->with('message', 'Anda telah berhasil logout.');
     }
-
     public function accept(Request $request, $id)
     {
         $user = User::where('id', $id)->first();
