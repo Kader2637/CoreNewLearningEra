@@ -19,7 +19,7 @@ class CheckRole
     {
         if (Auth::check()) {
             $user = Auth::user();
-            dd($user);
+            // dd($user);
             if (!in_array($user->role, $roles)) {
                 abort(403);
             }
