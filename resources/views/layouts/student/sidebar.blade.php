@@ -4,10 +4,16 @@
     </div>
     <nav class="dashboard__sidebar-menu">
         <ul class="list-wrap">
-            <li class="active">
+            <li class="">
                 <a href="/student/dashboard">
                     <i class="fas fa-home"></i>
                     Dashboard
+                </a>
+            </li>
+            <li class="">
+                <a href="/student/class">
+                    <i class="fas fa-home"></i>
+                    Kelas
                 </a>
             </li>
         </ul>

@@ -16,6 +16,9 @@ Route::prefix('student')->group(function () {
         return view('pages.student.index');
     });
 
+    Route::get('/clasroom', function () {
+        return view('pages.student.class');
+    });
 
 });
 

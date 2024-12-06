@@ -11,7 +11,7 @@
     <meta name="description" content="SkillGro - Online Courses & Education Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/spacing.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/tg-cursor.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @yield('style')
 </head>
 
 <body>
@@ -51,7 +53,7 @@
     <!-- Scroll-top-end-->
 
     <!-- header-area -->
-    @include('layouts.student.header')
+    @include('layouts.landingpage.header')
     <!-- header-area-end -->
 
 
@@ -61,24 +63,27 @@
 
         <!-- dashboard-area -->
         <section class="dashboard__area section-pb-120">
-            <div class="dashboard__bg"><img src="assets/img/bg/dashboard_bg.jpg" alt=""></div>
+            <div class="dashboard__bg">
+                <img src="{{ asset('assets/img/bg/dashboard_bg.jpg') }}" alt="">
+            </div>
             <div class="container">
                 <div class="dashboard__top-wrap">
-                    <div class="dashboard__top-bg" data-background="assets/img/bg/student_bg.jpg"></div>
+                    <div class="dashboard__top-bg"
+                        style="background-image: url('{{ asset('assets/img/bg/student_bg.jpg') }}');"></div>
                     <div class="dashboard__instructor-info">
                         <div class="dashboard__instructor-info-left">
                             <div class="thumb">
-                                <img src="assets/img/courses/details_instructors02.jpg" alt="img">
+                                <img src="{{ asset('assets/img/courses/details_instructors02.jpg') }}" alt="img">
                             </div>
                             <div class="content">
                                 <h4 class="title">Emily Hannah</h4>
                                 <ul class="list-wrap">
                                     <li>
-                                        <img src="assets/img/icons/course_icon03.svg" alt="img" class="injectable">
+                                        <img src="{{ asset('assets/img/icons/course_icon03.svg') }}" alt="img" class="injectable">
                                         10 Courses Enrolled
                                     </li>
                                     <li>
-                                        <img src="assets/img/icons/course_icon05.svg" alt="img" class="injectable">
+                                        <img src="{{ asset('assets/img/icons/course_icon05.svg') }}" alt="img" class="injectable">
                                         7 Certificate
                                     </li>
                                 </ul>
@@ -86,7 +91,7 @@
                         </div>
                         <div class="dashboard__instructor-info-right">
                             <a href="#" class="btn btn-two arrow-btn">Become an Instructor <img
-                                    src="assets/img/icons/right_arrow.svg" alt="img" class="injectable"></a>
+                                    src="{{ asset('assets/img/icons/right_arrow.svg') }}" alt="img" class="injectable"></a>
                         </div>
                     </div>
                 </div>
@@ -117,7 +122,7 @@
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer__widget">
                             <div class="logo mb-35">
-                                <a href="index-2.html"><img src="assets/img/logo/secondary_logo.svg" alt="img"></a>
+                                <a href="index-2.html"><img src="{{ asset('assets/img/logo/secondary_logo.svg') }}" alt="img"></a>
                             </div>
                             <div class="footer__content">
                                 <p>when an unknown printer took galley of type and scrambled it to make pspecimen bookt
@@ -166,39 +171,39 @@
                                 <ul class="list-wrap footer__social">
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/facebook.svg" alt="img"
+                                            <img src="{{ asset('assets/img/icons/facebook.svg') }}" alt="img"
                                                 class="injectable">
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/twitter.svg" alt="img"
+                                            <img src="{{ asset('assets/img/icons/twitter.svg') }}" alt="img"
                                                 class="injectable">
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/whatsapp.svg" alt="img"
+                                            <img src="{{ asset('assets/img/icons/whatsapp.svg') }}" alt="img"
                                                 class="injectable">
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/instagram.svg" alt="img"
+                                            <img src="{{ asset('assets/img/icons/instagram.svg') }}" alt="img"
                                                 class="injectable">
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://www.facebook.com/" target="_blank">
-                                            <img src="assets/img/icons/youtube.svg" alt="img"
+                                            <img src="{{ asset('assets/img/icons/youtube.svg') }}" alt="img"
                                                 class="injectable">
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="app-download">
-                                <a href="#"><img src="assets/img/others/google-play.svg" alt="img"></a>
-                                <a href="#"><img src="assets/img/others/apple-store.svg" alt="img"></a>
+                                <a href="#"><img src="{{ asset('assets/img/others/google-play.svg') }}" alt="img"></a>
+                                <a href="#"><img src="{{ asset('assets/img/others/apple-store.svg') }}" alt="img"></a>
                             </div>
                         </div>
                     </div>
