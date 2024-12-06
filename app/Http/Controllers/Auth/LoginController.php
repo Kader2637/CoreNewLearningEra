@@ -26,15 +26,6 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
     /**
      * Create a new controller instance.
      *
@@ -98,32 +89,48 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+        // Validasi input
+        $this->validate($request, [
+            'email' => 'required|exists:users,email|max:225',
+            'password' => 'required|min:6|max:225',
+        ], [
+            'email.max' => 'Masukan 225 karakter!',
+            'password.max' => 'Masukan 225 karakter!',
+            'email.required' => 'Masukkan Email Anda !!',
+            'email.exists' => 'Email Yang Anda Masukkan Belum Terdaftar !!',
+            'password.required' => 'Masukkan Kata Sandi Anda !!',
+            'password.min' => 'Password Minimal 6 Huruf !!',
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = Auth::user();
-            $success['token'] = $user->createToken('MyApp')->plainTextToken;
-            $success['name'] = $user->name;
-            $success['email'] = $user->email;
-            $success['role'] = $user->role;
-            $success['status'] = $user->status;
+        // Ambil email dan password dari request
+        $credentials = $request->only('email', 'password');
 
-            return response()->json([
-                'success' => true,
-                'data' => $success,
-                'message' => 'User login successfully.'
-            ], 200);
+        // Proses login
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            // Cek status pengguna
+            if ($user->status === 'pending') {
+                return redirect()->route('login')->with('warning', 'Harap tunggu konfirmasi dari admin.');
+            } elseif ($user->status === 'reject') {
+                return redirect()->route('login')->with('error', 'Anda diblokir dari sistem.');
+            }
+
+            if ($user->role === 'admin') {
+                return redirect('/admin/dashboard');
+            } elseif ($user->role === 'student') {
+                return redirect('/student/dashboard');
+            } elseif ($user->role === 'teacher') {
+                return redirect('/teacher');
+            } else {
+                return redirect('/login');
+            }
         } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised',
-                'error' => ['error' => 'Unauthorised']
-            ], 401);
+            return redirect()->route('login')->with('error', 'Invalid credentials, please try again.');
         }
     }
+
+
 
     public function ApiLogout(Request $request)
     {

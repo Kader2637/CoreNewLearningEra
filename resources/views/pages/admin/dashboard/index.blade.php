@@ -3,7 +3,8 @@
     <div class="page-title">
         <div class="row">
             <div class="col-xl-4 col-sm-7 box-col-3">
-                <h3>Dashboard</h3>
+                <h3>Dashboard 
+                </h3>
             </div>
             <div class="col-5 d-none d-xl-block">
 
@@ -112,7 +113,8 @@
                 <div class="card-body">
                     <div class="social-img-wrap">
                         <div class="social-img">
-                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px" style="object-fit: cover" alt="profile" />
+                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px" style="object-fit: cover"
+                                alt="profile" />
                         </div>
                         <div class="edit-icon">
                             <svg>
@@ -142,7 +144,8 @@
                 <div class="card-body">
                     <div class="social-img-wrap">
                         <div class="social-img">
-                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px" style="object-fit: cover" alt="profile" />
+                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px" style="object-fit: cover"
+                                alt="profile" />
                         </div>
                         <div class="edit-icon">
                             <svg>
@@ -172,7 +175,8 @@
                 <div class="card-body">
                     <div class="social-img-wrap">
                         <div class="social-img">
-                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px" style="object-fit: cover" alt="profile" />
+                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px"
+                                style="object-fit: cover" alt="profile" />
                         </div>
                         <div class="edit-icon">
                             <svg>
@@ -202,7 +206,8 @@
                 <div class="card-body">
                     <div class="social-img-wrap">
                         <div class="social-img">
-                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px" style="object-fit: cover" alt="profile" />
+                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px"
+                                style="object-fit: cover" alt="profile" />
                         </div>
                         <div class="edit-icon">
                             <svg>

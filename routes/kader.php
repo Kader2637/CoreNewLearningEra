@@ -2,15 +2,17 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckRole;
 
 
 Route::get('/about', function () {
     return view('pages.LandingPage.about.index');
 });
-Route::prefix('admin')->group(function () {
+
+Route::prefix('admin')->middleware([CheckRole::class . ':admin'])->group(function () {
     Route::get('/dashboard', function () {
         return view('pages.admin.dashboard.index');
-    });
+    })->name('admin/dashboard');
 
     Route::get('/classroom', function () {
         return view('pages.admin.classroom.index');
@@ -28,4 +30,3 @@ Route::prefix('admin')->group(function () {
         return view('pages.admin.approval.index');
     });
 });
-

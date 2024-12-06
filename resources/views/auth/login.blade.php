@@ -1,4 +1,5 @@
 @extends('layouts.landingpage.app')
+
 @section('style')
     <style>
         label {
@@ -54,6 +55,7 @@
             <img src="assets/img/others/breadcrumb_shape05.svg" alt="Shape" data-aos="fade-left" data-aos-delay="400" />
         </div>
     </section>
+
     <section class="singUp-area section-py-120">
         <div class="container">
             <div class="row justify-content-center">
@@ -61,7 +63,8 @@
                     <div class="singUp-wrap">
                         <h2 class="title">Welcome back!</h2>
                         <p>Hey there! Ready to log in? Just enter your username and password below and you'll be back in action in no time. Let's go!</p>
-                        <form action="#" class="account__form" id="loginForm">
+                        <form action="/post/login" method="POST" class="account__form" id="loginForm">
+                            @csrf
                             <div class="form-grp">
                                 <label for="email">Email</label>
                                 <input id="email" name="email" type="text" placeholder="email" required>
@@ -88,50 +91,17 @@
         </div>
     </section>
 @endsection
+
 @section('script')
 <script>
     $(document).ready(function() {
-        $('#loginForm').on('submit', function(event) {
-            event.preventDefault();
-
-            const formData = {
-                email: $('#email').val(),
-                password: $('#password').val()
-            };
-
-            $.ajax({
-                url: '/api/ApiLogin',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function(response) {
-                    const user = response.data;
-
-                    if (user.status === 'pending') {
-                        toastr.warning('Harap tunggu konfirmasi dari admin.', 'Status Pending');
-                    } else if (user.status === 'reject') {
-                        toastr.error('Anda diblokir dari sistem.', 'Akses Ditolak');
-                    } else if (user.status === 'accept') {
-                        localStorage.setItem('token', user.token);
-                        localStorage.setItem('user', JSON.stringify(user));
-
-                        if (user.role === 'admin') {
-                            window.location.href = '/admin/dashboard';
-                        } else if (user.role === 'student') {
-                            window.location.href = '/student/dashboard';
-                        } else if (user.role === 'teacher') {
-                            window.location.href = '/teacher';
-                        } else {
-                            window.location.href = '/home';
-                        }
-                    }
-                },
-                error: function(xhr) {
-                    const errorResponse = JSON.parse(xhr.responseText);
-                    toastr.error('Username atau password Salah', 'Error');
-                }
-            });
-        });
+        @if(session('warning'))
+            toastr.warning('{{ session('warning') }}', 'Status Pending');
+        @elseif(session('error'))
+            toastr.error('{{ session('error') }}', 'Akses Ditolak');
+        @elseif(session('success'))
+            toastr.success('{{ session('success') }}', 'Login Berhasil');
+        @endif
     });
 </script>
 @endsection

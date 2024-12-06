@@ -19,6 +19,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = auth()->user()->role;  // Mengakses ID pengguna yang sedang login
+        dd($user);  // Menampilkan ID pengguna
         return view('home');
     }
+
 }

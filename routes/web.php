@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,7 +10,7 @@ Route::get('/', function () {
 
 Route::get('/teacher', function () {
     return view('pages.teacher.dashboard.index');
-});
+})->name('teacher');
 Route::get('/classroom', function () {
     return view('pages.LandingPage.classroom.index');
 });
@@ -23,7 +25,11 @@ Route::get('/class', function () {
 Route::get('/detail', function () {
     return view('pages.teacher.detailClass.detailClass');
 });
-Auth::routes();
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login')->middleware(CheckRole::class);
+
+Route::post('/post/login' , [LoginController::class , 'login']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
