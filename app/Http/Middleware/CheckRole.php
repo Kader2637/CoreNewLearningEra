@@ -1,45 +1,38 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CheckRole
 {
-    public function handle($request, Closure $next, ...$roles)
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         if (Auth::check()) {
             $user = Auth::user();
-
-            if (in_array($request->route()->getName(), ['login', 'register' , 'register/teacher'])) {
-                switch ($user->role) {
-                    case 'admin':
-                        return redirect()->route('admin/dashboard');
-                    case 'student':
-                        return redirect()->route('student/dashboard');
-                    case 'teacher':
-                        return redirect()->route('teacher');
-                    default:
-                        return redirect('/');
-                }
-            }
-
             if (!in_array($user->role, $roles)) {
-                $currentRoute = $request->route()->getName();
-
                 switch ($user->role) {
                     case 'admin':
-                        if ($currentRoute !== 'admin/dashboard') {
+                        if ($user->role !== 'admin/dashboard') {
                             return redirect()->route('admin/dashboard');
                         }
                         break;
                     case 'student':
-                        if ($currentRoute !== 'student/dashboard') {
+                        if ($user->role !== 'student/dashboard') {
                             return redirect()->route('student/dashboard');
                         }
                         break;
                     case 'teacher':
-                        if ($currentRoute !== 'teacher') {
+                        if ($user->role !== 'teacher') {
                             return redirect()->route('teacher');
                         }
                         break;
@@ -47,6 +40,8 @@ class CheckRole
                         return redirect('/');
                 }
             }
+        } else {
+            return $next($request);
         }
 
         return $next($request);
