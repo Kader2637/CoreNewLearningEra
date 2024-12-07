@@ -258,34 +258,6 @@
     <script>
         SVGInject(document.querySelectorAll("img.injectable"));
     </script>
-    <script>
-        $(document).ready(function() {
-            $('#logoutButton').on('click', function() {
-                $.ajax({
-                    url: '/api/ApiLogout',
-                    type: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem(
-                            'token')
-                    },
-                    success: function(response) {
-                        localStorage.removeItem('token');
-                        localStorage.removeItem('user');
-
-                        window.location.href = '/';
-                    },
-                    error: function(xhr) {
-                        const errorResponse = JSON.parse(xhr.responseText);
-                        alert('Logout gagal: ' + errorResponse.message);
-                    }
-                });
-            });
-        });
-    </script>
     @yield('script')
 </body>
-
-
-<!-- Mirrored from html.themegenix.com/skillgro/student-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 25 Nov 2024 20:53:13 GMT -->
-
 </html>

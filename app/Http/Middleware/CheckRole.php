@@ -19,14 +19,23 @@ class CheckRole
     {
         if (Auth::check()) {
             $user = Auth::user();
-            // dd($user);
+
             if (!in_array($user->role, $roles)) {
-                abort(403);
+                $roleRedirects = [
+                    'admin' => route('admin.dashboard'),
+                    'student' => route('student/dashboard'),
+                    'teacher' => route('teacher'),
+                ];
+
+                if (isset($roleRedirects[$user->role]) && $roleRedirects[$user->role] !== $request->url()) {
+                    return redirect($roleRedirects[$user->role]);
+                }
             }
         } else {
             return $next($request);
         }
 
-        return $next($request);
+        return $next($request); 
+
     }
 }

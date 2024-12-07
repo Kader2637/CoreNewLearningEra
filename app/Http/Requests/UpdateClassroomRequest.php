@@ -11,7 +11,7 @@ class UpdateClassroomRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateClassroomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+                'name' => 'nullable|string',
+                'codeClass' => 'nullable|string',
+                'limit' => 'nullable|integer',
+                'description' => 'nullable|string',
+                'thumbnail' => 'nullable|file',
+                'statusClass' => 'nullable|in:private,public'
         ];
     }
 }

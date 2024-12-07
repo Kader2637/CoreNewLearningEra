@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -19,3 +20,10 @@ Route::post('/reject/{id}', [LoginController::class, 'reject']);
 
 // teacher
 Route::get('/teacher/pending' , [UserController::class , 'teacher']);
+
+// classroom
+Route::post('/classroom/teacher', [ClassroomController::class, 'store']);
+Route::get('/classroom/teacher/data/{id}', [ClassroomController::class, 'classroomTeacher']);
+Route::get('/classroom/show/{classroom}', [ClassroomController::class, 'show']);
+Route::delete('/classroom/delete/{classroom}', [ClassroomController::class, 'destroy']);
+Route::put('/classroom/update/{classroom}', [ClassroomController::class, 'update']);

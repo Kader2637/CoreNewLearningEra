@@ -26,7 +26,9 @@ class StoreClassroomRequest extends FormRequest
             'codeClass' => 'required',
             'limit' => 'required',
             'description' => 'required',
-            'thumbnail' => 'required'
+            'thumbnail' => 'required',
+            'statusClass' => 'required',
+            'user_id' => 'nullable'
         ];
     }
 }
