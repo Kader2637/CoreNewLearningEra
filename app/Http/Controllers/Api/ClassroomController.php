@@ -90,6 +90,7 @@ class ClassroomController extends Controller
         } else {
             $thumbnailPath = $classroom->thumbnail;
         }
+        
 
         $classroom->update([
             'name' => $request->name,

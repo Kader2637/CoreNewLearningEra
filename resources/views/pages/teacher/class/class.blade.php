@@ -78,7 +78,7 @@
                         <form id="updateClassForm" enctype="multipart/form-data">
                             <input type="hidden" value="{{ auth()->user()->id }}" name="user_id">
                             <input type="hidden" id="editClassId" name="class_id">
-
+                            @method('PUT')
                             <div class="mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail</label>
                                 <input type="file" class="form-control" id="thumbnail" name="thumbnail">
@@ -296,6 +296,54 @@
                 $('#modal-delete').modal('show');
             });
 
+// Event handler untuk tombol Edit
+$('#classroom-data').on('click', '.edit-btn', function () {
+    const classId = $(this).data('id');
+    const codeClass = $(this).data('code');
+    const name = $(this).data('name');
+    const limit = $(this).data('limit');
+    const description = $(this).data('description');
+    const thumbnail = $(this).data('thumbnail');
+
+    // Isi data ke dalam form modal
+    $('#editClassId').val(classId);
+    $('#updateClassForm #codeClass').val(codeClass);
+    $('#updateClassForm #namaKelas').val(name);
+    $('#updateClassForm #jumlahSiswa').val(limit);
+    $('#updateClassForm #deskripsiKelas').val(description);
+    $('#updateClassForm #thumbnail').val('');
+
+    // Tampilkan modal edit
+    $('#edit-class-modal').modal('show');
+});
+
+// Event handler untuk form update kelas
+$('#updateClassForm').on('submit', function (event) {
+    event.preventDefault();
+
+    const classId = $('#editClassId').val(); // Ambil ID kelas
+    const formData = new FormData(this); // Ambil semua data dari form
+    console.log(formData);
+
+    $.ajax({
+        url: `/api/classroom/update/${classId}`, // Endpoint update API
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            console.log(response);
+            if (response.message === 'Kelas berhasil diupdate! {
+                toastr.success('Kelas berhasil diperbarui!');
+                $('#edit-class-modal').modal('hide'); // Tutup modal
+                fetchClassData(); // Perbarui tabel kelas
+            }
+        },
+        error: function (xhr) {
+            toastr.error('Terjadi kesalahan saat memperbarui kelas: ' + (xhr.responseJSON?.message || 'Silakan coba lagi.'));
+        }
+    });
+});
             $('#form-delete').on('submit', function(event) {
                 event.preventDefault();
                 const classId = $('#deleteClassId').val();
