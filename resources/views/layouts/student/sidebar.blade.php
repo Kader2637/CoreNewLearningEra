@@ -11,7 +11,7 @@
                 </a>
             </li>
             <li class="">
-                <a href="/student/class">
+                <a href="/student/classroom">
                     <i class="fas fa-home"></i>
                     Kelas
                 </a>
