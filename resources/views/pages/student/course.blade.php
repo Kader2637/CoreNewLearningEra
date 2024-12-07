@@ -100,23 +100,23 @@
                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                                     data-bs-target="#collapseOne" aria-expanded="true"
                                                     aria-controls="collapseOne">
-                                                    Introduction
+                                                    Materi
                                                 </button>
                                             </h2>
                                             <div id="collapseOne" class="accordion-collapse collapse show"
                                                 aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                                 <div class="accordion-body">
                                                     <ul class="list-wrap">
-                                                        <li class="course-item open-item">
-                                                            <a href="https://www.youtube.com/watch?v=b2Az7_lLh3g"
-                                                                class="course-item-link popup-video">
-                                                                <span class="item-name">Course Installation</span>
+                                                        <li class="course-item">
+                                                            <a href="{{ route('detailmateri') }}"
+                                                                class="">
+                                                                <span class="item-name">Materi 1</span>
                                                                 <div class="course-item-meta">
                                                                     <span class="item-meta duration">03:03</span>
                                                                 </div>
                                                             </a>
                                                         </li>
-                                                        <li class="course-item">
+                                                        {{-- <li class="course-item">
                                                             <a href="#" class="course-item-link">
                                                                 <span class="item-name">Create a Simple React App</span>
                                                                 <div class="course-item-meta">
@@ -139,7 +139,7 @@
                                                                     </span>
                                                                 </div>
                                                             </a>
-                                                        </li>
+                                                        </li> --}}
                                                     </ul>
                                                 </div>
                                             </div>

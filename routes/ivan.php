@@ -18,4 +18,8 @@ Route::prefix('student')->middleware([CheckRole::class . ':student'])->group(fun
     Route::get('/course', function () {
         return view('pages.student.course');
     })->name('course');
+
+    Route::get('/materi/detail', function () {
+        return view('pages.student.detailmateri');
+    })->name('detailmateri');
 });
