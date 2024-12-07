@@ -11,6 +11,7 @@ Route::prefix('teacher')->group(function () {
         return view('pages.teacher.dashboard.index');
     })->name('teacher');
 
+
     Route::prefix('classroom')->group(function () {
         Route::get('/', function () {
             return view('pages.teacher.class.class');

@@ -22,6 +22,7 @@ class UpdateClassroomRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'user_id' => 'nullable|integer',
                 'name' => 'nullable|string',
                 'codeClass' => 'nullable|string',
                 'limit' => 'nullable|integer',
