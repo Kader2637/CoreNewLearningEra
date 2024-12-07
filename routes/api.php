@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\UserController;
@@ -14,7 +15,7 @@ Route::post('/Apiregister/teacher' , [LoginController::class , 'registerTeacher'
 Route::post('/Apiregister/student' , [LoginController::class , 'registerStudent']);
 Route::post('/ApiLogout', [LoginController::class, 'ApiLogout'])->middleware('auth:api');
 
-// approval
+// approval user
 Route::post('/accept/{id}', [LoginController::class, 'accept']);
 Route::post('/reject/{id}', [LoginController::class, 'reject']);
 
@@ -28,3 +29,8 @@ Route::get('/classroom/teacher/data/{id}', [ClassroomController::class, 'classro
 Route::get('/classroom/show/{classroom}', [ClassroomController::class, 'show']);
 Route::delete('/classroom/delete/{classroom}', [ClassroomController::class, 'destroy']);
 Route::put('/classroom/update/{classroom}', [ClassroomController::class, 'update']);
+
+// admin approval class
+Route::get('approval/classroom' , [AdminController::class , 'approvalClass']);
+Route::post('/acceptClass/{id}', [AdminController::class, 'acceptClass']);
+Route::post('/rejectClass/{id}', [AdminController::class, 'rejectClass']);

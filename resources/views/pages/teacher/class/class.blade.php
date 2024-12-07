@@ -229,8 +229,7 @@
                         }
                     },
                     error: function(xhr) {
-                        toastr.error('Terjadi kesalahan saat membuat kelas: ' + (xhr
-                            .responseJSON?.message || 'Silakan coba lagi.'));
+                        toastr.error('Terjadi kesalahan saat membuat kelas: ' + (xhr.responseJSON?.message || 'Silakan coba lagi.'));
                     }
                 });
             });
@@ -245,42 +244,38 @@
                         let rows = '';
                         if (response.data.length > 0) {
                             response.data.forEach((kelas, index) => {
-                                const thumbnailUrl =
-                                    `{{ asset('storage') }}/${kelas.thumbnail}`;
+                                const thumbnailUrl = `{{ asset('storage') }}/${kelas.thumbnail}`;
                                 rows += `
-                        <tr class="kelas${index + 1}">
-                            <td>${index + 1}</td>
-                            <td><img src="${thumbnailUrl}" alt="Thumbnail" width="200px"></td>
-                            <td>${kelas.codeClass}</td>
-                            <td>${kelas.name}</td>
-                            <td>Limit Siswa: ${kelas.limit}</td>
-                            <td>${kelas.status}</td>
-                            <td>
-                                <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn btn-info me-2 detail-btn" data-id="${kelas.id}">Detail</button>
-                                    <button type="button" class="btn btn-warning me-2 edit-btn" data-id="${kelas.id}" data-code="${kelas.codeClass}" data-name="${kelas.name}" data-limit="${kelas.limit}" data-description="${kelas.description}" data-thumbnail="${kelas.thumbnail}">Edit</button>
-                                    <button type="button" class="btn btn-secondary delete-btn" data-id="${kelas.id}" data-code="${kelas.codeClass}" data-name="${kelas.name}" data-limit="${kelas.limit}" data-description="${kelas.description}" data-thumbnail="${kelas.thumbnail}">Hapus</button>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
+                                    <tr class="kelas${index + 1}">
+                                        <td>${index + 1}</td>
+                                        <td><img src="${thumbnailUrl}" alt="Thumbnail" width="200px"></td>
+                                        <td>${kelas.codeClass}</td>
+                                        <td>${kelas.name}</td>
+                                        <td>Limit Siswa: ${kelas.limit}</td>
+                                        <td>${kelas.status}</td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <button type="button" class="btn btn-info me-2 detail-btn" data-id="${kelas.id}">Detail</button>
+                                                <button type="button" class="btn btn-warning me-2 edit-btn" data-id="${kelas.id}" data-code="${kelas.codeClass}" data-name="${kelas.name}" data-limit="${kelas.limit}" data-description="${kelas.description}" data-thumbnail="${kelas.thumbnail}">Edit</button>
+                                                <button type="button" class="btn btn-secondary delete-btn" data-id="${kelas.id}" data-code="${kelas.codeClass}" data-name="${kelas.name}" data-limit="${kelas.limit}" data-description="${kelas.description}" data-thumbnail="${kelas.thumbnail}">Hapus</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `;
                             });
                             $('#classroom-data').html(rows);
                             $('#no-data-message').hide();
                         } else {
                             $('#classroom-data').html(`
-                    <tr>
-
-                        <td colspan="7" class="text-center">
-                        <div class="d-flex justify-content-center">
-                            <img src="{{ asset('no-data.png') }}" width="200px" alt="" srcset=""> <br>
-                            </div>
-                            <h3>
-                                Data Masih Kosong
-                            </h3>
-                        </td>
-                    </tr>
-                `);
+                                <tr>
+                                    <td colspan="7" class="text-center">
+                                        <div class="d-flex justify-content-center">
+                                            <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
+                                        </div>
+                                        <h3>Data Masih Kosong</h3>
+                                    </td>
+                                </tr>
+                            `);
                         }
                     },
                     error: function(xhr, status, error) {
@@ -296,54 +291,53 @@
                 $('#modal-delete').modal('show');
             });
 
-// Event handler untuk tombol Edit
-$('#classroom-data').on('click', '.edit-btn', function () {
-    const classId = $(this).data('id');
-    const codeClass = $(this).data('code');
-    const name = $(this).data('name');
-    const limit = $(this).data('limit');
-    const description = $(this).data('description');
-    const thumbnail = $(this).data('thumbnail');
+            // Event handler untuk tombol Edit
+            $('#classroom-data').on('click', '.edit-btn', function() {
+                const classId = $(this).data('id');
+                const codeClass = $(this).data('code');
+                const name = $(this).data('name');
+                const limit = $(this).data('limit');
+                const description = $(this).data('description');
+                const thumbnail = $(this).data('thumbnail');
 
-    // Isi data ke dalam form modal
-    $('#editClassId').val(classId);
-    $('#updateClassForm #codeClass').val(codeClass);
-    $('#updateClassForm #namaKelas').val(name);
-    $('#updateClassForm #jumlahSiswa').val(limit);
-    $('#updateClassForm #deskripsiKelas').val(description);
-    $('#updateClassForm #thumbnail').val('');
+                // Isi data ke dalam form modal
+                $('#editClassId').val(classId);
+                $('#updateClassForm #codeClass').val(codeClass);
+                $('#updateClassForm #namaKelas').val(name);
+                $('#updateClassForm #jumlahSiswa').val(limit);
+                $('#updateClassForm #deskripsiKelas').val(description);
+                $('#updateClassForm #thumbnail').val('');
 
-    // Tampilkan modal edit
-    $('#edit-class-modal').modal('show');
-});
+                // Tampilkan modal edit
+                $('#edit-class-modal').modal('show');
+            });
 
-// Event handler untuk form update kelas
-$('#updateClassForm').on('submit', function (event) {
-    event.preventDefault();
+            // Event handler untuk form update kelas
+            $('#updateClassForm').on('submit', function(event) {
+                event.preventDefault();
 
-    const classId = $('#editClassId').val(); // Ambil ID kelas
-    const formData = new FormData(this); // Ambil semua data dari form
-    console.log(formData);
+                const classId = $('#editClassId').val(); // Ambil ID kelas
+                const formData = new FormData(this); // Ambil semua data dari form
 
-    $.ajax({
-        url: `/api/classroom/update/${classId}`, // Endpoint update API
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            console.log(response);
-            if (response.message === 'Kelas berhasil diupdate! {
-                toastr.success('Kelas berhasil diperbarui!');
-                $('#edit-class-modal').modal('hide'); // Tutup modal
-                fetchClassData(); // Perbarui tabel kelas
-            }
-        },
-        error: function (xhr) {
-            toastr.error('Terjadi kesalahan saat memperbarui kelas: ' + (xhr.responseJSON?.message || 'Silakan coba lagi.'));
-        }
-    });
-});
+                $.ajax({
+                    url: `/api/classroom/update/${classId}`, // Endpoint update API
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.message === 'Kelas berhasil diupdate!') {
+                            toastr.success('Kelas berhasil diperbarui!');
+                            $('#edit-class-modal').modal('hide'); // Tutup modal
+                            fetchClassData(); // Perbarui tabel kelas
+                        }
+                    },
+                    error: function(xhr) {
+                        toastr.error('Terjadi kesalahan saat memperbarui kelas: ' + (xhr.responseJSON?.message || 'Silakan coba lagi.'));
+                    }
+                });
+            });
+
             $('#form-delete').on('submit', function(event) {
                 event.preventDefault();
                 const classId = $('#deleteClassId').val();
@@ -366,37 +360,31 @@ $('#updateClassForm').on('submit', function (event) {
                     }
                 });
             });
-        });
 
-        $('#classroom-data').on('click', '.detail-btn', function() {
-            const classId = $(this).data('id');
-            $.ajax({
-                url: `/api/classroom/show/${classId}`,
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    const {
-                        codeClass,
-                        name,
-                        limit,
-                        description,
-                        thumbnail
-                    } = response.data;
-                    const thumbnailUrl = `{{ asset('storage') }}/${thumbnail}`;
-                    $('#detailModal .modal-body').html(`
-                        <div>
-                            <img src="${thumbnailUrl}" alt="Thumbnail"  class="mb-3 w-100">
-                        </div>
-                        <p><strong>Kode Kelas:</strong> ${codeClass}</p>
-                        <p><strong>Nama Kelas:</strong> ${name}</p>
-                        <p><strong>Limit Siswa:</strong> ${limit}</p>
-                        <p><strong>Deskripsi:</strong> ${description}</p>
-                    `);
-                    $('#detailModal').modal('show');
-                },
-                error: function(xhr) {
-                    toastr.error('Gagal memuat detail kelas.');
-                }
+            $('#classroom-data').on('click', '.detail-btn', function() {
+                const classId = $(this).data('id');
+                $.ajax({
+                    url: `/api/classroom/show/${classId}`,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        const { codeClass, name, limit, description, thumbnail } = response.data;
+                        const thumbnailUrl = `{{ asset('storage') }}/${thumbnail}`;
+                        $('#detailModal .modal-body').html(`
+                            <div>
+                                <img src="${thumbnailUrl}" alt="Thumbnail" class="mb-3 w-100">
+                            </div>
+                            <p><strong>Kode Kelas:</strong> ${codeClass}</p>
+                            <p><strong>Nama Kelas:</strong> ${name}</p>
+                            <p><strong>Limit Siswa:</strong> ${limit}</p>
+                            <p><strong>Deskripsi:</strong> ${description}</p>
+                        `);
+                        $('#detailModal').modal('show');
+                    },
+                    error: function(xhr) {
+                        toastr.error('Gagal memuat detail kelas.');
+                    }
+                });
             });
         });
     </script>
