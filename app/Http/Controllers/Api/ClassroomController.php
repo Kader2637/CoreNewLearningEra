@@ -113,11 +113,17 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-        Storage::delete('public/storage/' . $classroom->thumbnail);
-        $classroom = $classroom->delete();
+        // Ensure the thumbnail is deleted from the storage
+        if ($classroom->thumbnail) {
+            Storage::disk('public')->delete($classroom->thumbnail); // Use 'public' disk
+        }
+
+        // Delete the classroom record
+        $classroom->delete();
+
         return response()->json([
             'message' => 'success',
-            'data' => $classroom
+            'data' => null // You can return null or adjust as needed
         ], 200);
     }
 }
