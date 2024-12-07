@@ -4,28 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.LandingPage.index');
-});
-
-
-Route::get('/classroom', function () {
-    return view('pages.LandingPage.classroom.index');
-});
-Route::get('/testlogin', function () {
-    return view('test');
-});
-
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login')->middleware(CheckRole::class);
-
-Route::post('/post/login' , [LoginController::class , 'login']);
-
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
 
 Route::prefix('teacher')->group(function () {
     Route::get('/', function () {
@@ -46,3 +25,5 @@ Route::prefix('teacher')->group(function () {
 require_once __DIR__ . '/kader.php';
 require_once __DIR__ . '/erik.php';
 require_once __DIR__ . '/ivan.php';
+require_once __DIR__ . '/authentication.php';
+require_once __DIR__ . '/landing.php';
