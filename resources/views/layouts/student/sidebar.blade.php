@@ -24,9 +24,13 @@
     <nav class="dashboard__sidebar-menu">
         <ul class="list-wrap">
             <li>
-                <a href="index-2.html">
+                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display:none;">
+                    @csrf
+                </form>
+                <a href="#" id="logoutButton"
+                    onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
                     <i class="skillgro-logout"></i>
-                    Logout
+                    <span>Log Out</span>
                 </a>
             </li>
         </ul>

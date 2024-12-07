@@ -8,23 +8,23 @@ use App\Http\Requests\StoreClassroomRequest;
 use App\Http\Requests\UpdateClassroomRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class ClassroomController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() {}
+
+    public function classroomTeacher($id)
     {
-
-    }
-
-    public function classroomTeacher($id){
-        $classroom = Classroom::where('user_id' , $id)->get();
+        $classroom = Classroom::where('user_id', $id)->get();
         return response()->json([
             'status' => 'success',
             'data' => $classroom
-        ],200);
+        ], 200);
     }
 
     /**
@@ -61,7 +61,10 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-        //
+        return response()->json([
+            'message' => 'success',
+            'data' => $classroom
+        ], 200);
     }
 
     /**
@@ -75,16 +78,46 @@ class ClassroomController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(UpdateClassroomRequest $request, Classroom $classroom)
     {
-        //
+        if ($request->hasFile('thumbnail')) {
+            if ($classroom->thumbnail && Storage::exists('public/storage/' . $classroom->thumbnail)) {
+                Storage::delete('public/storage/' . $classroom->thumbnail);
+            }
+
+            $thumbnailPath = $request->file('thumbnail')->store('classroom-thumbnails', 'public');
+        } else {
+            $thumbnailPath = $classroom->thumbnail;
+        }
+
+        $classroom->update([
+            'name' => $request->name,
+            'user_id' => $request->user_id,
+            'codeClass' => $request->codeClass,
+            'limit' => $request->limit,
+            'statusClass' => $request->statusClass,
+            'description' => $request->description,
+            'thumbnail' => $thumbnailPath
+        ]);
+
+        return response()->json([
+            'message' => 'Kelas berhasil diupdate!',
+            'data' => $classroom
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Classroom $classroom)
     {
-        //
+        Storage::delete('public/storage/' . $classroom->thumbnail);
+        $classroom = $classroom->delete();
+        return response()->json([
+            'message' => 'success',
+            'data' => $classroom
+        ], 200);
     }
 }
