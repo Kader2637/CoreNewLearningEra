@@ -229,7 +229,8 @@
                         }
                     },
                     error: function(xhr) {
-                        toastr.error('Terjadi kesalahan saat membuat kelas: ' + (xhr.responseJSON?.message || 'Silakan coba lagi.'));
+                        toastr.error('Terjadi kesalahan saat membuat kelas: ' + (xhr
+                            .responseJSON?.message || 'Silakan coba lagi.'));
                     }
                 });
             });
@@ -244,38 +245,43 @@
                         let rows = '';
                         if (response.data.length > 0) {
                             response.data.forEach((kelas, index) => {
-                                const thumbnailUrl = `{{ asset('storage') }}/${kelas.thumbnail}`;
+                                const thumbnailUrl =
+                                    `{{ asset('storage') }}/${kelas.thumbnail}`;
+                                const detailButton = kelas.status === 'accept' ?
+                                    `<a href="/teacher/classroom/course/${kelas.id}" class="btn btn-info me-2" data-id="${kelas.id}">Detail</a>` :
+                                    ``;
+
                                 rows += `
-                                    <tr class="kelas${index + 1}">
-                                        <td>${index + 1}</td>
-                                        <td><img src="${thumbnailUrl}" alt="Thumbnail" width="200px"></td>
-                                        <td>${kelas.codeClass}</td>
-                                        <td>${kelas.name}</td>
-                                        <td>Limit Siswa: ${kelas.limit}</td>
-                                        <td>${kelas.status}</td>
-                                        <td>
-                                            <div class="d-flex justify-content-center">
-                                                <button type="button" class="btn btn-info me-2 detail-btn" data-id="${kelas.id}">Detail</button>
-                                                <button type="button" class="btn btn-warning me-2 edit-btn" data-id="${kelas.id}" data-code="${kelas.codeClass}" data-name="${kelas.name}" data-limit="${kelas.limit}" data-description="${kelas.description}" data-thumbnail="${kelas.thumbnail}">Edit</button>
-                                                <button type="button" class="btn btn-secondary delete-btn" data-id="${kelas.id}" data-code="${kelas.codeClass}" data-name="${kelas.name}" data-limit="${kelas.limit}" data-description="${kelas.description}" data-thumbnail="${kelas.thumbnail}">Hapus</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                `;
+                        <tr class="kelas${index + 1}">
+                            <td>${index + 1}</td>
+                            <td><img src="${thumbnailUrl}" alt="Thumbnail" width="200px"></td>
+                            <td>${kelas.codeClass}</td>
+                            <td>${kelas.name}</td>
+                            <td>Limit Siswa: ${kelas.limit}</td>
+                            <td>${kelas.status}</td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    ${detailButton}
+                                    <button type="button" class="btn btn-warning me-2 edit-btn" data-id="${kelas.id}" data-code="${kelas.codeClass}" data-name="${kelas.name}" data-limit="${kelas.limit}" data-description="${kelas.description}" data-thumbnail="${kelas.thumbnail}">Edit</button>
+                                    <button type="button" class="btn btn-secondary delete-btn" data-id="${kelas.id}" data-code="${kelas.codeClass}" data-name="${kelas.name}" data-limit="${kelas.limit}" data-description="${kelas.description}" data-thumbnail="${kelas.thumbnail}">Hapus</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
                             });
                             $('#classroom-data').html(rows);
                             $('#no-data-message').hide();
                         } else {
                             $('#classroom-data').html(`
-                                <tr>
-                                    <td colspan="7" class="text-center">
-                                        <div class="d-flex justify-content-center">
-                                            <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
-                                        </div>
-                                        <h3>Data Masih Kosong</h3>
-                                    </td>
-                                </tr>
-                            `);
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            <div class="d-flex justify-content-center">
+                                <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
+                            </div>
+                            <h3>Data Masih Kosong</h3>
+                        </td>
+                    </tr>
+                `);
                         }
                     },
                     error: function(xhr, status, error) {
@@ -333,7 +339,8 @@
                         }
                     },
                     error: function(xhr) {
-                        toastr.error('Terjadi kesalahan saat memperbarui kelas: ' + (xhr.responseJSON?.message || 'Silakan coba lagi.'));
+                        toastr.error('Terjadi kesalahan saat memperbarui kelas: ' + (xhr
+                            .responseJSON?.message || 'Silakan coba lagi.'));
                     }
                 });
             });
@@ -368,7 +375,13 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(response) {
-                        const { codeClass, name, limit, description, thumbnail } = response.data;
+                        const {
+                            codeClass,
+                            name,
+                            limit,
+                            description,
+                            thumbnail
+                        } = response.data;
                         const thumbnailUrl = `{{ asset('storage') }}/${thumbnail}`;
                         $('#detailModal .modal-body').html(`
                             <div>

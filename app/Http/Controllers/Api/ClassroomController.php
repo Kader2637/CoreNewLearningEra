@@ -90,7 +90,7 @@ class ClassroomController extends Controller
         } else {
             $thumbnailPath = $classroom->thumbnail;
         }
-        
+
 
         $classroom->update([
             'name' => $request->name,
@@ -114,17 +114,15 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-        // Ensure the thumbnail is deleted from the storage
         if ($classroom->thumbnail) {
-            Storage::disk('public')->delete($classroom->thumbnail); // Use 'public' disk
+            Storage::disk('public')->delete($classroom->thumbnail);
         }
 
-        // Delete the classroom record
         $classroom->delete();
 
         return response()->json([
             'message' => 'success',
-            'data' => null // You can return null or adjust as needed
+            'data' => null
         ], 200);
     }
 }

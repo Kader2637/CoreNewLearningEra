@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ClassroomController;
+use App\Http\Controllers\Api\ClassroomTeacherController;
+use App\Http\Controllers\Api\CourseTeacherController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,3 +37,12 @@ Route::put('/classroom/update/{classroom}', [ClassroomController::class, 'update
 Route::get('approval/classroom' , [AdminController::class , 'approvalClass']);
 Route::post('/acceptClass/{id}', [AdminController::class, 'acceptClass']);
 Route::post('/rejectClass/{id}', [AdminController::class, 'rejectClass']);
+
+// Classroom teacher
+Route::get('/teacher/classroom/show/{classroom}' , [ClassroomTeacherController::class , 'show']);
+
+// Course Teacher
+Route::post('/teacher/course/create', [CourseController::class, 'store']);
+Route::get('/teacher/course/data/{id}', [CourseTeacherController::class, 'courseClass']);
+Route::delete('/teacher/course/delete/{course}', [CourseController::class, 'destroy']);
+Route::get('/teacher/course/show/{course}' , [CourseController::class , 'show']);
