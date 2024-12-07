@@ -11,6 +11,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/Apiregister/teacher' , [LoginController::class , 'registerTeacher']);
+Route::post('/Apiregister/student' , [LoginController::class , 'registerStudent']);
 Route::post('/ApiLogout', [LoginController::class, 'ApiLogout'])->middleware('auth:api');
 
 // approval

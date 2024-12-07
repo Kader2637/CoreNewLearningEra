@@ -87,6 +87,39 @@ class LoginController extends Controller
         ], 201);
     }
 
+    public function registerStudent(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'gender' => 'required|string',
+            'no_telephone' => 'required|numeric',
+        ]);
+
+        if (User::where('email', $request->email)->exists()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Email sudah terdaftar.'
+            ], 400);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'student',
+            'gender' => $request->gender,
+            'no_telephone' => $request->no_telephone,
+            'status' => 'accept'
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $user
+        ], 201);
+    }
+
     public function login(Request $request)
     {
         // Validasi input

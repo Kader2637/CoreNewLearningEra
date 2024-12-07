@@ -71,41 +71,47 @@
                         <div class="account__divider">
 
                         </div>
-                        <form action="#" class="account__form">
+                        <form id="registrationForm" class="account__form">
                             <div class="form-grp">
                                 <label for="nama">Nama Lengkap</label>
-                                <input id="email" type="text" placeholder="nama lengkap">
+                                <input id="email" name="name" type="text" placeholder="nama lengkap">
                             </div>
                             <div class="form-grp">
                                 <label for="jenis">Jenis Kelamin</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                    value="option1">
+                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio1"
+                                    value="male">
                                 <label class="form-check-label" for="inlineRadio1">Laki-Laki</label>
                             </div>
-                            <div class="form-check form-check-inline mb-4">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                    value="option2">
+                            <div class="mb-4 form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio2"
+                                    value="female">
                                 <label class="form-check-label" for="inlineRadio2">Perempuan</label>
                             </div>
-                            <select class="form-select mb-4" aria-label="Default select example">
-                                <option selected>select Class</option>
-                                <option value="1">Sd</option>
-                                <option value="2">Smp</option>
-                                <option value="3">Sma</option>
-                                <option value="4">Smk</option>
-                                <option value="5">S1</option>
-                                <option value="6">S2</option>
-                                <option value="7">Other</option>
-                            </select>
                             <div class="form-grp">
-                                <label for="email">Email</label>
-                                <input id="email" type="text" placeholder="email">
+                                <label for="no_telephone">No_telephone</label>
+                                <input id="no_telephone" name="no_telephone" type="number" placeholder="masukan_no">
                             </div>
                             <div class="form-grp">
-                                <label for="password">Password</label>
-                                <input id="password" type="text" placeholder="password">
+                                <label for="email">Email</label>
+                                <input id="email" name="email" type="text" placeholder="email">
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-xl-6">
+                                    <div class="form-grp">
+                                        <label for="password">Password</label>
+                                        <input id="password" name="password" type="password" placeholder="Masukkan Password"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6">
+                                    <div class="form-grp">
+                                        <label for="confirm_password">Konfirmasi Password</label>
+                                        <input id="confirm_password" name="password_confirmation" type="password"
+                                            placeholder="Konfirmasi Password" required>
+                                    </div>
+                                </div>
                             </div>
                             <div class="account__check">
                                 <div class="account__check-remember">
@@ -125,4 +131,30 @@
             </div>
         </div>
     </section>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#registrationForm').on('submit', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Apiregister/student',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        toastr.success(
+                            'Pendaftaran berhasil!',
+                            'Sukses');
+                        setTimeout(function() {
+                            window.location.href = "/login";
+                        }, 2000);
+                    },
+                    error: function(xhr) {
+                        toastr.error('Terjadi kesalahan: ' + xhr.responseText, 'Kesalahan');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
