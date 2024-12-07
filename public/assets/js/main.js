@@ -619,25 +619,6 @@ var brandSwiper = new Swiper('.brand-swiper-active-two', {
     },
 });
 
-/*==================================
-        SVG Draw
-====================================*/
-var $svgIconBox = $('.tg-svg');
-$svgIconBox.each(function() {
-    var $this = $(this),
-        $svgIcon = $this.find('.svg-icon'),
-        $id = $svgIcon.attr('id'),
-        $icon = $svgIcon.data('svg-icon');
-    var $vivus = new Vivus($id, {
-        duration: 80,
-        file: $icon,
-    });
-    $this.on('mouseenter', function () {
-        $vivus.reset().play();
-    });
-});
-
-
 /*===========================================
 	=         Marquee Active         =
 =============================================*/

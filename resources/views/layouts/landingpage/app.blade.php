@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/plyr.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/spacing.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/tg-cursor.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @yield('style')
@@ -81,19 +80,13 @@
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.marquee.min.js') }}"></script>
-    <script src="{{ asset('assets/js/tg-cursor.min.js') }}"></script>
-    <script src="{{ asset('assets/js/vivus.min.js') }}"></script>
     <script src="{{ asset('assets/js/ajax-form.js') }}"></script>
-    <script src="{{ asset('assets/js/svg-inject.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.circleType.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.lettering.min.js') }}"></script>
     <script src="{{ asset('assets/js/plyr.min.js') }}"></script>
     <script src="{{ asset('assets/js/wow.min.js') }}"></script>
     <script src="{{ asset('assets/js/aos.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script>
-        SVGInject(document.querySelectorAll("img.injectable"));
-    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Toastr JS -->

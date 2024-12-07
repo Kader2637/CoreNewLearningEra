@@ -66,9 +66,9 @@
                         <form action="#" class="account__form">
                             <div class="">
                                 <div class="row justify-content-center">
-                                    <div class="col-md-4 col-lg-4 col-sm-4">
+                                    <div class="col-12 col-xl-4 mt-2">
                                         <div class="card bg-info text-white">
-                                            <div class="card-body">
+                                            <div class="card-body d-flex justify-content-center">
                                                 <a href="/register/student">
                                                     <label>
                                                         <input type="hidden" name="product" class="card-input-element" />
@@ -115,9 +115,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4 col-sm-4">
+                                    <div class="col-12 col-xl-4 mt-2">
                                         <div class="card bg-secondary">
-                                            <div class="card-body">
+                                            <div class="card-body d-flex justify-content-center">
                                                 <a href="/register/teacher">
                                                     <label>
                                                         <input type="hidden" name="product" class="card-input-element" />
