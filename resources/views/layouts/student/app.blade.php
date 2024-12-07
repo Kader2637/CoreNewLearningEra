@@ -79,11 +79,13 @@
                                 <h4 class="title">Emily Hannah</h4>
                                 <ul class="list-wrap">
                                     <li>
-                                        <img src="{{ asset('assets/img/icons/course_icon03.svg') }}" alt="img" class="injectable">
+                                        <img src="{{ asset('assets/img/icons/course_icon03.svg') }}" alt="img"
+                                            class="injectable">
                                         10 Courses Enrolled
                                     </li>
                                     <li>
-                                        <img src="{{ asset('assets/img/icons/course_icon05.svg') }}" alt="img" class="injectable">
+                                        <img src="{{ asset('assets/img/icons/course_icon05.svg') }}" alt="img"
+                                            class="injectable">
                                         7 Certificate
                                     </li>
                                 </ul>
@@ -91,15 +93,18 @@
                         </div>
                         <div class="dashboard__instructor-info-right">
                             <a href="#" class="btn btn-two arrow-btn">Become an Instructor <img
-                                    src="{{ asset('assets/img/icons/right_arrow.svg') }}" alt="img" class="injectable"></a>
+                                    src="{{ asset('assets/img/icons/right_arrow.svg') }}" alt="img"
+                                    class="injectable"></a>
                         </div>
                     </div>
                 </div>
                 <div class="dashboard__inner-wrap">
                     <div class="row">
-                        <div class="col-lg-3">
-                            @include('layouts.student.sidebar')
-                        </div>
+                        @if (!request()->is('student/materi/detail'))
+                            <div class="col-lg-3">
+                                @include('layouts.student.sidebar')
+                            </div>
+                        @endif
                         <div class="col-lg-9">
                             @yield('content')
                         </div>
@@ -122,7 +127,8 @@
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer__widget">
                             <div class="logo mb-35">
-                                <a href="index-2.html"><img src="{{ asset('assets/img/logo/secondary_logo.svg') }}" alt="img"></a>
+                                <a href="index-2.html"><img src="{{ asset('assets/img/logo/secondary_logo.svg') }}"
+                                        alt="img"></a>
                             </div>
                             <div class="footer__content">
                                 <p>when an unknown printer took galley of type and scrambled it to make pspecimen bookt
@@ -202,8 +208,10 @@
                                 </ul>
                             </div>
                             <div class="app-download">
-                                <a href="#"><img src="{{ asset('assets/img/others/google-play.svg') }}" alt="img"></a>
-                                <a href="#"><img src="{{ asset('assets/img/others/apple-store.svg') }}" alt="img"></a>
+                                <a href="#"><img src="{{ asset('assets/img/others/google-play.svg') }}"
+                                        alt="img"></a>
+                                <a href="#"><img src="{{ asset('assets/img/others/apple-store.svg') }}"
+                                        alt="img"></a>
                             </div>
                         </div>
                     </div>
@@ -260,4 +268,5 @@
     </script>
     @yield('script')
 </body>
+
 </html>

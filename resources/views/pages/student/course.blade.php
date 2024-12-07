@@ -1,6 +1,6 @@
 @extends('layouts.student.app')
 @section('content')
-    <section class="courses__details-area section-py-120">
+    <section>
         <div class="container">
             <div class="row">
                 <div class="col">

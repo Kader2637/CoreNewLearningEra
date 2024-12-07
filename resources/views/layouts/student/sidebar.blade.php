@@ -1,3 +1,4 @@
+@if (!request()->is('student/materi/detail'))
 <div class="dashboard__sidebar-wrap">
     <div class="dashboard__sidebar-title mb-20">
         <h6 class="title">Welcome, Abdul Kader</h6>
@@ -36,3 +37,4 @@
         </ul>
     </nav>
 </div>
+@endif
