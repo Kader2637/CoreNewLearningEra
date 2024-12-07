@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('codeClass');
             $table->integer('limit');
+            $table->integer('total_user')->default(0);
             $table->text('description');
             $table->text('thumbnail');
             $table->enum('status' , ['accept' , 'pending' , 'reject'])->default('pending');

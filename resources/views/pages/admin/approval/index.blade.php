@@ -44,14 +44,27 @@
                             </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+        <div class="col-sm-12">
+            <div id="alert-container"></div>
+            <div class="">
+                <div class="mb-4">
+                    <h4>Data Kelas Sedang Menunggu Approval</h4>
+                </div>
+                <div>
+                    <div id="project-container" class="row">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     @include('layouts.admin.loader')
+    @include('components.reject-delete')
+    @include('components.accept-delete')
 @endsection
 @section('script')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -85,33 +98,33 @@
                         if (response.status === "success" && Array.isArray(response.data)) {
                             if (response.data.length === 0) {
                                 tbody.append(`
-                                    <tr>
-                                        <td colspan="6" class="text-center">Data masih kosong</td>
-                                    </tr>
-                                `);
+                                        <tr>
+                                            <td colspan="6" class="text-center">Data masih kosong</td>
+                                        </tr>
+                                    `);
                             } else {
                                 $.each(response.data, function(index, item) {
                                     let profileImage = item.image || '{{ asset('user.png') }}';
 
                                     tbody.append(`
-                                        <tr>
-                                            <td class="text-center" scope="row">${index + 1}</td>
-                                            <td>
-                                                <img class="img-30 me-2" src="${profileImage}" alt="profile">
-                                                ${item.name}
-                                            </td>
-                                            <td class="text-center">${item.gender}</td>
-                                            <td class="text-center">${item.no_telephone}</td>
-                                            <td class="text-center">${item.email}</td>
-                                            <td class="d-flex justify-content-center">
-                                                <div class="d-flex gap-2">
-                                                    <button class="btn btn-info btn-sm accept-button" data-id="${item.id}">Terima</button>
-                                                    <button class="btn btn-danger btn-sm reject-button" data-id="${item.id}">Tolak</button>
-                                                    <button class="btn btn-success btn-sm">View</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    `);
+                                            <tr>
+                                                <td class="text-center" scope="row">${index + 1}</td>
+                                                <td>
+                                                    <img class="img-30 me-2" src="${profileImage}" alt="profile">
+                                                    ${item.name}
+                                                </td>
+                                                <td class="text-center">${item.gender}</td>
+                                                <td class="text-center">${item.no_telephone}</td>
+                                                <td class="text-center">${item.email}</td>
+                                                <td class="d-flex justify-content-center">
+                                                    <div class="d-flex gap-2">
+                                                        <button class="btn btn-info btn-sm accept-button" data-id="${item.id}">Terima</button>
+                                                        <button class="btn btn-danger btn-sm reject-button" data-id="${item.id}">Tolak</button>
+                                                        <button class="btn btn-success btn-sm">View</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        `);
                                 });
 
                                 $('.accept-button').off('click').on('click', function() {
@@ -126,10 +139,10 @@
                             }
                         } else {
                             tbody.append(`
-                                <tr>
-                                    <td colspan="6" class="text-center">Data masih kosong</td>
-                                </tr>
-                            `);
+                                    <tr>
+                                        <td colspan="6" class="text-center">Data masih kosong</td>
+                                    </tr>
+                                `);
                             showAlert('Data masih kosong.', 'info');
                         }
                     },
@@ -181,6 +194,128 @@
             }
 
             fetchData();
+        });
+
+        function fetchClassroomData() {
+            $.ajax({
+                url: '/api/approval/classroom',
+                method: 'GET',
+                success: function(response) {
+                    if (response.status === "success") {
+                        if (response.data.length === 0) {
+                            $('#project-container').html(`
+                        <div class="col-12 d-flex flex-column align-items-center justify-content-center text-center">
+                            <img src="{{ asset('no-data.png') }}" width="200px" alt="">
+                            <h3>Data Masih Kosong</h3>
+                        </div>
+                    `);
+                        } else {
+                            $('#project-container').empty();
+                            response.data.forEach(function(item) {
+                                const profileImageUrl = item.profile ?
+                                    `{{ asset('storage') }}/${item.profile}` :
+                                    '{{ asset('user.png') }}';
+
+                                const thumbnailUrl = item.thumbnail ?
+                                    `{{ asset('storage') }}/${item.thumbnail}` :
+                                    '{{ asset('user.png') }}';
+
+                                const projectBox = `
+                            <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
+                                <div class="project-box">
+                                    <div>
+                                        <img class="w-100" src="${thumbnailUrl}" alt="${item.name}" title="">
+                                    </div>
+                                    <h3 class="f-w-600 mt-3">${item.name}</h3>
+                                    <div class="d-flex">
+                                        <img class="img-20 me-2 rounded-circle" src="${profileImageUrl}" alt="" title="">
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0">${item.user}</p>
+                                        </div>
+                                    </div>
+                                    <p>${item.description}</p>
+                                    <div class="row details">
+                                        <div class="col-6"><span>Limit Siswa</span></div>
+                                        <div class="col-6 font-secondary">${item.limit}</div>
+                                    </div>
+                                    <div class="mt-4 row">
+                                        <div class="col-12 col-xl-6 mt-2">
+                                            <button class="btn w-100 btn-danger reject-button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal-reject">
+                                                Tolak
+                                            </button>
+                                        </div>
+                                        <div class="col-12 col-xl-6 mt-2">
+                                            <button class="btn w-100 btn-info accept-button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal-accept">
+                                                Terima
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                                $('#project-container').append(projectBox);
+                            });
+                        }
+                    }
+                },
+                error: function() {
+                    $('#project-container').html(`
+                <div class="col-12 d-flex flex-column align-items-center justify-content-center text-center">
+                    <img src="{{ asset('no-data.png') }}" width="200px" alt="">
+                    <h3>Terjadi kesalahan saat memuat data.</h3>
+                </div>
+            `);
+                }
+            });
+        }
+
+        fetchClassroomData();
+
+        $(document).on('click', '.reject-button', function() {
+            const classId = $(this).data('id');
+            $('#RejectClassId').val(classId);
+        });
+
+        $('#form-tolak').on('submit', function(e) {
+            e.preventDefault();
+            const classId = $('#RejectClassId').val();
+
+            $.ajax({
+                url: `/api/rejectClass/${classId}`,
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    toastr.success('Kelas Berhasil Ditolak.');
+                    $('#modal-reject').modal('hide');
+                    fetchClassroomData();
+                },
+                error: function() {
+                    toastr.error('Terjadi kesalahan saat menolak kelas.');
+                }
+            });
+        });
+
+        $(document).on('click', '.accept-button', function() {
+            const classId = $(this).data('id');
+            $('#AcceptClassId').val(classId);
+        });
+
+        $('#form-accept').on('submit', function(e) {
+            e.preventDefault();
+            const classId = $('#AcceptClassId').val();
+            $.ajax({
+                url: `/api/acceptClass/${classId}`,
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#modal-accept').modal('hide');
+                    toastr.success('Kelas berhasil diterima!');
+                    fetchClassroomData();
+                },
+                error: function() {
+                    toastr.error('Terjadi kesalahan saat menerima kelas.');
+                }
+            });
         });
     </script>
 @endsection

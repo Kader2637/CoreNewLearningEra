@@ -32,6 +32,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     @yield('style')
 </head>
 
@@ -100,6 +101,7 @@
     <script src="{{ asset('assetsAdmin/assets/js/height-equal.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/script.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/theme-customizer/customizer.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @yield('script')
 </body>
 
