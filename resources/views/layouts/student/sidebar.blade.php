@@ -17,6 +17,12 @@
                     Kelas
                 </a>
             </li>
+            <li class="">
+                <a href="/student/classroom">
+                    <i class="fas fa-home"></i>
+                    Bergabung
+                </a>
+            </li>
         </ul>
     </nav>
     <div class="dashboard__sidebar-title mt-30 mb-20">

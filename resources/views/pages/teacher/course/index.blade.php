@@ -1,12 +1,11 @@
 @extends('layouts.teacher.app')
 @section('content')
-
-<div class="d-flex justify-content-between mb-3">
-    <h4>Detail Kelas <span id="class-name1"></span></h4>
-    <div>
-        <a href="{{ route('classroom.teacher') }}" class="btn btn-secondary btn-sm" >Kembali</a>
+    <div class="d-flex justify-content-between mb-3">
+        <h4>Detail Kelas <span id="class-name1"></span></h4>
+        <div>
+            <a href="{{ route('classroom.teacher') }}" class="btn btn-secondary btn-sm">Kembali</a>
+        </div>
     </div>
-</div>
     <div class="row">
         <div class="col-lg-12">
             <div class="class-profile card card-body px-3 pt-3 pb-0">
@@ -30,14 +29,79 @@
     </div>
 
     <div class="d-flex justify-content-between">
-        <h4>Materi</h4>
+        <div class="">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a href="#course" data-bs-toggle="tab" class="nav-link active show">Materi</a>
+                </li>
+                <li class="nav-item"><a href="#student" data-bs-toggle="tab" class="nav-link">Siswa</a>
+                </li>
+                <li class="nav-item"><a href="#approval" data-bs-toggle="tab" class="nav-link">Approval</a>
+                </li>
+            </ul>
+        </div>
         <div>
-            <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#addMaterialModal">Tambah Materi</button>
+            <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#addMaterialModal">Tambah
+                Materi</button>
         </div>
     </div>
-
-    <!-- Card Container for Course Materials -->
-    <div id="materialCards" class="row mt-4 mb-5"></div>
+    <div class="tab-content">
+        <div id="course" class="tab-pane fade active show">
+            <div id="materialCards" class="row mt-4 mb-5"></div>
+        </div>
+        <div id="student" class="tab-pane fade">
+            <div class="row mt-4 mb-5">
+                <div class="col-xl-4 col-xxl-6 col-sm-6">
+                    <div class="card contact-bx">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="image-bx me-3 me-lg-2 me-xl-3 ">
+                                    <img src="{{ asset('assets/img/others/kader.png') }}" alt="" class="rounded-circle" width="90">
+                                    <span class="active"></span>
+                                </div>
+                                <div class="media-body">
+                                    <h6 class="fs-20 font-w600 mb-0"><a href="javascript:void(0)" class="text-black">Abdul Kader</a></h6>
+                                    <p class="fs-14">abdulkader0126@gmail.com</p>
+                                    <div class="d-flex justify-content-end mt-2 gap-2">
+                                        <button type="button" class="btn btn-danger btn-sm" title="Keluarkan">
+                                            Keluarkan
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="approval" class="tab-pane fade">
+            <div class="row mt-4 mb-5">
+                <div class="col-xl-4 col-xxl-6 col-sm-6">
+                    <div class="card contact-bx">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="image-bx me-3 me-lg-2 me-xl-3 ">
+                                    <img src="{{ asset('assets/img/others/kader.png') }}" alt="" class="rounded-circle" width="90">
+                                    <span class="active"></span>
+                                </div>
+                                <div class="media-body">
+                                    <h6 class="fs-20 font-w600 mb-0"><a href="javascript:void(0)" class="text-black">Abdul Kader</a></h6>
+                                    <p class="fs-14">abdulkader0126@gmail.com</p>
+                                    <div class="d-flex justify-content-end mt-2 gap-2">
+                                        <button type="button" class="btn btn-danger btn-sm" title="Keluarkan">
+                                            Tolak
+                                        </button>
+                                        <button type="button" class="btn btn-infos btn-sm" title="Keluarkan">
+                                            Terima
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="addMaterialModal" tabindex="-1" aria-labelledby="addMaterialModalLabel" aria-hidden="true">
