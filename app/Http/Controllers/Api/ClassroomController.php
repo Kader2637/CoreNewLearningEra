@@ -127,37 +127,60 @@ class ClassroomController extends Controller
         ], 200);
     }
 
-    public function classroomStudent($id)
-{
-    $classrooms = Classroom::where('status', 'accept')
-        ->where('statusClass', 'public')
-        ->whereDoesntHave('studentClassroomRelations', function ($query) use ($id) {
-            $query->where('user_id', $id)
-                  ->where('status', '!=', 'pending');
-        })
-        ->get()
-        ->map(function ($classroom) {
+    public function studentCourse($id)
+    {
+        $students = StudentClassroomRelation::where('classroom_id', $id)->where('status' , 'accept')
+            ->with('user')
+            ->get();
+
+        $formattedData = $students->map(function ($relation) {
+            $user = $relation->user;
             return [
-                'id' => $classroom->id,
-                'name' => $classroom->name,
-                'codeClass' => $classroom->codeClass,
-                'limit' => $classroom->limit,
-                'total_user' => $classroom->total_user,
-                'description' => $classroom->description,
-                'thumbnail' => $classroom->thumbnail,
-                'status' => $classroom->status,
-                'statusClass' => $classroom->statusClass,
-                'user_id' => $classroom->user_id,
-                'user_name' => $classroom->user ? $classroom->user->name : null,
-                'user_image' => $classroom->user ? $classroom->user->image : null,
-                'created_at' => $classroom->created_at,
-                'updated_at' => $classroom->updated_at,
+                'id_relation' => $relation->id,
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'profile' => $user->image,
             ];
         });
 
-    return response()->json([
-        'message' => 'success',
-        'data' => $classrooms
-    ], 200);
-}
+        return response()->json([
+            'status' => true,
+            'data' => $formattedData,
+        ], 200);
+    }
+
+    public function classroomStudent($id)
+    {
+        $classrooms = Classroom::where('status', 'accept')
+            ->where('statusClass', 'public')
+            ->whereDoesntHave('studentClassroomRelations', function ($query) use ($id) {
+                $query->where('user_id', $id)
+                    ->where('status', '!=', 'pending');
+            })
+            ->get()
+            ->map(function ($classroom) {
+                return [
+                    'id' => $classroom->id,
+                    'name' => $classroom->name,
+                    'codeClass' => $classroom->codeClass,
+                    'limit' => $classroom->limit,
+                    'total_user' => $classroom->total_user,
+                    'description' => $classroom->description,
+                    'thumbnail' => $classroom->thumbnail,
+                    'status' => $classroom->status,
+                    'statusClass' => $classroom->statusClass,
+                    'user_id' => $classroom->user_id,
+                    'user_name' => $classroom->user ? $classroom->user->name : null,
+                    'user_image' => $classroom->user ? $classroom->user->image : null,
+                    'created_at' => $classroom->created_at,
+                    'updated_at' => $classroom->updated_at,
+                ];
+            });
+
+        return response()->json([
+            'message' => 'success',
+            'data' => $classrooms
+        ], 200);
+    }
 }

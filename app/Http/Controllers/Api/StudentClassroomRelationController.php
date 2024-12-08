@@ -131,7 +131,20 @@ class StudentClassroomRelationController extends Controller
      */
     public function destroy(StudentClassroomRelation $studentClassroomRelation)
     {
-        //
+        $classroom = $studentClassroomRelation->classroom;
+
+        if ($classroom->total_user > 0) {
+            $classroom->total_user -= 1;
+            $classroom->save();
+        }
+
+        $studentClassroomRelation->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil mengeluarkan siswa.',
+            'data' => $studentClassroomRelation
+        ], 200);
     }
 
     public function joinclass(StoreStudentClassroomRelationRequest $request, $id)

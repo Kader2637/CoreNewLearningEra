@@ -49,56 +49,12 @@
             <div id="materialCards" class="row mt-4 mb-5"></div>
         </div>
         <div id="student" class="tab-pane fade">
-            <div class="row mt-4 mb-5">
-                <div class="col-xl-4 col-xxl-6 col-sm-6">
-                    <div class="card contact-bx">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="image-bx me-3 me-lg-2 me-xl-3 ">
-                                    <img src="{{ asset('assets/img/others/kader.png') }}" alt="" class="rounded-circle" width="90">
-                                    <span class="active"></span>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="fs-20 font-w600 mb-0"><a href="javascript:void(0)" class="text-black">Abdul Kader</a></h6>
-                                    <p class="fs-14">abdulkader0126@gmail.com</p>
-                                    <div class="d-flex justify-content-end mt-2 gap-2">
-                                        <button type="button" class="btn btn-danger btn-sm" title="Keluarkan">
-                                            Keluarkan
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row mt-4 mb-5" id="student-list">
             </div>
         </div>
         <div id="approval" class="tab-pane fade">
-            <div class="row mt-4 mb-5">
-                <div class="col-xl-4 col-xxl-6 col-sm-6">
-                    <div class="card contact-bx">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="image-bx me-3 me-lg-2 me-xl-3 ">
-                                    <img src="{{ asset('assets/img/others/kader.png') }}" alt="" class="rounded-circle" width="90">
-                                    <span class="active"></span>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="fs-20 font-w600 mb-0"><a href="javascript:void(0)" class="text-black">Abdul Kader</a></h6>
-                                    <p class="fs-14">abdulkader0126@gmail.com</p>
-                                    <div class="d-flex justify-content-end mt-2 gap-2">
-                                        <button type="button" class="btn btn-danger btn-sm" title="Keluarkan">
-                                            Tolak
-                                        </button>
-                                        <button type="button" class="btn btn-infos btn-sm" title="Keluarkan">
-                                            Terima
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row mt-4 mb-5" id="student-pending">
+
             </div>
         </div>
     </div>
@@ -142,6 +98,9 @@
         </div>
     </div>
     @include('components.modal-delete')
+    @include('components.teacher.kick')
+    @include('components.teacher.accept')
+    @include('components.teacher.reject')
 @endsection
 
 @section('script')
@@ -182,6 +141,220 @@
                 }
             });
         };
+
+        const ambilDataSiswa = () => {
+            $.ajax({
+                url: `/api/teacher/data/classroom/${classId}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                    if (response.status) {
+                        const daftarSiswa = response.data;
+                        const kontainerSiswa = $('#student-list');
+                        kontainerSiswa.empty();
+                        if (daftarSiswa.length > 0) {
+                            daftarSiswa.forEach(siswa => {
+                                kontainerSiswa.append(`
+                            <div class="col-xl-4 col-xxl-6 col-sm-6">
+                                <div class="card contact-bx">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="image-bx me-3 me-lg-2 me-xl-3">
+                                                <img src="${siswa.profile || '{{ asset('user.png') }}'}" alt="" class="rounded-circle" width="70">
+                                                <span class="active"></span>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="fs-20 font-w600 mb-0">
+                                                    <a href="javascript:void(0)" class="text-black">${siswa.name}</a>
+                                                </h6>
+                                                <p class="fs-14">${siswa.email}</p>
+                                                <div class="d-flex justify-content-end mt-2 gap-2">
+                                                    <button type="button" class="btn btn-danger btn-sm" title="Keluarkan" data-id="${siswa.id_relation}" onclick="openKickModal(${siswa.id_relation})">
+    Keluarkan
+</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                            });
+                        } else {
+                            kontainerSiswa.append(`
+                        <div class="d-flex justify-content-center">
+                            <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
+                        </div>
+                        <h3 class="text-center">Data Masih Kosong</h3>
+                    `);
+                        }
+                    } else {
+                        $('#student-list').append('<p>Error memuat data siswa</p>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#student-list').append('<p>Error memuat data siswa</p>');
+                }
+            });
+        };
+
+        const ambilDataSiswaPending = () => {
+            $.ajax({
+                url: `/api/pending/teacher/${classId}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                    const kontainerSiswaPending = $('#student-pending');
+                    kontainerSiswaPending.empty();
+
+                    if (response.status && response.data.length > 0) {
+                        response.data.forEach(siswa => {
+                            kontainerSiswaPending.append(`
+                    <div class="col-xl-4 col-xxl-6 col-sm-6" id="teacher-${siswa.id}">
+                        <div class="card contact-bx">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="image-bx me-3 me-lg-2 me-xl-3">
+                                        <img src="${siswa.profile || '{{ asset('user.png') }}'}" alt="" class="rounded-circle" width="70">
+                                        <span class="active"></span>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="fs-20 font-w600 mb-0">
+                                            <a href="javascript:void(0)" class="text-black">${siswa.name}</a>
+                                        </h6>
+                                        <p class="fs-14">${siswa.email}</p>
+                                        <div class="d-flex justify-content-end mt-2 gap-2">
+                                            <button type="button" class="btn btn-danger btn-sm" title="Tolak" data-id="${siswa.id}">
+                                                Tolak
+                                            </button>
+                                            <button type="button" class="btn btn-info btn-sm" title="Terima" data-id="${siswa.id}">
+                                                Terima
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `);
+                        });
+
+                        $('.btn-info').on('click', function() {
+                            const siswaId = $(this).data('id');
+                            $('#acceptStudentId').val(siswaId);
+                            $('#modal-accept-student').modal('show');
+                        });
+
+                        $('.btn-danger').on('click', function() {
+                            const siswaId = $(this).data('id');
+                            $('#rejectStudentId').val(siswaId);
+                            $('#modal-reject-student').modal('show');
+                        });
+                    } else {
+                        kontainerSiswaPending.append(`
+                <div class="d-flex justify-content-center">
+                    <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
+                </div>
+                <h3 class="text-center">Data Masih Kosong</h3>
+                `);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#student-pending').append('<p>Error memuat data siswa</p>');
+                }
+            });
+        };
+
+        $('#form-accept').on('submit', function(e) {
+            e.preventDefault();
+            const siswaId = $('#acceptStudentId').val();
+
+            $.ajax({
+                url: `/api/accept/teacher/${siswaId}`,
+                method: 'POST',
+                data: {
+                    _token: $('input[name="_token"]').val(),
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        showAlert(response.message, 'success');
+                        $('#modal-accept-student').modal('hide');
+                        ambilDataSiswaPending();
+                        ambilDataSiswa();
+                    } else {
+                        showAlert(response.message, 'error');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    let errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
+                    try {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        if (errorResponse.message) {
+                            errorMessage = errorResponse.message;
+                        }
+                    } catch (e) {}
+                    showAlert(errorMessage, 'error');
+                }
+            });
+        });
+
+
+        $('#form-reject').on('submit', function(e) {
+            e.preventDefault();
+            const siswaId = $('#rejectStudentId').val();
+
+            $.ajax({
+                url: `/api/reject/teacher/${siswaId}`,
+                method: 'POST',
+                data: {
+                    _token: $('input[name="_token"]').val(),
+                },
+                success: function(response) {
+                    if (response.status) {
+                        showAlert("Siswa berhasil ditolak.", 'success');
+                        $('#modal-reject-student').modal('hide');
+                        ambilDataSiswaPending();
+                    } else {
+                        showAlert("Gagal menolak siswa.", 'error');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showAlert("Terjadi kesalahan.", 'error');
+                }
+            });
+        });
+
+
+        const openKickModal = (studentId) => {
+            $('#deleteClassId').val(studentId);
+            $('#modal-kick-student').modal('show');
+        };
+
+        $('#form-kick').submit(function(e) {
+            e.preventDefault();
+            const studentId = $('#deleteClassId').val();
+
+            $.ajax({
+                url: `/api/kick/student/${studentId}`,
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    showAlert("Siswa berhasil di Keluarkan", 'success');
+                    $('#modal-kick-student').modal('hide');
+                    ambilDataSiswa();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error mengeluarkan siswa:', error);
+                    showAlert("Gagal mengeluarkan siswa", 'error');
+                }
+            });
+        });
+
 
         const fetchMaterials = () => {
             $.ajax({
@@ -302,6 +475,8 @@
         $(document).ready(function() {
             fetchClassData();
             fetchMaterials();
+            ambilDataSiswa();
+            ambilDataSiswaPending();
 
             document.getElementById('materialType').addEventListener('change', function() {
                 const additionalInput = document.getElementById('additionalInput');

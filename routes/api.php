@@ -42,6 +42,7 @@ Route::post('/rejectClass/{id}', [AdminController::class, 'rejectClass']);
 
 // Classroom teacher
 Route::get('/teacher/classroom/show/{classroom}' , [ClassroomTeacherController::class , 'show']);
+Route::get('/teacher/data/classroom/{id}' , [ClassroomController::class , 'studentCourse']);
 
 // Course Teacher
 Route::post('/teacher/course/create', [CourseController::class, 'store']);
@@ -62,3 +63,11 @@ Route::get('/student/data/classroom/{id}' , [StudentCourseController::class , 's
 // student course
 Route::get('/student/course/data/{id}', [StudentCourseController::class, 'courseClass']);
 Route::get('/student/course/show/{course}' , [CourseController::class , 'show']);
+
+// kick student classroom
+Route::delete('/kick/student/{studentClassroomRelation}', [StudentClassroomRelationController::class, 'destroy']);
+
+// pending approval classroom teacher
+Route::get('/pending/teacher/{id}' , [ClassroomTeacherController::class , 'pendingStudent']);
+Route::post('/accept/teacher/{user_id}' , [ClassroomTeacherController::class , 'accept']);
+Route::post('/reject/teacher/{user_id}' , [ClassroomTeacherController::class , 'reject']);

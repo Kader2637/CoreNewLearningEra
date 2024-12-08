@@ -28,10 +28,6 @@
 </head>
 
 <body>
-
-    <!--*******************
-        Preloader start
-    ********************-->
     <div id="preloader">
         <div class="sk-three-bounce">
             <div class="sk-child sk-bounce1"></div>
@@ -39,85 +35,18 @@
             <div class="sk-child sk-bounce3"></div>
         </div>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
-
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
     <div id="main-wrapper">
-
-        <!--**********************************
-            Nav header start
-        ***********************************-->
         @include('layouts.teacher.navHeader')
-        <!--**********************************
-            Nav header end
-        ***********************************-->
-
-        <!--**********************************
-            Chat box start
-        ***********************************-->
-        <!--**********************************
-            Chat box End
-        ***********************************-->
-
-        <!--**********************************
-            Header start
-        ***********************************-->
         @include('layouts.teacher.header')
-        <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-
-        <!--**********************************
-            Sidebar start
-        ***********************************-->
         @include('layouts.teacher.sidebar')
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
-
-        <!--**********************************
-            Content body start
-        ***********************************-->
         <div class="content-body">
-            <!-- row -->
             <div class="container-fluid">
                 @yield('content')
             </div>
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-
-        <!--**********************************
-            Footer start
-        ***********************************-->
         @include('layouts.teacher.footer')
-        <!--**********************************
-            Footer end
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button start
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button end
-        ***********************************-->
-
-
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
-    <!-- Required vendors -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="{{ asset('assetsTeacher/vendor/global/global.min.js') }}"></script>
@@ -127,8 +56,7 @@
     <!-- Chart piety plugin files -->
     <script src="{{ asset('assetsTeacher/vendor/peity/jquery.peity.min.js') }}"></script>
     <script src="{{ asset('assetsTeacher/vendor/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
-    <!-- Apex Chart -->
-    <script src="{{ asset('assetsTeacher/vendor/apexchart/apexchart.js') }}"></script>
+
     <!-- Dashboard 1 -->
     <script src="{{ asset('assetsTeacher/js/dashboard/dashboard-1.js') }}"></script>
     <script src="{{ asset('assetsTeacher/js/custom.min.js') }}"></script>
