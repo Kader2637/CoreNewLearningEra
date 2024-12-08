@@ -1,7 +1,7 @@
 @if (!request()->is('student/materi/detail'))
 <div class="dashboard__sidebar-wrap">
     <div class="dashboard__sidebar-title mb-20">
-        <h6 class="title">Welcome, Abdul Kader</h6>
+        <h6 class="title">Welcome, {{ auth()->user()->name }}</h6>
     </div>
     <nav class="dashboard__sidebar-menu">
         <ul class="list-wrap">

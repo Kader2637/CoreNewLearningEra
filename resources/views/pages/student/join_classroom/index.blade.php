@@ -48,11 +48,6 @@
                                         </a>
                                     </div>
                                     <div class="courses__item-content courses__item-content-two">
-                                        <ul class="courses__item-meta list-wrap">
-                                            <li class="courses__item-tag">
-                                                <a href="javascript:void(0)">${classroom.codeClass}</a>
-                                            </li>
-                                        </ul>
                                         <h5 class="title"><a href="javascript:void(0)">${classroom.name}</a></h5>
                                             <p class="course-description">${courseDescription}</p>
                                         <div class="courses__item-content-bottom">
