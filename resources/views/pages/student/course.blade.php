@@ -112,7 +112,7 @@
                                                                 class="">
                                                                 <span class="item-name">Materi 1</span>
                                                                 <div class="course-item-meta">
-                                                                    <span class="item-meta duration">03:03</span>
+                                                                    <span class="item-meta duration"></span>
                                                                 </div>
                                                             </a>
                                                         </li>
