@@ -3,9 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckRole;
 
-
-
-
 Route::prefix('student')->middleware([CheckRole::class . ':student'])->group(function () {
     Route::get('/dashboard', function () {
         return view('pages.student.index');
