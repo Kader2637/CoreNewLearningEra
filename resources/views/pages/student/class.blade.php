@@ -51,13 +51,13 @@
                             <div class="col-xl-5 col-md-6 course-item">
                                 <div class="courses__item courses__item-two shine__animate-item">
                                     <div class="courses__item-thumb courses__item-thumb-two">
-                                        <a href="/student/course" class="shine__animate-link">
+                                        <a href="/student/classroom/course/${course.id}" class="shine__animate-link">
                                             <img src="${courseThumbnail}" alt="img">
                                         </a>
                                     </div>
                                     <div class="courses__item-content courses__item-content-two">
                                         <h5 class="title">
-                                            <a href="/student/course">${course.name}</a>
+                                            <a href="/student/classroom/course/${course.id}">${course.name}</a>
                                         </h5>
                                         <p class="course-description">${courseDescription}</p>
                                         <div class="courses__item-content-bottom">

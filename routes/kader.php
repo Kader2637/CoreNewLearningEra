@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\CourseTeacherController;
+use App\Http\Controllers\Api\StudentCourseController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckRole;
@@ -33,3 +34,9 @@ Route::prefix('admin')->middleware(['auth', CheckRole::class . ':admin'])->group
 
 Route::get('/teacher/classroom/course/{id}' , [CourseTeacherController::class , 'show']);
 Route::get('/teacher/course/detail/{id}' , [CourseTeacherController::class , 'showPage']);
+
+
+// student
+
+Route::get('/student/classroom/course/{id}' , [StudentCourseController::class , 'show']);
+Route::get('/student/course/detail/{id}' , [StudentCourseController::class , 'showPage']);

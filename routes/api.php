@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\StudentClassroomRelationController;
+use App\Http\Controllers\Api\StudentCourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,3 +55,10 @@ Route::get('/student/classroom/data/{id}' , [StudentClassroomRelationController:
 Route::post('/classroom/join', [StudentClassroomRelationController::class, 'store']);
 Route::get('/join/classroom/{id}', [ClassroomController::class, 'classroomStudent']);
 Route::post('/Apiclassroom/join/{id}', [StudentClassroomRelationController::class, 'joinclass']);
+Route::get('/student/classroom/show/{classroom}' , [StudentCourseController::class , 'showstudent']);
+Route::get('/student/data/classroom/{id}' , [StudentCourseController::class , 'studentCourse']);
+
+
+// student course
+Route::get('/student/course/data/{id}', [StudentCourseController::class, 'courseClass']);
+Route::get('/student/course/show/{course}' , [CourseController::class , 'show']);

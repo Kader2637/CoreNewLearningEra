@@ -12,14 +12,6 @@ Route::prefix('student')->middleware([CheckRole::class . ':student'])->group(fun
         return view('pages.student.class');
     })->name('student/classroom');
 
-    Route::get('/course', function () {
-        return view('pages.student.course');
-    })->name('course');
-
-    Route::get('/materi/detail', function () {
-        return view('pages.student.detailmateri');
-    })->name('detailmateri');
-
     Route::get('/diskusi', function () {
         return view('pages.student.diskusi');
     })->name('diskusi');

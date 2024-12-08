@@ -10,7 +10,7 @@ class ClassroomTeacherController extends Controller
 {
     public function show(Classroom $classroom)
     {
-        $classroom = $classroom->where('user_id' , $classroom->user_id)->first();
+        $classroom = $classroom->where('id' , $classroom->id)->first();
         return response()->json([
             'status'=> 'success' ,
             'data' => $classroom
