@@ -15,7 +15,7 @@ class StudentClassroomRelationController extends Controller
      */
     public function index($id)
     {
-        $StudentClassroomRelations = StudentClassroomRelation::where('user_id', $id)->get();
+        $StudentClassroomRelations = StudentClassroomRelation::where('user_id', $id)->where('status' , 'accept')->get();
 
         if ($StudentClassroomRelations->isNotEmpty()) {
             $formattedData = $StudentClassroomRelations->map(function ($relation) {
@@ -66,40 +66,40 @@ class StudentClassroomRelationController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreStudentClassroomRelationRequest $request)
-{
-    $classroom = Classroom::where('codeClass', $request->classroom_code)
-        ->where('statusClass', 'public')
-        ->first();
-
-    if ($classroom) {
-        $existingRelation = StudentClassroomRelation::where('user_id', $request->user_id)
-            ->where('classroom_id', $classroom->id)
+    {
+        $classroom = Classroom::where('codeClass', $request->classroom_code)
+            ->where('statusClass', 'public')
             ->first();
 
-        if ($existingRelation) {
-            return response()->json(['message' => 'Anda sudah bergabung di kelas ini.'], 400);
-        }
+        if ($classroom) {
+            $existingRelation = StudentClassroomRelation::where('user_id', $request->user_id)
+                ->where('classroom_id', $classroom->id)
+                ->first();
 
-        $totalUsers = StudentClassroomRelation::where('classroom_id', $classroom->id)->count();
-        $limit = $classroom->limit;
+            if ($existingRelation) {
+                return response()->json(['message' => 'Anda sudah bergabung di kelas ini.'], 400);
+            }
 
-        if ($totalUsers < $limit) {
-            StudentClassroomRelation::create([
-                'user_id' => $request->user_id,
-                'classroom_id' => $classroom->id,
-                'status' => 'accept',
-            ]);
+            $totalUsers = StudentClassroomRelation::where('classroom_id', $classroom->id)->count();
+            $limit = $classroom->limit;
 
-            $classroom->increment('total_user');
+            if ($totalUsers < $limit) {
+                StudentClassroomRelation::create([
+                    'user_id' => $request->user_id,
+                    'classroom_id' => $classroom->id,
+                    'status' => 'accept',
+                ]);
 
-            return response()->json(['message' => 'Bergabung dengan kelas berhasil.'], 200);
+                $classroom->increment('total_user');
+
+                return response()->json(['message' => 'Bergabung dengan kelas berhasil.'], 200);
+            } else {
+                return response()->json(['message' => 'Batas pengguna kelas telah tercapai.'], 400);
+            }
         } else {
-            return response()->json(['message' => 'Batas pengguna kelas telah tercapai.'], 400);
+            return response()->json(['message' => 'Kode kelas atau status kelas tidak valid.'], 400);
         }
-    } else {
-        return response()->json(['message' => 'Kode kelas atau status kelas tidak valid.'], 400);
     }
-}
 
 
     /**
@@ -132,5 +132,38 @@ class StudentClassroomRelationController extends Controller
     public function destroy(StudentClassroomRelation $studentClassroomRelation)
     {
         //
+    }
+
+    public function joinclass(StoreStudentClassroomRelationRequest $request, $id)
+    {
+        $classroom = Classroom::where('id', $id)
+            ->where('statusClass', 'public')
+            ->first();
+
+        if ($classroom) {
+            $existingRelation = StudentClassroomRelation::where('user_id', $request->user_id)
+                ->where('classroom_id', $classroom->id)
+                ->first();
+
+            if ($existingRelation) {
+                return response()->json(['message' => 'Anda sudah mendaftar di kelas ini. Silakan menunggu konfirmasi dari pemilik kelas.'], 400);
+            }
+
+            $totalUsers = StudentClassroomRelation::where('classroom_id', $classroom->id)->count();
+            $limit = $classroom->limit;
+
+            if ($totalUsers < $limit) {
+                StudentClassroomRelation::create([
+                    'user_id' => $request->user_id,
+                    'classroom_id' => $classroom->id,
+                    'status' => 'pending',
+                ]);
+                return response()->json(['message' => 'Anda telah mendaftar di kelas ini. Silakan menunggu konfirmasi dari pemilik kelas.'], 200);
+            } else {
+                return response()->json(['message' => 'Batas pengguna kelas telah tercapai.'], 400);
+            }
+        } else {
+            return response()->json(['message' => 'ID kelas atau status kelas tidak valid.'], 400);
+        }
     }
 }

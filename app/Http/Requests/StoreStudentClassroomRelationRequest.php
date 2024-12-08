@@ -22,7 +22,7 @@ class StoreStudentClassroomRelationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'classroom_code' => 'required',
+            'classroom_code' => 'nullable',
             'user_id' => 'required'
         ];
     }

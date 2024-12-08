@@ -14,4 +14,8 @@ class Classroom extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function studentClassroomRelations() {
+        return $this->hasMany(StudentClassroomRelation::class);
+    }
 }

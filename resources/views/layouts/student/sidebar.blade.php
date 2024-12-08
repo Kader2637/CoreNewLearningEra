@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li class="">
-                <a href="/student/classroom">
+                <a href="{{ route('join.classroom') }}">
                     <i class="fas fa-home"></i>
                     Bergabung
                 </a>

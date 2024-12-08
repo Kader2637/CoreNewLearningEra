@@ -52,3 +52,5 @@ Route::get('/teacher/course/show/{course}' , [CourseController::class , 'show'])
 // student classroom
 Route::get('/student/classroom/data/{id}' , [StudentClassroomRelationController::class  , 'index']);
 Route::post('/classroom/join', [StudentClassroomRelationController::class, 'store']);
+Route::get('/join/classroom/{id}', [ClassroomController::class, 'classroomStudent']);
+Route::post('/Apiclassroom/join/{id}', [StudentClassroomRelationController::class, 'joinclass']);
