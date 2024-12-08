@@ -3,7 +3,6 @@
 <div class="d-flex justify-content-between mb-3">
     <h4>Detail Materi <span id="class-name1"></span></h4>
     <div>
-        {{-- <a id="back-button" href="#" class="btn btn-secondary btn-sm">Kembali</a> --}}
     </div>
 </div>
 

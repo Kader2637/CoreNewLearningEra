@@ -48,7 +48,6 @@
                             <div class="courses__curriculum-wrap">
                                 <h3 class="title">Materi</h3>
                                 <ul class="curriculum-list" id="curriculum-list">
-                                    <!-- Materi akan dimuat di sini -->
                                 </ul>
                             </div>
                         </div>
@@ -56,7 +55,6 @@
                             tabindex="0">
                             <h3 class="title">Siswa</h3>
                             <div class="row" id="student-list">
-                                <!-- Daftar siswa akan dimuat di sini -->
                             </div>
                         </div>
                     </div>
@@ -87,7 +85,7 @@
                     $('#profile').attr('src', authorImage);
                     $('#nameTeacher').text(dataKelas.user.name);
                     ambilDataMateri();
-                    ambilDataSiswa(); // Memanggil fungsi untuk mengambil data siswa
+                    ambilDataSiswa();
                 } else {
                     $('#class-name').text('Data kelas tidak ditemukan');
                 }
