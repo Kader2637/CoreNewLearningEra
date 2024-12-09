@@ -15,7 +15,7 @@ class StudentClassroomRelationController extends Controller
      */
     public function index($id)
     {
-        $StudentClassroomRelations = StudentClassroomRelation::where('user_id', $id)->where('status' , 'accept')->get();
+        $StudentClassroomRelations = StudentClassroomRelation::where('user_id', $id)->where('status', 'accept')->get();
 
         if ($StudentClassroomRelations->isNotEmpty()) {
             $formattedData = $StudentClassroomRelations->map(function ($relation) {
@@ -79,22 +79,19 @@ class StudentClassroomRelationController extends Controller
                 return response()->json(['message' => 'Anda sudah bergabung di kelas ini.'], 400);
             }
 
-            $totalUsers = StudentClassroomRelation::where('classroom_id', $classroom->id)->count();
-            $limit = $classroom->limit;
-
-            if ($totalUsers < $limit) {
-                StudentClassroomRelation::create([
-                    'user_id' => $request->user_id,
-                    'classroom_id' => $classroom->id,
-                    'status' => 'accept',
-                ]);
-
-                $classroom->increment('total_user');
-
-                return response()->json(['message' => 'Bergabung dengan kelas berhasil.'], 200);
-            } else {
+            if ($classroom->total_user >= $classroom->limit) {
                 return response()->json(['message' => 'Batas pengguna kelas telah tercapai.'], 400);
             }
+
+            StudentClassroomRelation::create([
+                'user_id' => $request->user_id,
+                'classroom_id' => $classroom->id,
+                'status' => 'accept',
+            ]);
+
+            $classroom->increment('total_user');
+
+            return response()->json(['message' => 'Bergabung dengan kelas berhasil.'], 200);
         } else {
             return response()->json(['message' => 'Kode kelas atau status kelas tidak valid.'], 400);
         }
