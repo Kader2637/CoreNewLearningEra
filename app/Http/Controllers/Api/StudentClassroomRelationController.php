@@ -68,7 +68,6 @@ class StudentClassroomRelationController extends Controller
     public function store(StoreStudentClassroomRelationRequest $request)
     {
         $classroom = Classroom::where('codeClass', $request->classroom_code)
-            ->where('statusClass', 'public')
             ->first();
 
         if ($classroom) {
