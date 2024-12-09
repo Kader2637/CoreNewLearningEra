@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between mb-3 mt-3">
-        <h4>Kelas</h4>
+        <h4>Bergabung Kelas</h4>
     </div>
     <div class="row" id="classroom-list">
         <!-- Kursus akan dimuat di sini menggunakan AJAX -->

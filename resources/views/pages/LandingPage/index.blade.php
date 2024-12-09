@@ -181,7 +181,7 @@
                             </div>
                             <div class="instructor__content-two">
                                 <h3 class="title">
-                                    <a href="{{ route('register') }}">Masuk Sebagai Guru</a>
+                                    <a href="/register/teacher">Masuk Sebagai Guru</a>
                                 </h3>
                                 <p>
                                     Bergabunglah sebagai guru untuk berbagi
@@ -190,7 +190,7 @@
                                     pembelajaran yang dinamis.
                                 </p>
                                 <div class="tg-button-wrap">
-                                    <a href="{{ route('register') }}" class="btn arrow-btn">
+                                    <a href="/register/teacher" class="btn arrow-btn">
                                         Masuk
                                         <img src="assets/img/icons/right_arrow.svg" alt="img" class="injectable" />
                                     </a>
@@ -213,7 +213,7 @@
                             </div>
                             <div class="instructor__content-two">
                                 <h3 class="title">
-                                    <a href="{{ route('register') }}">
+                                    <a href="/register/student">
                                         Masuk Sebagai Siswa
                                     </a>
                                 </h3>
@@ -224,7 +224,7 @@
                                     bersama para ahli.
                                 </p>
                                 <div class="tg-button-wrap">
-                                    <a href="{{ route('register') }}" class="btn arrow-btn">
+                                    <a href="/register/student" class="btn arrow-btn">
                                             Masuk
                                         <img src="assets/img/icons/right_arrow.svg" alt="img" class="injectable" />
                                     </a>

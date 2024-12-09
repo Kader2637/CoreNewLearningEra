@@ -71,3 +71,6 @@ Route::delete('/kick/student/{studentClassroomRelation}', [StudentClassroomRelat
 Route::get('/pending/teacher/{id}' , [ClassroomTeacherController::class , 'pendingStudent']);
 Route::post('/accept/teacher/{user_id}' , [ClassroomTeacherController::class , 'accept']);
 Route::post('/reject/teacher/{user_id}' , [ClassroomTeacherController::class , 'reject']);
+
+// landing page
+Route::get('/classroom' , [ClassroomController::class , 'index']);

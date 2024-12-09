@@ -17,7 +17,34 @@ class ClassroomController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {}
+    public function index()
+    {
+        $classrooms = Classroom::where('status', 'accept')
+            ->where('statusClass', 'public')
+            ->whereColumn('total_user', '<', 'limit')
+            ->get()
+            ->map(function ($classroom) {
+                return [
+                    'id' => $classroom->id,
+                    'name' => $classroom->name,
+                    'codeClass' => $classroom->codeClass,
+                    'limit' => $classroom->limit,
+                    'total_user' => $classroom->total_user,
+                    'description' => $classroom->description,
+                    'thumbnail' => $classroom->thumbnail,
+                    'status' => $classroom->status,
+                    'statusClass' => $classroom->statusClass,
+                    'user_name' => $classroom->user ? $classroom->user->name : null,
+                    'user_image' => $classroom->user ? $classroom->user->image : null,
+                    'created_at' => $classroom->created_at,
+                    'updated_at' => $classroom->updated_at,
+                ];
+            });
+        return response()->json([
+            'message' => 'success',
+            'data' => $classrooms
+        ], 200);
+    }
 
     public function classroomTeacher($id)
     {
@@ -129,7 +156,7 @@ class ClassroomController extends Controller
 
     public function studentCourse($id)
     {
-        $students = StudentClassroomRelation::where('classroom_id', $id)->where('status' , 'accept')
+        $students = StudentClassroomRelation::where('classroom_id', $id)->where('status', 'accept')
             ->with('user')
             ->get();
 
@@ -151,38 +178,37 @@ class ClassroomController extends Controller
     }
 
     public function classroomStudent($id)
-{
-    $classrooms = Classroom::where('status', 'accept')
-        ->where('statusClass', 'public')
-        ->whereDoesntHave('studentClassroomRelations', function ($query) use ($id) {
-            $query->where('user_id', $id)
-                ->where('status', '!=', 'pending');
-        })
-        ->whereColumn('total_user', '<', 'limit') 
-        ->get()
-        ->map(function ($classroom) {
-            return [
-                'id' => $classroom->id,
-                'name' => $classroom->name,
-                'codeClass' => $classroom->codeClass,
-                'limit' => $classroom->limit,
-                'total_user' => $classroom->total_user,
-                'description' => $classroom->description,
-                'thumbnail' => $classroom->thumbnail,
-                'status' => $classroom->status,
-                'statusClass' => $classroom->statusClass,
-                'user_id' => $classroom->user_id,
-                'user_name' => $classroom->user ? $classroom->user->name : null,
-                'user_image' => $classroom->user ? $classroom->user->image : null,
-                'created_at' => $classroom->created_at,
-                'updated_at' => $classroom->updated_at,
-            ];
-        });
+    {
+        $classrooms = Classroom::where('status', 'accept')
+            ->where('statusClass', 'public')
+            ->whereDoesntHave('studentClassroomRelations', function ($query) use ($id) {
+                $query->where('user_id', $id)
+                    ->where('status', '!=', 'pending');
+            })
+            ->whereColumn('total_user', '<', 'limit')
+            ->get()
+            ->map(function ($classroom) {
+                return [
+                    'id' => $classroom->id,
+                    'name' => $classroom->name,
+                    'codeClass' => $classroom->codeClass,
+                    'limit' => $classroom->limit,
+                    'total_user' => $classroom->total_user,
+                    'description' => $classroom->description,
+                    'thumbnail' => $classroom->thumbnail,
+                    'status' => $classroom->status,
+                    'statusClass' => $classroom->statusClass,
+                    'user_id' => $classroom->user_id,
+                    'user_name' => $classroom->user ? $classroom->user->name : null,
+                    'user_image' => $classroom->user ? $classroom->user->image : null,
+                    'created_at' => $classroom->created_at,
+                    'updated_at' => $classroom->updated_at,
+                ];
+            });
 
-    return response()->json([
-        'message' => 'success',
-        'data' => $classrooms
-    ], 200);
-}
-
+        return response()->json([
+            'message' => 'success',
+            'data' => $classrooms
+        ], 200);
+    }
 }

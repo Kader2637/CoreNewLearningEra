@@ -3,6 +3,7 @@
 <div class="d-flex justify-content-between mb-3">
     <h4>Detail Materi <span id="class-name1"></span></h4>
     <div>
+        <a href="" id="class-link" class="classroom-link" style="background: linear-gradient(90deg, #1e3c72, #2a5298); color: white; font-size: 13px; padding: 13px; border: none; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">Kembali</a>
     </div>
 </div>
 
@@ -37,8 +38,11 @@
                     const textDiv = document.getElementById('text');
                     const backButton = document.getElementById('back-button');
                     const classNameElement = document.getElementById('class-name1');
+                    const classLinkElement = document.getElementById('class-link');
+
 
                     classNameElement.textContent = course.name;
+                    classLinkElement.href = `/student/classroom/course/${course.classroom_id}`;
 
                     if (course.type === 'link' && course.link) {
                         if (course.link.includes('youtube.com') || course.link.includes('youtu.be')) {

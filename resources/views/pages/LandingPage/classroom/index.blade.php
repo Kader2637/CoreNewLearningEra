@@ -31,154 +31,82 @@
     </section>
     <section class="courses-area pt-5 pb-4" style="background-image: url('assets/img/bg/courses_bg.jpg');">
         <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="card courses__item shine__animate-item">
-                            <a href="#" class="shine__animate-link">
-                                <img src="assets/img/courses/course_thumb01.jpg" alt="Learning JavaScript With Imagination" class="card-img-top" />
-                            </a>
-                            <div class="card-body">
-                                <ul class="courses__item-meta list-wrap list-unstyled mb-3">
-                                    <li class="courses__item-tag">
-                                        <a href="#">Development</a>
-                                    </li>
-                                    <li class="avg-rating">
-                                        <i class="fas fa-star"></i> (4.8 Reviews)
-                                    </li>
-                                </ul>
-                                <h5 class="card-title">
-                                    <a href="#">Learning JavaScript With Imagination</a>
-                                </h5>
-                                <p class="author">
-                                    By <a href="#">David Millar</a>
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="button">
-                                        <a href="#" class="btn btn-primary d-flex align-items-center">
-                                            Masuk
-                                            <i class="flaticon-arrow-right ms-2"></i>
-                                        </a>
-                                    </div>
-                                    <h5 class="price mb-0">$15.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="card courses__item shine__animate-item">
-                            <a href="#" class="shine__animate-link">
-                                <img src="assets/img/courses/course_thumb01.jpg" alt="Learning JavaScript With Imagination" class="card-img-top" />
-                            </a>
-                            <div class="card-body">
-                                <ul class="courses__item-meta list-wrap list-unstyled mb-3">
-                                    <li class="courses__item-tag">
-                                        <a href="#">Development</a>
-                                    </li>
-                                    <li class="avg-rating">
-                                        <i class="fas fa-star"></i> (4.8 Reviews)
-                                    </li>
-                                </ul>
-                                <h5 class="card-title">
-                                    <a href="#">Learning JavaScript With Imagination</a>
-                                </h5>
-                                <p class="author">
-                                    By <a href="#">David Millar</a>
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="button">
-                                        <a href="#" class="btn btn-primary d-flex align-items-center">
-                                            Masuk
-                                            <i class="flaticon-arrow-right ms-2"></i>
-                                        </a>
-                                    </div>
-                                    <h5 class="price mb-0">$15.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="card courses__item shine__animate-item">
-                            <a href="#" class="shine__animate-link">
-                                <img src="assets/img/courses/course_thumb01.jpg" alt="Learning JavaScript With Imagination" class="card-img-top" />
-                            </a>
-                            <div class="card-body">
-                                <ul class="courses__item-meta list-wrap list-unstyled mb-3">
-                                    <li class="courses__item-tag">
-                                        <a href="#">Development</a>
-                                    </li>
-                                    <li class="avg-rating">
-                                        <i class="fas fa-star"></i> (4.8 Reviews)
-                                    </li>
-                                </ul>
-                                <h5 class="card-title">
-                                    <a href="#">Learning JavaScript With Imagination</a>
-                                </h5>
-                                <p class="author">
-                                    By <a href="#">David Millar</a>
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="button">
-                                        <a href="#" class="btn btn-primary d-flex align-items-center">
-                                            Masuk
-                                            <i class="flaticon-arrow-right ms-2"></i>
-                                        </a>
-                                    </div>
-                                    <h5 class="price mb-0">$15.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="card courses__item shine__animate-item">
-                            <a href="#" class="shine__animate-link">
-                                <img src="assets/img/courses/course_thumb01.jpg" alt="Learning JavaScript With Imagination" class="card-img-top" />
-                            </a>
-                            <div class="card-body">
-                                <ul class="courses__item-meta list-wrap list-unstyled mb-3">
-                                    <li class="courses__item-tag">
-                                        <a href="#">Development</a>
-                                    </li>
-                                    <li class="avg-rating">
-                                        <i class="fas fa-star"></i> (4.8 Reviews)
-                                    </li>
-                                </ul>
-                                <h5 class="card-title">
-                                    <a href="#">Learning JavaScript With Imagination</a>
-                                </h5>
-                                <p class="author">
-                                    By <a href="#">David Millar</a>
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="button">
-                                        <a href="#" class="btn btn-primary d-flex align-items-center">
-                                            Masuk
-                                            <i class="flaticon-arrow-right ms-2"></i>
-                                        </a>
-                                    </div>
-                                    <h5 class="price mb-0">$15.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <div class="d-flex justify-content-center">
-                <nav class="pagination__wrap mt-3">
-                    <ul class="list-wrap pagination">
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">4</a>
-                        </li>
-                    </ul>
-                </nav>
+            <div id="classroom-container" class="row d-flex justify-content-center">
             </div>
         </div>
     </section>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            const container = $('#classroom-container');
+            const loading = $('#loading');
+            const noData = $('#no-data');
+
+            loading.show();
+            noData.hide();
+            container.empty();
+
+            $.ajax({
+                url: '/api/classroom',
+                method: 'GET',
+                success: function(response) {
+                    loading.hide();
+
+                    if (response.data && response.data.length > 0) {
+                        response.data.forEach(classroom => {
+                            const thumbnailPath = classroom.thumbnail ?
+                                `{{ asset('storage/${classroom.thumbnail}') }}` :
+                                '{{ asset('default-thumbnail.jpg') }}';
+
+                            const description = classroom.description ?
+                                (classroom.description.length > 90 ?
+                                    classroom.description.substring(0, 90) + '...' :
+                                    classroom.description) :
+                                'No description available';
+
+                            const cardHtml = `
+                        <div class="col-12 col-xl-4 col-lg-5">
+                            <div class="card courses__item shine__animate-item">
+<a href="#" class="shine__animate-link">
+    <img src="${thumbnailPath}" alt="${classroom.name}" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;" />
+</a>
+
+                                <div class="card-body">
+                                    <ul class="courses__item-meta list-wrap list-unstyled mb-3">
+                                        <li class="courses__item-tag">
+                                            <a href="#">${classroom.statusClass}</a>
+                                        </li>
+                                    </ul>
+                                    <h5 class="card-title">
+                                        <a href="#">${classroom.name}</a>
+                                    </h5>
+                                    <p class="description">${description}</p>
+                                    <p class="author">
+                                        Teacher : <a href="#">${classroom.user_name || 'Unknown'}</a>
+                                    </p>
+                                    <div class="mt-3">
+                                        <div class="/login">
+                                            <button class="w-100 join-button"
+                                                style="background: linear-gradient(90deg, #1e3c72, #2a5298); color: white; font-size: 13px; padding: 13px; border: none; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                                                Bergabung
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                            container.append(cardHtml);
+                        });
+                    } else {
+                        noData.show();
+                    }
+                },
+                error: function(error) {
+                    loading.hide();
+                    noData.show();
+                }
+            });
+        });
+    </script>
 @endsection

@@ -19,14 +19,12 @@ class CheckRole
     {
         if (Auth::check()) {
             $user = Auth::user();
-
             if (!in_array($user->role, $roles)) {
                 $roleRedirects = [
                     'admin' => route('admin.dashboard'),
                     'student' => route('student/dashboard'),
                     'teacher' => route('teacher'),
                 ];
-
                 if (isset($roleRedirects[$user->role]) && $roleRedirects[$user->role] !== $request->url()) {
                     return redirect($roleRedirects[$user->role]);
                 }
@@ -34,8 +32,6 @@ class CheckRole
         } else {
             return $next($request);
         }
-
-        return $next($request); 
-
+        return $next($request);
     }
 }
