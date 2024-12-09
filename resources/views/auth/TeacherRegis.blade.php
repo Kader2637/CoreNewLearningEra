@@ -68,7 +68,7 @@
                         <div class="account__divider">
                             <span>or</span>
                         </div>
-                        <form action="#" class="account__form" id="registrationForm">
+                        <form action="#" class="account__form" id="registrationForm" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-12 col-xl-6">
                                     <div class="form-grp">
@@ -127,6 +127,12 @@
                                         <input id="confirm_password" name="password_confirmation" type="password" placeholder="Konfirmasi Password" required>
                                     </div>
                                 </div>
+                                <div class="col-12 col-xl-6">
+                                    <div class="form-grp">
+                                        <label for="image">Foto Profil</label>
+                                        <input id="image" name="image" type="file" required>
+                                    </div>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-two arrow-btn">
                                 Daftar
@@ -150,7 +156,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: 'http://127.0.0.1:8000/api/Apiregister/teacher',
+                    url: '/api/Apiregister/teacher',
                     data: $(this).serialize(),
                     success: function(response) {
                         toastr.success(

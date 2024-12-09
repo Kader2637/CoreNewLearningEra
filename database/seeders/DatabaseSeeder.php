@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
+            'image' => 'user.png',
             'name' => 'Abdul Kader',
             'email' => 'abdulkader0126@gmail.com',
             'password' => '12345678',
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'accept'
         ]);
         User::factory()->create([
+            'image' => 'user.png',
             'name' => 'Ivan maulana tjiptady',
             'email' => 'ivan@gmail.com',
             'password' => '12345678',
@@ -32,6 +34,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'pending'
         ]);
         User::factory()->create([
+            'image' => 'user.png',
             'name' => 'Erik Aditya Irvansya',
             'email' => 'erik@gmail.com',
             'password' => '12345678',
@@ -40,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'accept'
         ]);
         User::factory()->create([
+            'image' => 'user.png',
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => '12345678',

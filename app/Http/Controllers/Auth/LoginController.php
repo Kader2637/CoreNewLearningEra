@@ -59,6 +59,7 @@ class LoginController extends Controller
             'nip' => 'required|numeric',
             'address' => 'required|string',
             'no_telephone' => 'required|numeric',
+            'image' => 'nullable'
         ]);
 
         if (User::where('email', $request->email)->exists()) {
@@ -78,7 +79,8 @@ class LoginController extends Controller
             'nip' => $request->nip,
             'address' => $request->address,
             'no_telephone' => $request->no_telephone,
-            'status' => 'pending'
+            'status' => 'pending',
+            'image' => $request->file('image')->store(path: 'images')
         ]);
 
         return response()->json([
