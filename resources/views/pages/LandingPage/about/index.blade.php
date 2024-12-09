@@ -41,10 +41,10 @@
                     <div class="about__content-three">
                         <div class="section__title mb-10">
                             <span class="sub-title">
-                                Get More About Us
+                                Tentang Kami
                             </span>
                             <h2 class="title">
-                                Empowering Students to reach their
+                                New
                                 <span class="position-relative">
                                     <svg x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 209 59" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -52,44 +52,50 @@
                                             d="M4.74438 7.70565C69.7006 -1.18799 136.097 -2.38304 203.934 4.1205C207.178 4.48495 209.422 7.14626 208.933 10.0534C206.793 23.6481 205.415 36.5704 204.801 48.8204C204.756 51.3291 202.246 53.5582 199.213 53.7955C136.093 59.7623 74.1922 60.5985 13.5091 56.3043C10.5653 56.0924 7.84371 53.7277 7.42158 51.0325C5.20725 38.2627 2.76333 25.6511 0.0898448 13.1978C-0.465589 10.5873 1.61173 8.1379 4.73327 7.70565"
                                             fill="currentcolor" />
                                     </svg>
-                                    potential
+                                    Learning
                                 </span>
-                                Goal For Next Level Challenge.
+                                Era
                             </h2>
                         </div>
                         <p class="desc">
-                            when an unknown printer took a galley of
-                            type and scrambled it to make a type
-                            specimen book. It has survived not only five
-                            centuries, but also the leap into electronic
-                            typesetting.
+                            Kami, tim Trio Innovator, mempersembahkan platform pembelajaran online yang revolusioner. Dengan
+                            menawarkan kelas privat dan publik, kami berkomitmen untuk memudahkan akses pendidikan bagi
+                            semua orang. Di era pembelajaran baru ini, kami percaya bahwa setiap individu berhak mendapatkan
+                            ilmu dan keterampilan yang mereka butuhkan untuk berkembang. Bergabunglah dengan kami dan
+                            rasakan pengalaman belajar yang lebih fleksibel, interaktif, dan menyenangkan!
                         </p>
                         <ul class="about__info-list list-wrap">
                             <li class="about__info-list-item">
                                 <i class="flaticon-angle-right"></i>
                                 <p class="content">
-                                    The Most World Class Instructors
+                                    Akses Kelas Kapan Saja dan Di Mana Saja
                                 </p>
                             </li>
                             <li class="about__info-list-item">
                                 <i class="flaticon-angle-right"></i>
                                 <p class="content">
-                                    Access Your Class anywhere
+                                    Rencana Kursus yang Fleksibel
                                 </p>
                             </li>
                             <li class="about__info-list-item">
                                 <i class="flaticon-angle-right"></i>
                                 <p class="content">
-                                    Flexible Course Plan
+                                    Kelas Publik dan Privat
+                                </p>
+                            </li>
+                            <li class="about__info-list-item">
+                                <i class="flaticon-angle-right"></i>
+                                <p class="content">
+                                    Materi dalam Format Video, Dokumen, dan Lainnya
+                                </p>
+                            </li>
+                            <li class="about__info-list-item">
+                                <i class="flaticon-angle-right"></i>
+                                <p class="content">
+                                    Pengumpulan Tugas dan Penilaian yang Efisien
                                 </p>
                             </li>
                         </ul>
-                        <div class="tg-button-wrap">
-                            <a href="contact.html" class="btn arrow-btn">
-                                Start Free Trial
-                                <img src="assets/img/icons/right_arrow.svg" alt="img" class="injectable" />
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
