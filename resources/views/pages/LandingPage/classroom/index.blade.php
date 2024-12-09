@@ -42,7 +42,6 @@
         </div>
         <h3>Belum ada kelas</h3>
     </div>
-
 @endsection
 @section('script')
     <script>
