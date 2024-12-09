@@ -35,6 +35,14 @@
             </div>
         </div>
     </section>
+
+    <div id="no-data" class="text-center mt-5 mb-5" style="display: none;">
+        <div class="d-flex justify-content-center">
+            <img src="{{ asset('nodatalanding.jpg') }}" width="400px" alt="">
+        </div>
+        <h3>Belum ada kelas</h3>
+    </div>
+
 @endsection
 @section('script')
     <script>

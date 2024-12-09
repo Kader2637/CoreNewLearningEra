@@ -100,13 +100,6 @@
         </svg>
     </div>
 
-    <div id="no-data" class="text-center" style="display: none;">
-        <div class="d-flex justify-content-center">
-            <img src="{{ asset('no-data.png') }}" width="200px" alt="">
-        </div>
-        <h3>Belum ada kelas</h3>
-    </div>
-
 
 
     <!-- JS Assets -->
