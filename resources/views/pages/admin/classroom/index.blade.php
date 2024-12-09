@@ -86,8 +86,15 @@
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <h3 class="f-w-600 mb-0">${course.name}</h3>
-                                            <span class="badge badge-primary">${course.statusClass}</span>
-                                        </div>
+<div>
+        <span class="badge bg-primary me-1">${course.statusClass || 'Status Kelas'}</span>
+<span class="badge bg-secondary">
+    ${course.status === 'accept' ? 'Terima' :
+      course.status === 'reject' ? 'Ditolak' :
+      course.status === 'pending' ? 'Menunggu' :
+      'Status'}
+</span>
+    </div>                                        </div>
                                         <div class="d-flex align-items-center mb-3">
                                             <img class="img-20 me-2 rounded-circle" src="${authorImage}" alt="User Avatar" title="">
                                             <div class="flex-grow-1">

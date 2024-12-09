@@ -229,8 +229,12 @@
     <h3 class="f-w-600 mb-0">${item.name}</h3>
     <div>
         <span class="badge bg-primary me-1">${item.statusClass || 'Status Kelas'}</span>
-        <span class="badge bg-secondary">${item.status || 'Status'}</span>
-    </div>
+<span class="badge bg-secondary">
+    ${item.status === 'accept' ? 'Terima' :
+      item.status === 'reject' ? 'Ditolak' :
+      item.status === 'pending' ? 'Menunggu' :
+      'Status'}
+</span>    </div>
 </div>
             <div class="d-flex align-items-center mb-3">
                 <img class="img-20 me-2 rounded-circle" src="${profileImageUrl}" alt="User Avatar" title="">
