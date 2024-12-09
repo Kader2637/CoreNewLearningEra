@@ -13,19 +13,17 @@
                             <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                                 <ul class="navigation">
                                     <li class="menu-item {{ request()->is('/student/dashboard') ? 'active' : '' }}">
-                                        <a href="/student/dashboard">Dashboard</a>
+                                        <a href="/student/dashboard"></a>
                                     </li>
-                                    {{-- <li class="menu-item {{ request()->is('classroom') ? 'active' : '' }}">
-                                        <a href="/classroom">Kelas</a>
-                                    </li> --}}
                                 </ul>
                             </div>
                             <div class="tgmenu__action">
-                                <ul class="list-wrap">
+                                {{-- <ul class="list-wrap">
                                     <li class="header-btn login-btn">
-                                        <button id="logoutButton" type="button" class="btn btn-primary">Logout</button>
+                                        <button id="logoutButton" type="button"
+                                       action="{{ route('logout') }}" class="btn btn-primary" method="POST" >Logout</button>
                                     </li>
-                                </ul>
+                                </ul> --}}
                             </div>
                             <div class="mobile-login-btn">
                                 <a href="{{ route('login') }}"><img src="assets/img/icons/user.svg" alt=""

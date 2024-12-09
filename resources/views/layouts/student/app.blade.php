@@ -63,7 +63,7 @@
     <!-- Scroll-top-end-->
 
     <!-- header-area -->
-    @include('layouts.landingpage.header')
+    @include('layouts.student.header')
     <!-- header-area-end -->
 
 
@@ -77,7 +77,7 @@
                 <img src="{{ asset('assets/img/bg/dashboard_bg.jpg') }}" alt="">
             </div>
             <div class="container">
-                <div class="dashboard__top-wrap">
+                {{-- <div class="dashboard__top-wrap">
                     <div class="dashboard__top-bg"
                         style="background-image: url('{{ asset('assets/img/bg/student_bg.jpg') }}');"></div>
                     <div class="dashboard__instructor-info">
@@ -107,7 +107,36 @@
                                     class="injectable"></a>
                         </div>
                     </div>
+                </div> --}}
+                <section class="mb-5 breadcrumb__area breadcrumb__bg"
+        style="background-image: url('{{ asset('assets/img/bg/breadcrumb_bg.jpg') }}');">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb__content">
+                        <h3 class="title">Dasboard</h3>
+                        <nav class="breadcrumb">
+                            <span property="itemListElement" typeof="ListItem">
+                                <a href="/">Home</a>
+                            </span>
+                            <span class="breadcrumb-separator">
+                                <i class="fas fa-angle-right"></i>
+                            </span>
+                            <span property="itemListElement" typeof="ListItem">Dashboard</span>
+                        </nav>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="breadcrumb__shape-wrap">
+            <img src="{{ asset('assets/img/others/breadcrumb_shape01.svg') }}" alt="Shape" class="alltuchtopdown" />
+            <img src="{{ asset('assets/img/others/breadcrumb_shape02.svg') }}" alt="Shape" data-aos="fade-right" data-aos-delay="300" />
+            <img src="{{ asset('assets/img/others/breadcrumb_shape03.svg') }}" alt="Shape" data-aos="fade-up" data-aos-delay="400" />
+            <img src="{{ asset('assets/img/others/breadcrumb_shape04.svg') }}" alt="Shape" data-aos="fade-down-left"
+                data-aos-delay="400" />
+            <img src="{{ asset('assets/img/others/breadcrumb_shape05.svg') }}" alt="Shape" data-aos="fade-left" data-aos-delay="400" />
+        </div>
+    </section>
                 <div class="dashboard__inner-wrap">
                     <div class="row">
                         @if (!request()->is('student/materi/detail'))
