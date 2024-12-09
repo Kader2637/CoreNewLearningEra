@@ -296,7 +296,6 @@
         $('#form-tolak').on('submit', function(e) {
             e.preventDefault();
             const classId = $('#RejectClassId').val();
-
             $.ajax({
                 url: `/api/rejectClass/${classId}`,
                 method: 'POST',

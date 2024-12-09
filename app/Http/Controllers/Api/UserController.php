@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -14,7 +15,33 @@ class UserController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => $user
-        ],200);
+        ], 200);
     }
 
+    public function teacherAll()
+    {
+        $user = User::where('role', 'teacher')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $user
+        ], 200);
+    }
+
+
+    public function destroy(User $user)
+    {
+        if ($user->image) {
+            Storage::delete($user->image);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'id' => $user->id,
+                'message' => 'User deleted successfully.'
+            ]
+        ], 200);
+    }
 }

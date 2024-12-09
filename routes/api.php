@@ -45,6 +45,8 @@ Route::get('classroom/admin' , [ClassroomController::class , 'classroomAdmin']);
 // Classroom teacher
 Route::get('/teacher/classroom/show/{classroom}' , [ClassroomTeacherController::class , 'show']);
 Route::get('/teacher/data/classroom/{id}' , [ClassroomController::class , 'studentCourse']);
+Route::get('/teacher' , [UserController::class , 'teacherAll']);
+Route::delete('/user/delete/{user}' , [UserController::class , 'destroy']);
 
 // Course Teacher
 Route::post('/teacher/course/create', [CourseController::class, 'store']);
