@@ -46,6 +46,33 @@ class ClassroomController extends Controller
         ], 200);
     }
 
+    public function classroomAdmin()
+    {
+        $classrooms = Classroom::all()
+            ->map(function ($classroom) {
+                return [
+                    'id' => $classroom->id,
+                    'name' => $classroom->name,
+                    'codeClass' => $classroom->codeClass,
+                    'limit' => $classroom->limit,
+                    'status' => $classroom->status,
+                    'total_user' => $classroom->total_user,
+                    'description' => $classroom->description,
+                    'thumbnail' => $classroom->thumbnail,
+                    'status' => $classroom->status,
+                    'statusClass' => $classroom->statusClass,
+                    'user_name' => $classroom->user ? $classroom->user->name : null,
+                    'user_image' => $classroom->user ? $classroom->user->image : null,
+                    'created_at' => $classroom->created_at,
+                    'updated_at' => $classroom->updated_at,
+                ];
+            });
+        return response()->json([
+            'message' => 'success',
+            'data' => $classrooms
+        ], 200);
+    }
+
     public function classroomTeacher($id)
     {
         $classroom = Classroom::where('user_id', $id)->get();
@@ -210,5 +237,15 @@ class ClassroomController extends Controller
             'message' => 'success',
             'data' => $classrooms
         ], 200);
+    }
+
+    public function detailClassroom($id)
+    {
+            return view('pages.admin.classroom.detail' , compact('id'));
+    }
+
+    public function detailCourse($id){
+
+        return view('pages.admin.classroom.detailCourse', compact('id'));
     }
 }

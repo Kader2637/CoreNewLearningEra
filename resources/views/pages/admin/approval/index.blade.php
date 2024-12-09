@@ -65,6 +65,7 @@
     @include('layouts.admin.loader')
     @include('components.reject-delete')
     @include('components.accept-delete')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @endsection
 @section('script')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -118,8 +119,8 @@
                                                 <td class="text-center">${item.email}</td>
                                                 <td class="d-flex justify-content-center">
                                                     <div class="d-flex gap-2">
-                                                        <button class="btn btn-info btn-sm accept-button" data-id="${item.id}">Terima</button>
-                                                        <button class="btn btn-danger btn-sm reject-button" data-id="${item.id}">Tolak</button>
+                                                        <button class="btn btn-info btn-sm accept-button-user" data-id="${item.id}">Terima</button>
+                                                        <button class="btn btn-danger btn-sm reject-button-user" data-id="${item.id}">Tolak</button>
                                                         <button class="btn btn-success btn-sm">View</button>
                                                     </div>
                                                 </td>
@@ -127,12 +128,12 @@
                                         `);
                                 });
 
-                                $('.accept-button').off('click').on('click', function() {
+                                $('.accept-button-user').off('click').on('click', function() {
                                     const userId = $(this).data('id');
                                     acceptUser(userId);
                                 });
 
-                                $('.reject-button').off('click').on('click', function() {
+                                $('.reject-button-user').off('click').on('click', function() {
                                     const userId = $(this).data('id');
                                     rejectUser(userId);
                                 });
@@ -213,7 +214,7 @@
                             $('#project-container').empty();
                             response.data.forEach(function(item) {
                                 const profileImageUrl = item.profile ?
-                                    `{{ asset('storage') }}/${item.profile}` :
+                                    `{{ asset('') }}/${item.profile}` :
                                     '{{ asset('user.png') }}';
 
                                 const thumbnailUrl = item.thumbnail ?
@@ -221,37 +222,57 @@
                                     '{{ asset('user.png') }}';
 
                                 const projectBox = `
-                            <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                <div class="project-box">
-                                    <div>
-                                        <img class="w-100" src="${thumbnailUrl}" alt="${item.name}" title="">
-                                    </div>
-                                    <h3 class="f-w-600 mt-3">${item.name}</h3>
-                                    <div class="d-flex">
-                                        <img class="img-20 me-2 rounded-circle" src="${profileImageUrl}" alt="" title="">
-                                        <div class="flex-grow-1">
-                                            <p class="mb-0">${item.user}</p>
-                                        </div>
-                                    </div>
-                                    <p>${item.description}</p>
-                                    <div class="row details">
-                                        <div class="col-6"><span>Limit Siswa</span></div>
-                                        <div class="col-6 font-secondary">${item.limit}</div>
-                                    </div>
-                                    <div class="mt-4 row">
-                                        <div class="col-12 col-xl-6 mt-2">
-                                            <button class="btn w-100 btn-danger reject-button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal-reject">
-                                                Tolak
-                                            </button>
-                                        </div>
-                                        <div class="col-12 col-xl-6 mt-2">
-                                            <button class="btn w-100 btn-info accept-button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal-accept">
-                                                Terima
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="col-xl-5 col-xxl-3 col-lg-8 col-12">
+    <div class="card shadow-sm border-light">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="f-w-600 mb-0">${item.name}</h3>
+    <div>
+        <span class="badge bg-primary me-1">${item.statusClass || 'Status Kelas'}</span>
+<span class="badge bg-secondary">
+    ${item.status === 'accept' ? 'Terima' :
+      item.status === 'reject' ? 'Ditolak' :
+      item.status === 'pending' ? 'Menunggu' :
+      'Status'}
+</span>    </div>
+</div>
+            <div class="d-flex align-items-center mb-3">
+                <img class="img-20 me-2 rounded-circle" src="${profileImageUrl}" alt="User Avatar" title="">
+                <div class="flex-grow-1">
+                    <p class="mb-0 font-weight-bold">${item.user}</p>
+                </div>
+            </div>
+            <img src="${thumbnailUrl}" class="img-fluid mb-3" alt="${item.name} Thumbnail">
+            <p class="text-muted">${item.description}</p>
+            <div class="row details">
+                <div class="col-6">
+                    <span class="font-weight-bold">Limit Siswa:</span>
+                </div>
+                <div class="col-6 font-secondary">${item.limit}</div>
+            </div>
+           <div class="mt-3">
+    <div class="row">
+        <div class="col-4 mt-2">
+            <a href="/admin/classroom/detail/${item.id}" class="btn btn-primary w-100">
+                <i class="fas fa-info-circle me-2"></i>
+            </a>
+        </div>
+        <div class="col-4 mt-2">
+            <button class="btn btn-danger w-100 reject-button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal-reject">
+                <i class="fas fa-times me-2"></i>
+            </button>
+        </div>
+        <div class="col-4 mt-2">
+            <button class="btn btn-info w-100 accept-button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal-accept">
+                <i class="fas fa-check me-2"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
                         `;
                                 $('#project-container').append(projectBox);
                             });
@@ -279,7 +300,6 @@
         $('#form-tolak').on('submit', function(e) {
             e.preventDefault();
             const classId = $('#RejectClassId').val();
-
             $.ajax({
                 url: `/api/rejectClass/${classId}`,
                 method: 'POST',

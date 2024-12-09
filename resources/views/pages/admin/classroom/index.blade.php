@@ -25,246 +25,109 @@
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row project-cards">
-            <div class="col-md-12 project-list">
-                <div class="card">
-                    <div class="row">
-                        <div class="p-0 col-md-6">
-                            <ul class="nav nav-tabs border-tab d-flex" id="top-tab" role="tablist">
-                                <li class="nav-item"><a class="nav-link active" id="top-home-tab" data-bs-toggle="tab"
-                                        href="#top-home" role="tab" aria-controls="top-home" aria-selected="true"><i
-                                            data-feather="target"></i>All</a>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" id="profile-top-tab" data-bs-toggle="tab"
-                                        href="#top-profile" role="tab" aria-controls="top-profile"
-                                        aria-selected="false"><i data-feather="info"></i>Menunggu Approval</a>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
-                                        href="#top-contact" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="check-circle"></i>Ditolak</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="p-0 col-md-6">
-                            <div class="mb-0 form-group me-0"></div><a class="btn btn-primary" href="#"> <i
-                                    data-feather="plus-square"> </i>Tambah Kelas</a>
-                        </div>
-                    </div>
-                </div>
+        <div class="mt-4 row" id="classroom-container"></div>
+
+        <div id="no-data" class="d-none">
+            <div class="d-flex justify-content-center">
+                <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
             </div>
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="tab-content" id="top-tabContent">
-                            <div class="tab-pane fade show active" id="top-home" role="tabpanel"
-                                aria-labelledby="top-home-tab">
-                                <div class="row">
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3><span class="badge badge-primary">Admin</span>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="top-profile" role="tabpanel"
-                                aria-labelledby="profile-top-tab">
-                                <div class="row">
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3><span class="badge badge-warning">Menunggu</span>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3><span class="badge badge-warning">Menunggu</span>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3><span class="badge badge-warning">Menunggu</span>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="top-contact" role="tabpanel"
-                                aria-labelledby="contact-top-tab">
-                                <div class="row">
-                                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                                        <div class="project-box">
-                                            <h3 class="f-w-600">Pemrograman </h3><span class="badge badge-secondary">Ditolak</span>
-                                            <div class="d-flex"><img class="img-20 me-2 rounded-circle"
-                                                    src="{{ asset('assets/img/others/kader.png') }}" alt="" data-original-title=""
-                                                    title="">
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0">abdulkader0126@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt rerum, necessitatibus sed corrupti dolor maxime.</p>
-                                            <div class="row details">
-                                                <div class="col-6"><span>Materi </span></div>
-                                                <div class="col-6 font-secondary">12 </div>
-                                                <div class="col-6"> <span>Student</span></div>
-                                                <div class="col-6 font-secondary">5</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <h3 class="text-center">Data Masih Kosong</h3>
+        </div>
+
+        <div id="loading" class="">
+            <div class="d-flex justify-content-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z" />
+                    <rect width="2" height="7" x="11" y="6" fill="currentColor" rx="1">
+                        <animateTransform attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate"
+                            values="0 12 12;360 12 12" />
+                    </rect>
+                    <rect width="2" height="9" x="11" y="11" fill="currentColor" rx="1">
+                        <animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate"
+                            values="0 12 12;360 12 12" />
+                    </rect>
+                </svg>
             </div>
+            <h4 class="mt-2 text-center">
+                Loading...
+            </h4>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#loading').removeClass('d-none');
+
+            $.ajax({
+                url: '/api/classroom/admin',
+                type: 'GET',
+                success: function(response) {
+                    $('#loading').addClass('d-none');
+                    if (response.data.length === 0) {
+                        $('#no-data').removeClass('d-none');
+                    } else {
+                        response.data.forEach(function(course) {
+                            const defaultImage =
+                                "{{ asset('user.png') }}";
+
+                            const courseThumbnail = course.thumbnail ?
+                                `/storage/${course.thumbnail}` : '/user.png';
+                            const authorImage = course.profile ? `/storage/${course.profile}` :
+                                '/user.png';
+                            const courseDescription = course.description.length > 80 ?
+                                course.description.substring(0, 80) + '...' : course
+                                .description;
+
+                            $('#classroom-container').append(`
+                            <div class="col-xl-3 col-12">
+                                <div class="shadow-sm card border-light">
+                                    <div class="card-body">
+                                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                                            <h3 class="mb-0 f-w-600">${course.name}</h3>
+<div>
+        <span class="badge bg-primary me-1">${course.statusClass || 'Status Kelas'}</span>
+<span class="badge bg-secondary">
+    ${course.status === 'accept' ? 'Terima' :
+      course.status === 'reject' ? 'Ditolak' :
+      course.status === 'pending' ? 'Menunggu' :
+      'Status'}
+</span>
+    </div>                                        </div>
+                                        <div class="mb-3 d-flex align-items-center">
+                                            <img class="img-20 me-2 rounded-circle" src="${authorImage}" alt="User Avatar" title="">
+                                            <div class="flex-grow-1">
+                                                <p class="mb-0 font-weight-bold">${course.user_name}</p>
+                                            </div>
+                                        </div>
+                                        <img src="${courseThumbnail}" class="mb-3 img-fluid" alt="${course.name} Thumbnail">
+                                        <p class="text-muted">${courseDescription}</p>
+                                        <div class="row details">
+                                            <div class="col-6">
+                                                <span class="font-weight-bold">Total User:</span>
+                                            </div>
+                                            <div class="col-6 font-secondary">${course.total_user}</div>
+                                            <div class="col-6">
+                                                <span class="font-weight-bold">Limit:</span>
+                                            </div>
+                                            <div class="col-6 font-secondary">${course.limit}</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="/admin/classroom/detail/${course.id}" class="btn btn-primary w-100">Detail</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    $('#loading').addClass('d-none');
+                    console.error('Terjadi kesalahan: ' + xhr.responseText);
+                }
+            });
+        });
+    </script>
 @endsection
