@@ -29,7 +29,7 @@
             <div class="col-md-12 project-list">
                 <div class="card">
                     <div class="row">
-                        <div class="col-md-6 p-0">
+                        <div class="p-0 col-md-6">
                             <ul class="nav nav-tabs border-tab d-flex" id="top-tab" role="tablist">
                                 <li class="nav-item"><a class="nav-link active" id="top-home-tab" data-bs-toggle="tab"
                                         href="#top-home" role="tab" aria-controls="top-home" aria-selected="true"><i
@@ -45,8 +45,8 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-md-6 p-0">
-                            <div class="form-group mb-0 me-0"></div><a class="btn btn-primary" href="#"> <i
+                        <div class="p-0 col-md-6">
+                            <div class="mb-0 form-group me-0"></div><a class="btn btn-primary" href="#"> <i
                                     data-feather="plus-square"> </i>Tambah Kelas</a>
                         </div>
                     </div>

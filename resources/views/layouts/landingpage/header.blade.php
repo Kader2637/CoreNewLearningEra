@@ -7,7 +7,7 @@
                     <div class="tgmenu__wrap">
                         <nav class="tgmenu__nav">
                             <div class="logo">
-                                <a href="index-2.html"><img src="{{ asset('logo.png') }}" width="200px" alt="Logo"></a>
+                                <a href="javascript:void(0)"><img src="{{ asset('logo.png') }}" width="200px" alt="Logo"></a>
                             </div>
                             <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                                 <ul class="navigation">

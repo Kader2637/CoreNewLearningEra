@@ -4,53 +4,50 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-4 col-md-6">
                     <div class="footer__widget">
-                        <div class="logo mb-35">
-                            <a href="index-2.html"><img src="assets/img/logo/secondary_logo.svg" alt="img"></a>
+                        <div class="mb-20 logo">
+                            <a href="javascript:void(0);"><img src="{{ asset('logo.png') }}" width="200px" alt="Logo"></a>
                         </div>
                         <div class="footer__content">
-                            <p>when an unknown printer took galley of type and scrambled it to make pspecimen bookt
-                                has.</p>
+                            <p>New Learning space</p>
                             <ul class="list-wrap">
-                                <li>463 7th Ave, NY 10018, USA</li>
-                                <li>+123 88 9900 456</li>
+                                <li>Jl. Pisang No.50, Malang, Kec. Lowokwaru,
+                                    Kota Malang,
+                                    Jawa Timur 65145</li>
+                                </li>
+                                <li></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                     <div class="footer__widget">
-                        <h4 class="footer__widget-title">Useful Links</h4>
+                        <h4 class="footer__widget-title">Ide dari kami</h4>
                         <div class="footer__link">
                             <ul class="list-wrap">
-                                <li><a href="events-details.html">Our values</a></li>
-                                <li><a href="events-details.html">Our advisory board</a></li>
-                                <li><a href="events-details.html">Our partners</a></li>
-                                <li><a href="events-details.html">Become a partner</a></li>
-                                <li><a href="events-details.html">Work at Future Learn</a></li>
-                                <li><a href="events-details.html">Quizlet Plus</a></li>
+                                <li><a href="/about">Tentang kami</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                     <div class="footer__widget">
-                        <h4 class="footer__widget-title">Our Company</h4>
+                        <h4 class=""></h4>
                         <div class="footer__link">
-                            <ul class="list-wrap">
-                                <li><a href="contact.html">Contact Us</a></li>
-                                <li><a href="instructor-details.html">Become Teacher</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="instructor-details.html">Instructor</a></li>
-                                <li><a href="events-details.html">Events</a></li>
-                            </ul>
+                            {{-- <ul class="list-wrap">
+                                <li><a href="">Contact Us</a></li>
+                                <li><a href="">Become Teacher</a></li>
+                                <li><a href="">Blog</a></li>
+                                <li><a href="">Instructor</a></li>
+                                <li><a href="">Events</a></li>
+                            </ul> --}}
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-6">
                     <div class="footer__widget">
-                        <h4 class="footer__widget-title">Get In Touch</h4>
+                        <h5 class="footer__widget-title">Dapatkan kami</h5>
                         <div class="footer__contact-content">
-                            <p>when an unknown printer took <br> galley type and scrambled</p>
+                            <p>bisa cek sosial media <br> </p>
                             <ul class="list-wrap footer__social">
                                 <li>
                                     <a href="https://www.facebook.com/" target="_blank">
@@ -64,27 +61,20 @@
                                 </li>
                                 <li>
                                     <a href="https://www.facebook.com/" target="_blank">
-                                        <img src="assets/img/icons/whatsapp.svg" alt="img"
-                                            class="injectable">
+                                        <img src="assets/img/icons/whatsapp.svg" alt="img" class="injectable">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://www.facebook.com/" target="_blank">
-                                        <img src="assets/img/icons/instagram.svg" alt="img"
-                                            class="injectable">
+                                        <img src="assets/img/icons/instagram.svg" alt="img" class="injectable">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://www.facebook.com/" target="_blank">
-                                        <img src="assets/img/icons/youtube.svg" alt="img"
-                                            class="injectable">
+                                        <img src="assets/img/icons/youtube.svg" alt="img" class="injectable">
                                     </a>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="app-download">
-                            <a href="#"><img src="assets/img/others/google-play.svg" alt="img"></a>
-                            <a href="#"><img src="assets/img/others/apple-store.svg" alt="img"></a>
                         </div>
                     </div>
                 </div>
@@ -96,14 +86,14 @@
             <div class="row align-items-center">
                 <div class="col-md-7">
                     <div class="copy-right-text">
-                        <p>© 2024. All rights reserved.</p>
+                        <p>Copyright 2024 © Trio Of Innovator.</p>
                     </div>
                 </div>
                 <div class="col-md-5">
                     <div class="footer__bottom-menu">
                         <ul class="list-wrap">
-                            <li><a href="contact.html">Term of Use</a></li>
-                            <li><a href="contact.html">Privacy Policy</a></li>
+                            <li><a href="javasript:void(0)">Term of Use</a></li>
+                            <li><a href="javasript:void(0)">Privacy Policy</a></li>
                         </ul>
                     </div>
                 </div>
