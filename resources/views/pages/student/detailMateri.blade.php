@@ -2,10 +2,7 @@
 @section('content')
 <div class="d-flex justify-content-between mb-3">
     <h4>Detail Materi <span id="class-name1"></span></h4>
-    <div class="d-flex">
-        <!-- Button Kembali -->
-        <a href="" id="class-link" class="classroom-link" style="background: linear-gradient(90deg, #1e3c72, #2a5298); color: white; font-size: 13px; padding: 13px; border: none; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); margin-right: 10px;">Kembali</a>
-    </div>
+
 </div>
 
 <!-- Tabs -->
@@ -44,6 +41,18 @@
         <form id="submit-task-form" action="/api/student/task/submit" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
+                <label for="description" class="form-label">Judul tugas</label>
+                <input class="form-control" id="description" name="description"placeholder="Tuliskan judul tugas..."></input>
+            </div>
+            <div class="mb-3">
+                <label for="deadline" class="form-label">Deadline</label>
+                <input type="date" class="form-control" id="deadline" name="deadline" placeholder="Pilih tanggal deadline">
+            </div>
+            <div class="mb-3">
+                <label for="deadline" class="form-label">Tanggal pengumpulan</label>
+                <input type="date" class="form-control" id="tanggalPengumpulan" name="tanggalPengumpulan" placeholder="Pilih tanggal deadline">
+            </div>
+            <div class="mb-3">
                 <label for="file" class="form-label">Unggah File</label>
                 <input type="file" class="form-control" id="file" name="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
             </div>
@@ -55,9 +64,22 @@
                 <label for="description" class="form-label">Deskripsi</label>
                 <textarea class="form-control" id="description" name="description" rows="4" placeholder="Tuliskan deskripsi tugas..."></textarea>
             </div>
-            <button type="submit" class="btn btn-primary" style="background: linear-gradient(90deg, #ff0800, #ff0000); border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer;">
-                Kirim Tugas
-            </button>
+
+            <div class="d-flex justify-content-end align-items-center">
+                <!-- Button Kembali -->
+                <a href="" id="class-link" class="btn btn-primary" style="background: linear-gradient(90deg, #1e3c72, #2a5298); border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; margin-right: 10px;">
+                    Kembali
+                </a>
+
+                <!-- Button Kirim Tugas -->
+                <button type="submit" class="btn btn-primary" style="background: linear-gradient(90deg, #ff0800, #ff0000); border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer;">
+                    Kirim Tugas
+                </button>
+            </div>
+
+
+
+
         </form>
     </div>
 </div>

@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between mb-3">
         <h4>Detail Tugas <span id="task-name">Matematika - Tugas 1</span></h4>
         <div>
-            <a href="http://127.0.0.1:8000/teacher/task" class="btn btn-secondary btn-sm">Kembali</a>
+            <a href="{{ route('task.assignmentAssessment') }}" class="btn btn-secondary btn-sm">Kembali</a>
         </div>
     </div>
 
@@ -61,7 +61,7 @@
                     <th>No</th>
                     <th>Nama Siswa</th>
                     <th>Nilai</th>
-                    <th>Action</th>
+                    <th class="text-center">Aksi</th> <!-- Centered Action Column -->
                 </tr>
             </thead>
             <tbody>
@@ -69,8 +69,8 @@
             </tbody>
         </table>
         <div>
-            <button class="btn btn-secondary btn-sm" id="prevBtn">Previous</button>
-            <button class="btn btn-secondary btn-sm" id="nextBtn">Next</button>
+            <button class="btn btn-secondary btn-sm" id="prevBtn">Kembali</button>
+            <button class="btn btn-secondary btn-sm" id="nextBtn">Lanjut</button>
         </div>
     </div>
 
@@ -83,7 +83,7 @@
                 <tr>
                     <th>No</th>
                     <th>Nama Siswa</th>
-                    <th>Action</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -91,8 +91,8 @@
             </tbody>
         </table>
         <div>
-            <button class="btn btn-secondary btn-sm" id="prevBtnNotSubmitted">Previous</button>
-            <button class="btn btn-secondary btn-sm" id="nextBtnNotSubmitted">Next</button>
+            <button class="btn btn-secondary btn-sm" id="prevBtnNotSubmitted">Kembali</button>
+            <button class="btn btn-secondary btn-sm" id="nextBtnNotSubmitted">Lanjut</button>
         </div>
     </div>
 </div>
@@ -130,7 +130,7 @@
                 <td>${startIndex + index + 1}</td>
                 <td>${item.name}</td>
                 ${tableId === 'submitted-table' ? `<td><input type="number" class="form-control" value="${item.grade}" /></td>` : ''}
-                <td>
+                <td class="text-center">
                     <button class="btn btn-primary btn-sm">${tableId === 'submitted-table' ? 'Simpan Nilai' : item.action}</button>
                 </td>
             `;
@@ -171,8 +171,5 @@
         }
     });
 </script>
-
-
-
 
 @endsection

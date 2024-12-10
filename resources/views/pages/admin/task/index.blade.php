@@ -1,13 +1,35 @@
-@extends('layouts.teacher.app')
+@extends('layouts.admin.app')
+
 @section('content')
+<div class="page-title">
+    <div class="row">
+        <div class="col-xl-4 col-sm-7 box-col-3">
+            <h3>Tugas</h3>
+        </div>
+        <div class="col-5 d-none d-xl-block">
+
+        </div>
+        <div class="col-xl-3 col-sm-5 box-col-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/admin/classroom">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="m2.25 12l8.955-8.955a1.124 1.124 0 0 1 1.59 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">Tugas</li>
+            </ol>
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
     <!-- Modal Buat Tugas Baru -->
     <div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div>
-                    <a href="{{ route('task.assignmentAssessment') }}" class="btn btn-secondary btn-sm">Kembali</a>
-                </div>
                 <div class="modal-header">
                     <h5 class="modal-title" id="createTaskModalLabel">Buat Tugas Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -90,25 +112,17 @@
         </div>
     </div>
 
-
-<div class="d-lg-flex d-block mb-3 pb-3 border-bottom">
-    <div class="card-tabs mb-lg-0 mb-3 me-auto">
-        <a class="text-black fs-3">Semua Tugas</a>
+    <!-- Header -->
+    <div class="d-lg-flex d-block mb-3 pb-3 border-bottom" style="margin-top: 20px;"> <!-- Menambahkan margin-top -->
+        <div class="card-tabs mb-lg-0 mb-3 me-auto">
+            <a class="text-black fs-3">Semua Tugas</a>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#createTaskModal">
+                Buat Tugas Baru
+            </button>
+        </div>
     </div>
-    <div class="d-flex justify-content-between w-100">
-        <!-- Tombol Kembali (sebelah kiri) -->
-        <a href="{{ route('teacher.classroom.course') }}" class="btn btn-secondary btn-sm rounded" style="width: 180px;">
-            Kembali
-        </a>
-
-        <!-- Tombol Buat Tugas Baru (sebelah kanan) -->
-        <button type="button" class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#createTaskModal" style="width: 180px;">
-            Buat Tugas Baru
-        </button>
-    </div>
-</div>
-
-
 
     <!-- Filter Berdasarkan Tugas -->
     <div class="row">
@@ -146,7 +160,7 @@
                             <td style="padding: 15px;"><a href="#">Download File</a></td>
                             <td style="padding: 15px;"><span class="badge bg-success">Aktif</span></td>
                             <td style="padding: 15px;" class="text-center">
-                                <a href="{{ route('task.detailTask') }}" class="btn btn-info btn-sm">Detail</a>
+                                <a href="{{ route('admin.detailTask') }}" class="btn btn-info btn-sm">Detail</a>
                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit</button>
                                 <button class="btn btn-danger btn-sm">Hapus</button>
                             </td>

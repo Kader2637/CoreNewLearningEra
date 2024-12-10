@@ -148,12 +148,14 @@
     </style>
 @endsection
 @section('content')
-    <div class="mb-3 d-flex justify-content-between">
-        <h4>Detail Kelas <span id="class-name1"></span></h4>
-        <div>
-            <a href="{{ route('classroom.teacher') }}" class="btn btn-secondary btn-sm">Kembali</a>
-        </div>
+<div class="mb-3 d-flex justify-content-between">
+    <h4>Detail Kelas <span id="class-name1"></span></h4>
+    <div>
+        <a href="{{ route('task.assignmentAssessment') }}" class="btn btn-primary btn-sm mr-2">Tambah Tugas</a>
+        <a href="{{ route('classroom.teacher') }}" class="btn btn-secondary btn-sm">Kembali</a>
     </div>
+</div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="px-3 pt-3 pb-0 class-profile card card-body">

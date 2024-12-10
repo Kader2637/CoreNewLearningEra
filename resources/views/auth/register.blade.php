@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumb__content">
-                        <h3 class="title">Register</h3>
+                        <h3 class="title">Daftar</h3>
                         <nav class="breadcrumb">
                             <span property="itemListElement" typeof="ListItem">
                                 <a href="/">Home</a>
@@ -38,7 +38,7 @@
                             <span class="breadcrumb-separator">
                                 <i class="fas fa-angle-right"></i>
                             </span>
-                            <span property="itemListElement" typeof="ListItem">Register</span>
+                            <span property="itemListElement" typeof="ListItem">Daftar</span>
                         </nav>
                     </div>
                 </div>
@@ -58,9 +58,8 @@
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-8">
                     <div class="singUp-wrap">
-                        <h2 class="title">CHOOSE ROLE</h2>
-                        <p>Hey there! Ready to log in? Just enter your username and password below and you'll be back in
-                            action in no time. Let's go!</p>
+                        <h2 class="title">PILIH ROLE</h2>
+                        <p>Halo! Siap untuk melangkah lebih jauh? Pilih peran yang sesuai untuk Anda dan mulai perjalanan Anda bersama kami! Ayo, temukan peran yang tepat dan mulai sekarang.</p>
                         <div class="account__divider">
                         </div>
                         <form action="#" class="account__form">
@@ -101,7 +100,7 @@
                                                                         </div>
                                                                         <div class="panel-heading text-white">
                                                                             <h5 class="mt-1 text-white">
-                                                                                Student
+                                                                                Siswa
                                                                             </h5>
                                                                         </div>
                                                                     </div>
@@ -150,7 +149,7 @@
                                                                         </div>
                                                                         <div class="panel-heading">
                                                                             <h5 class="mt-1 text-white">
-                                                                                Teacher
+                                                                                Guru
                                                                             </h5>
                                                                         </div>
                                                                     </div>
@@ -169,7 +168,7 @@
                         <div class="account__divider">
                         </div>
                         <div class="account__switch">
-                            <p>Sudah mempunyai akun?<a href="{{ route('login') }}">Login</a></p>
+                            <p>Sudah mempunyai akun?<a href="{{ route('login') }}">Masuk</a></p>
                         </div>
                     </div>
                 </div>

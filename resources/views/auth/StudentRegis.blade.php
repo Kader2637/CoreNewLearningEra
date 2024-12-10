@@ -1,4 +1,5 @@
 @extends('layouts.landingpage.app')
+
 @section('style')
     <style>
         label {
@@ -18,9 +19,10 @@
             cursor: pointer;
         }
 
-        .card-input-element:checked+.card-input {
+        .card-input-element:checked + .card-input {
             box-shadow: 0 0 2px 2px #cb56fa;
         }
+
         label {
             width: 100%;
             text-align: left; /* Aligning the label text to the left */
@@ -55,7 +57,8 @@
             margin-bottom: 8px;
         }
 
-        .form-grp input, .form-grp textarea {
+        .form-grp input,
+        .form-grp textarea {
             width: 100%;
         }
 
@@ -111,9 +114,8 @@
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-8">
                     <div class="singUp-wrap">
-                        <h2 class="title">Student Register</h2>
-                        <p>Hey there! Ready to log in? Just enter your username and password below and you'll be back in
-                            action in no time. Let's go!</p>
+                        <h2 class="title">Register siswa</h2>
+                        <p>Selamat datang di platform pembelajaran kami! Bergabunglah dengan ribuan siswa lainnya dan mulailah perjalanan belajar Anda bersama New Learning Era. Daftar sekarang untuk mulai belajar dengan cara yang lebih menyenangkan dan efektif!</p>
                         <div class="account__social">
 
                         </div>
@@ -174,15 +176,16 @@
                             <div class="account__check">
                                 <div class="account__check-remember">
                                     <input type="checkbox" class="form-check-input" value="" id="terms-check">
-                                    <label for="terms-check" class="form-check-label">Remember me</label>
+                                    <label for="terms-check" class="form-check-label">Ingat saya</label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-two arrow-btn">Sign<img
-                                    src="{{ asset('assets/img/icons/right_arrow.svg') }}" alt="img"
-                                    class="injectable"></button>
+                            <button type="submit" class="btn btn-two arrow-btn" id="submitButton">
+                                <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                                Daftar<img src="{{ asset('assets/img/icons/right_arrow.svg') }}" alt="img" class="injectable">
+                            </button>
                         </form>
                         <div class="account__switch">
-                            <p><a href="{{ route('register') }}">Back</a></p>
+                            <p><a href="{{ route('register') }}">Kembali</a></p>
                         </div>
                     </div>
                 </div>
@@ -190,6 +193,7 @@
         </div>
     </section>
 @endsection
+
 @section('script')
     <script>
         function previewImage(event) {
@@ -204,10 +208,17 @@
             }
             reader.readAsDataURL(event.target.files[0]);
         }
+
         $(document).ready(function() {
             $('#registrationForm').on('submit', function(e) {
                 e.preventDefault();
+
+                // Menonaktifkan tombol dan menampilkan spinner
+                $('#submitButton').prop('disabled', true);
+                $('#spinner').show();
+
                 var formData = new FormData(this);
+
                 $.ajax({
                     type: 'POST',
                     url: '/api/Apiregister/student',
@@ -215,15 +226,18 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        toastr.success(
-                            'Pendaftaran berhasil!',
-                            'Sukses');
+                        toastr.success('Pendaftaran berhasil!', 'Sukses');
                         setTimeout(function() {
                             window.location.href = "/login";
                         }, 2000);
                     },
                     error: function(xhr) {
                         toastr.error('Terjadi kesalahan: ' + xhr.responseText, 'Kesalahan');
+                    },
+                    complete: function() {
+                        // Menonaktifkan spinner dan mengaktifkan kembali tombol setelah request selesai
+                        $('#submitButton').prop('disabled', false);
+                        $('#spinner').hide();
                     }
                 });
             });

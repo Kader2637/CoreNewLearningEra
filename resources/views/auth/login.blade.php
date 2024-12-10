@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumb__content">
-                        <h3 class="title">Login</h3>
+                        <h3 class="title">Masuk</h3>
                         <nav class="breadcrumb">
                             <span property="itemListElement" typeof="ListItem">
                                 <a href="/">Home</a>
@@ -40,7 +40,7 @@
                             <span class="breadcrumb-separator">
                                 <i class="fas fa-angle-right"></i>
                             </span>
-                            <span property="itemListElement" typeof="ListItem">Login</span>
+                            <span property="itemListElement" typeof="ListItem">Masuk</span>
                         </nav>
                     </div>
                 </div>
@@ -61,9 +61,8 @@
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-8">
                     <div class="singUp-wrap">
-                        <h2 class="title">Welcome back!</h2>
-                        <p>Hey there! Ready to log in? Just enter your username and password below and you'll be back in
-                            action in no time. Let's go!</p>
+                        <h2 class="title">Selamat datang!</h2>
+                        <p>Halo, selamat datang kembali! Masukkan email dan kata sandi Anda untuk melanjutkan ke dalam akun. Kami siap membantu Anda menjalani pengalaman terbaik di sini. Ayo, segera masuk!</p>
                         <form action="/post/login" method="POST" class="account__form" id="loginForm">
                             @csrf
                             <div class="form-grp">
@@ -71,21 +70,21 @@
                                 <input id="email" name="email" type="text" placeholder="email" required>
                             </div>
                             <div class="form-grp">
-                                <label for="password">Password</label>
+                                <label for="password">Kata sandi</label>
                                 <input id="password" name="password" type="password" placeholder="password" required>
                             </div>
                             <div class="account__check">
                                 <div class="account__check-remember">
                                     <input type="checkbox" class="form-check-input" value="" id="terms-check">
-                                    <label for="terms-check" class="form-check-label">Remember me</label>
+                                    <label for="terms-check" class="form-check-label">Ingat saya</label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-two arrow-btn">Sign In<img
+                            <button type="submit" class="btn btn-two arrow-btn">Masuk<img
                                     src="assets/img/icons/right_arrow.svg" alt="img" class="injectable"></button>
                         </form>
                         <div id="responseMessage"></div>
                         <div class="account__switch">
-                            <p>Don't have an account?<a href="{{ route('register') }}">Sign Up</a></p>
+                            <p>Belum punya akun?<a href="{{ route('register') }}">Daftar</a></p>
                         </div>
                     </div>
                 </div>

@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="d-flex justify-content-between mb-3">
-    <h4>Detail Materi <span id="class-name1"></span></h4>
+
+   <h4>Detail Materi <span id="class-name1"></span></h4>
     <div>
         <a id="back-button" href="#" class="btn btn-secondary btn-sm">Kembali</a>
     </div>
 </div>
-
 <div id="link" style="display: none;"></div>
 <div id="document" style="display: none; position: relative; width: 100%; overflow: hidden;">
     <div class="container-fluid d-flex justify-content-center mb-5">

@@ -25,7 +25,7 @@
                             <div class="tgmenu__action">
                                 <ul class="list-wrap">
                                     <li class="header-btn login-btn">
-                                        <a href="{{ route('login') }}">Log in</a>
+                                        <a href="{{ route('login') }}">Masuk</a>
                                     </li>
                                 </ul>
                             </div>

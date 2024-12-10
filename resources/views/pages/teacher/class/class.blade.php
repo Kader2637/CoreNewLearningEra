@@ -1,5 +1,17 @@
 @extends('layouts.teacher.app')
 @section('content')
+<style>
+    /* Menambahkan border pada tabel dan sel */
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #ddd;
+}
+</style>
+
+
     <div class="container-fluid">
         <!-- Modal Buat Kelas Baru -->
         <div class="modal fade" id="createClassModal" tabindex="-1" aria-labelledby="createClassModalLabel" aria-hidden="true">
@@ -178,7 +190,7 @@
                 </div>
                 <!-- Tabel Data Kelas -->
                 <div class="table-responsive card-table rounded table-hover fs-14">
-                    <table class="table border-no display mb-4 dataTablesCard project-bx dataTable no-footer"
+                    <table class="table table-bordered mb-4 dataTablesCard project-bx dataTable no-footer"
                         id="example5" role="grid">
                         <thead>
                             <tr role="row">
@@ -192,9 +204,9 @@
                             </tr>
                         </thead>
                         <tbody id="classroom-data">
+                            <!-- Data rows will be populated here -->
                         </tbody>
                     </table>
-                </div>
             </div>
         </div>
     </div>

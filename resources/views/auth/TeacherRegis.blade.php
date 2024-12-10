@@ -4,7 +4,7 @@
     <style>
         label {
             width: 100%;
-            text-align: left; /* Aligning the label text to the left */
+            text-align: left;
         }
 
         .card-input-element {
@@ -68,6 +68,33 @@
         .profile-image-wrapper input {
             margin-top: 10px; /* Add margin between image and file input */
         }
+
+        .spinner {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Adjust button styles to make space for spinner */
+        .btn-spinner {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-spinner span {
+            margin-right: 10px;
+        }
     </style>
 @endsection
 
@@ -109,9 +136,8 @@
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-8">
                     <div class="singUp-wrap">
-                        <h2 class="title">Teacher Register</h2>
-                        <p>Hey there! Ready to log in? Just enter your username and password below and you'll be back in
-                            action in no time. Let's go!</p>
+                        <h2 class="title">Register guru</h2>
+                        <p>Selamat datang, calon pengajar! Bergabunglah dengan New Learning Era dan bantu membentuk masa depan generasi penerus dengan cara mengajar yang lebih efektif dan menyenangkan. Daftarkan diri Anda sekarang untuk berbagi ilmu dan pengalaman!</p>
                         <div class="account__divider">
                             <span>or</span>
                         </div>
@@ -120,7 +146,6 @@
                                 <!-- Profile Picture (hidden initially) -->
                                 <div class="col-12">
                                     <div class="form-grp profile-image-wrapper">
-
                                         <div class="profile-image-container" id="profileImageContainer" style="display: none;">
                                             <img id="profileImage" src="{{ asset('assets/img/user.png') }}" alt="Foto Profil">
                                         </div>
@@ -188,13 +213,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-two arrow-btn">
-                                Daftar
-                                <img src="{{ asset('assets/img/icons/right_arrow.svg') }}" alt="img" class="injectable">
+                            <button type="submit" class="btn btn-two arrow-btn btn-spinner" id="submitButton">
+                                <span>Daftar</span>
+                                <div id="loadingSpinner" class="spinner"></div>
                             </button>
                         </form>
                         <div class="account__switch">
-                            <p><a href="{{ route('register') }}">Back</a></p>
+                            <p><a href="{{ route('register') }}">Kembali</a></p>
                         </div>
                     </div>
                 </div>
@@ -211,8 +236,6 @@
             reader.onload = function() {
                 const output = document.getElementById('profileImage');
                 const container = document.getElementById('profileImageContainer');
-
-                // Display the profile image container when an image is selected
                 container.style.display = 'flex';
                 output.src = reader.result;
             }
@@ -222,6 +245,12 @@
         $(document).ready(function() {
             $('#registrationForm').on('submit', function(e) {
                 e.preventDefault();
+
+                // Show the spinner
+                $('#submitButton span').hide(); // Hide text
+                $('#loadingSpinner').show(); // Show the spinner
+                $('#submitButton').prop('disabled', true); // Disable the button
+
                 var formData = new FormData(this);
                 $.ajax({
                     type: 'POST',
@@ -230,15 +259,19 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        toastr.success(
-                            'Pendaftaran berhasil! Silahkan menunggu konfirmasi dari admin terlebih dahulu!',
-                            'Sukses');
+                        toastr.success('Pendaftaran berhasil! Silahkan menunggu konfirmasi dari admin terlebih dahulu!', 'Sukses');
                         setTimeout(function() {
                             window.location.href = "/login";
                         }, 2000);
                     },
                     error: function(xhr, status, error) {
                         toastr.error('Pendaftaran gagal! Coba lagi!', 'Gagal');
+                    },
+                    complete: function() {
+                        // Hide the spinner after the request is complete
+                        $('#loadingSpinner').hide();
+                        $('#submitButton span').show(); // Show text again
+                        $('#submitButton').prop('disabled', false); // Enable the button again
                     }
                 });
             });

@@ -26,4 +26,13 @@ Route::prefix('admin')->middleware(['auth', CheckRole::class . ':admin'])->group
     Route::get('/approval', function () {
         return view('pages.admin.approval.index');
     })->name('admin.approval');
+
+    Route::get('/task', function () {
+        return view('pages.admin.task.index');
+    })->name('admin.task');
+
+    Route::get('/deatailTask', function () {
+        return view('pages.admin.task.detailTask.detailTask');
+    })->name('admin.detailTask');
+
 });
