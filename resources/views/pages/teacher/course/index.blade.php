@@ -151,7 +151,6 @@
 <div class="mb-3 d-flex justify-content-between">
     <h4>Detail Kelas <span id="class-name1"></span></h4>
     <div>
-        <a href="{{ route('task.assignmentAssessment') }}" class="btn btn-primary btn-sm mr-2">Tambah Tugas</a>
         <a href="{{ route('classroom.teacher') }}" class="btn btn-secondary btn-sm">Kembali</a>
     </div>
 </div>

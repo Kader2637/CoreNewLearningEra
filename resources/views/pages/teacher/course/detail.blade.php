@@ -5,6 +5,7 @@
 
    <h4>Detail Materi <span id="class-name1"></span></h4>
     <div>
+        <a href="{{ route('task.assignmentAssessment') }}" class="btn btn-primary btn-sm mr-2">Tambah Tugas</a>
         <a id="back-button" href="#" class="btn btn-secondary btn-sm">Kembali</a>
     </div>
 </div>

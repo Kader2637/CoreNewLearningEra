@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TaskCourse;
-use App\Http\Requests\StoreTaskCourseRequest;
-use App\Http\Requests\UpdateTaskCourseRequest;
+use App\Models\AssigmentAsesmentTask;
+use App\Http\Requests\StoreAssigmentAsesmentTaskRequest;
+use App\Http\Requests\UpdateAssigmentAsesmentTaskRequest;
 
-class TaskCourseController extends Controller
+class AssigmentAsesmentTaskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class TaskCourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTaskCourseRequest $request)
+    public function store(StoreAssigmentAsesmentTaskRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class TaskCourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TaskCourse $taskCourse)
+    public function show(AssigmentAsesmentTask $assigmentAsesmentTask)
     {
         //
     }
@@ -43,7 +43,7 @@ class TaskCourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TaskCourse $taskCourse)
+    public function edit(AssigmentAsesmentTask $assigmentAsesmentTask)
     {
         //
     }
@@ -51,7 +51,7 @@ class TaskCourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaskCourseRequest $request, TaskCourse $taskCourse)
+    public function update(UpdateAssigmentAsesmentTaskRequest $request, AssigmentAsesmentTask $assigmentAsesmentTask)
     {
         //
     }
@@ -59,7 +59,7 @@ class TaskCourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TaskCourse $taskCourse)
+    public function destroy(AssigmentAsesmentTask $assigmentAsesmentTask)
     {
         //
     }

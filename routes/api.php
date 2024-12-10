@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\StudentClassroomRelationController;
 use App\Http\Controllers\Api\StudentCourseController;
+use App\Http\Controllers\Api\TaskCourseController;
 use App\Http\Controllers\ForumDiscussionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -83,3 +84,12 @@ Route::get('/classroom' , [ClassroomController::class , 'index']);
 Route::get('/forum/discussion/{id}' , [ForumDiscussionController::class , 'index']);
 Route::post('/forum/discussion' , [ForumDiscussionController::class , 'store']);
 Route::delete('/forum/discussion/delete/{id}' , [ForumDiscussionController::class , 'destroy']);
+
+
+// Task course
+Route::get('/task/course/{id}' , [TaskCourseController::class , 'index']);
+Route::post('/task/course/post' , [TaskCourseController::class , 'store']);
+Route::put('/task/course/update/{taskCourse}' ,[TaskCourseController::class , 'update']);
+Route::delete('/task/course/delete/{taskCourse}' , [TaskCourseController::class , 'destroy']);
+
+

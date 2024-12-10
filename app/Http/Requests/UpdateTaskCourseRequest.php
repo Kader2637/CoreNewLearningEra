@@ -11,7 +11,7 @@ class UpdateTaskCourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateTaskCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'description' => 'required',
+            'course_id' => 'required',
+            'type' => 'required',
         ];
     }
 }

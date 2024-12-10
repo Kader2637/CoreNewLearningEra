@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('task_courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('name');
+            $table->text('description');
+            $table->enum('type' , ['link', 'file']);
             $table->foreignId('course_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

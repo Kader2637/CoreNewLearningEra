@@ -11,7 +11,7 @@
 
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                    <img src="{{ asset('assetsTeacher/images/profile/1.jpg') }}" style="object-fit: cover" width="20" alt=""/>
+                                    <img src="{{ asset('storage/') }}/{{ auth()->user()->image }}" style="object-fit: cover" width="20" alt=""/>
 									<div class="header-info">
 										<span class="text-black">{{ auth()->user()->name }}</span>
 										<p class="fs-12 mb-0">{{ auth()->user()->role }}</p>
