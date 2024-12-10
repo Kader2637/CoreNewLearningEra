@@ -264,6 +264,57 @@
                         $('#nameTeacher').text(dataKelas.user.name);
                         ambilDataMateri();
                         ambilDataSiswa();
+
+function ambilDataSiswa() {
+    $.ajax({
+        url: `/api/teacher/data/classroom/${classId}`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            console.log(response);
+            if (response.status) {
+                const daftarSiswa = response.data;
+                const kontainerSiswa = $('#student-list');
+                kontainerSiswa.empty();
+                if (daftarSiswa.length > 0) {
+                    daftarSiswa.forEach(siswa => {
+                        kontainerSiswa.append(`
+                            <div class="col-xl-4 col-xxl-6 col-sm-6">
+                                <div class="card contact-bx">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="image-bx me-3 me-lg-2 me-xl-3">
+                                                <img src="${siswa.profile || '{{ asset('user.png') }}'}" alt="" class="rounded-circle" width="70">
+                                                <span class="active"></span>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="mb-0 fs-20 font-w600">
+                                                    <a href="javascript:void(0)" class="text-black">${siswa.name}</a>
+                                                </h6>
+                                                <p class="fs-14">${siswa.email}</p>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    });
+                } else {
+                    kontainerSiswa.append('<p class="text-center">Tidak ada data siswa.</p>');
+                }
+            } else {
+                console.error('Data tidak ditemukan:', response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Terjadi kesalahan:', error);
+        }
+    });
+}
+
+
+
                     } else {
                         $('#class-name').text('Data kelas tidak ditemukan');
                     }

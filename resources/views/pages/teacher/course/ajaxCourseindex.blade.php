@@ -57,11 +57,11 @@
                                             <span class="active"></span>
                                         </div>
                                         <div class="media-body">
-                                            <h6 class="fs-20 font-w600 mb-0">
+                                            <h6 class="mb-0 fs-20 font-w600">
                                                 <a href="javascript:void(0)" class="text-black">${siswa.name}</a>
                                             </h6>
                                             <p class="fs-14">${siswa.email}</p>
-                                            <div class="d-flex justify-content-end mt-2 gap-2">
+                                            <div class="gap-2 mt-2 d-flex justify-content-end">
                                                 <button type="button" class="btn btn-danger btn-sm" title="Keluarkan" data-id="${siswa.id_relation}" onclick="openKickModal(${siswa.id_relation})">
 Keluarkan
 </button>
@@ -114,11 +114,11 @@ Keluarkan
                                     <span class="active"></span>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="fs-20 font-w600 mb-0">
+                                    <h6 class="mb-0 fs-20 font-w600">
                                         <a href="javascript:void(0)" class="text-black">${siswa.name}</a>
                                     </h6>
                                     <p class="fs-14">${siswa.email}</p>
-                                    <div class="d-flex justify-content-end mt-2 gap-2">
+                                    <div class="gap-2 mt-2 d-flex justify-content-end">
                                         <button type="button" class="btn btn-danger btn-sm" title="Tolak" data-id="${siswa.id}">
                                             Tolak
                                         </button>
@@ -294,12 +294,12 @@ Keluarkan
                             .description;
 
                         const card = `
-                    <div class="col-lg-4 mb-3" id="material-${material.id}">
+                    <div class="mb-3 col-lg-4" id="material-${material.id}">
                         <div class="card d-flex flex-column" style="height: 100%;">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">${material.name}</h5>
                                 <p class="card-text flex-grow-1">${truncatedDescription}</p>
-                                <div class="d-flex justify-content-end mt-2 gap-2">
+                                <div class="gap-2 mt-2 d-flex justify-content-end">
                                     <button type="button" class="btn btn-warning btn-sm" title="Edit">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="white" d="m19.71 8.04l-2.34 2.33l-3.75-3.75l2.34-2.33c.39-.39 1.04-.39 1.41 0l2.34 2.34c.39.37.39 1.02 0 1.41M3 17.25L13.06 7.18l3.75 3.75L6.75 21H3zM16.62 5.04l-1.54 1.54l2.34 2.34l1.54-1.54zM15.36 11L13 8.64l-9 9.02V20h2.34z"/></svg>
                                     </button>

@@ -244,63 +244,33 @@
                         <div class="row" id="student-list">
                         </div>
                         {{-- diskusi --}}
-                        <section class="msger">
-                            <header class="msger-header">
-                                <div class="msger-header-title">
-                                    <i class="fas fa-comment-alt"></i> Diskusi room
-                                </div>
-                                <div class="msger-header-options">
-                                    <span><i class="fas fa-cog"></i></span>
-                                </div>
-                            </header>
-
-                            <main class="msger-chat">
-                                <div class="msg left-msg">
-                                    <div class="msg-img"
-                                        style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)">
-                                    </div>
-
-                                    <div class="msg-bubble">
-                                        <div class="msg-info">
-                                            <div class="msg-info-name">BOT</div>
-                                            <div class="msg-info-time">12:45</div>
+                       <section class="msger mb-5d">
+                                    <header class="msger-header">
+                                        <div class="msger-header-title">
+                                            <i class="fas fa-comment-alt"></i> Ruang Diskusi
                                         </div>
-
-                                        <div class="msg-text">
-                                            Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+                                        <div class="msger-header-options">
+                                            <span><i class="fas fa-cog"></i></span>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="msg right-msg">
-                                    <div class="msg-img"
-                                        style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)">
-                                    </div>
-
-                                    <div class="msg-bubble">
-                                        <div class="msg-info">
-                                            <div class="msg-info-name">vanzy</div>
-                                            <div class="msg-info-time">12:46</div>
-                                        </div>
-
-                                        <div class="msg-text">
-                                            BANG UDAH BANG
-                                        </div>
-                                    </div>
-                                </div>
-                            </main>
-
-                            <form class="msger-inputarea">
-                                <input type="text" class="msger-input" placeholder="Enter your message...">
-                                <button type="submit" class="msger-send-btn">Send</button>
-                            </form>
-
-                        </section>
+                                    </header>
+                                    <main class="msger-chat" id="kotak-pesan" style="height: 650px; overflow-y: auto;">
+                                    </main>
+                                    <form class="msger-inputarea" id="form-pesan">
+                                        <input type="text" class="msger-input" name="message" id="input-pesan"
+                                            placeholder="Tulis pesan di sini...">
+                                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                        <input type="hidden" name="classroom_id" value="{{ $id }}">
+                                        <button type="submit" class="msger-send-btn">Kirim</button>
+                                    </form>
+                                </section>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @include('components.modal-delete')
+    @include('components.teacher.kick')
+    @include('components.teacher.accept')
 @endsection
 
 @section('script')
@@ -433,8 +403,147 @@ Keluarkan
             });
         };
 
+
         $(document).ready(function() {
             ambilDataKelas();
+        });
+
+
+        const openKickModal = (studentId) => {
+            $('#deleteClassId').val(studentId);
+            $('#modal-kick-student').modal('show');
+        };
+
+        $('#form-kick').submit(function(e) {
+            e.preventDefault();
+            const studentId = $('#deleteClassId').val();
+
+            $.ajax({
+                url: `/api/kick/student/${studentId}`,
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    showAlert("Siswa berhasil di Keluarkan", 'success');
+                    $('#modal-kick-student').modal('hide');
+                    ambilDataSiswa();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error mengeluarkan siswa:', error);
+                    showAlert("Gagal mengeluarkan siswa", 'error');
+                }
+            });
+        });
+    </script>
+     <script>
+        $(document).ready(function() {
+            const urlAmbilPesan = `/api/forum/discussion/{{ $id }}`;
+            const urlKirimPesan = `/api/forum/discussion`;
+            const localStorageKey = `messages-${{{ $id }}}`;
+            let lastMessageId = localStorage.getItem(localStorageKey) || 0;
+
+            function ambilPesan() {
+                const kotakPesan = $('#kotak-pesan');
+                const isScrolledToBottom = kotakPesan.scrollTop() + kotakPesan.innerHeight() >= kotakPesan[0].scrollHeight;
+
+                $.ajax({
+                    url: `${urlAmbilPesan}?last_message_id=${lastMessageId}`,
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.status === "success" && response.data.length > 0) {
+                            tampilkanPesan(response.data, isScrolledToBottom);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Gagal mengambil pesan', error);
+                    }
+                });
+            }
+
+            function tampilkanPesan(pesan, isScrolledToBottom) {
+                const kotakPesan = $('#kotak-pesan');
+                const existingMessages = kotakPesan.find('.msg').map(function() {
+                    return $(this).data('message-id');
+                }).get();
+
+                pesan.forEach(function(msg) {
+                    if (existingMessages.includes(msg.id)) {
+                        return;
+                    }
+
+                    const kelasPesan = msg.user_id == "{{ auth()->user()->id }}" ? 'right-msg' : 'left-msg';
+                    const userImage = msg.user_id == "{{ auth()->user()->id }}" && msg.user_image ?
+                                      "{{ asset('storage') }}/" + msg.user_image :
+                                      "{{ asset('storage/user.png') }}";
+
+                    const time = new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                    const htmlPesan = `
+                        <div class="msg ${kelasPesan}" data-message-id="${msg.id}">
+                            <div class="msg-img" style="background-image: url('${userImage}');"></div>
+                            <div class="msg-bubble">
+                                <div class="msg-info">
+                                    <div class="msg-info-name">${msg.user_id == "{{ auth()->user()->id }}" ? 'Anda' : msg.user_name}</div>
+                                    <div class="msg-info-time">${time}</div>
+                                </div>
+                                <div class="msg-text">${msg.message}</div>
+                            </div>
+                        </div>
+                    `;
+                    kotakPesan.append(htmlPesan);
+                    lastMessageId = msg.id;
+                });
+
+                localStorage.setItem(localStorageKey, lastMessageId);
+
+                if (isScrolledToBottom) {
+                    kotakPesan.scrollTop(kotakPesan.prop('scrollHeight'));
+                }
+            }
+
+            $('#form-pesan').submit(function(event) {
+                event.preventDefault();
+                const formData = $(this).serialize();
+                $.ajax({
+                    url: urlKirimPesan,
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        if (response.status === "success" && response.data) {
+                            const pesanBaru = response.data;
+                            const kelasPesan = pesanBaru.user_id == "{{ auth()->user()->id }}" ? 'right-msg' : 'left-msg';
+
+                            const userImage = pesanBaru.user_id == "{{ auth()->user()->id }}" && pesanBaru.user_image ?
+                                              "{{ asset('storage') }}/" + pesanBaru.user_image :
+                                              "{{ asset('storage/user.png') }}";
+
+                            const time = new Date(pesanBaru.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                            const htmlPesan = `
+                                <div class="msg ${kelasPesan}" data-message-id="${pesanBaru.id}">
+                                    <div class="msg-img" style="background-image: url('${userImage}');"></div>
+                                    <div class="msg-bubble">
+                                        <div class="msg-info">
+                                            <div class="msg-info-name">Anda</div>
+                                            <div class="msg-info-time">${time}</div>
+                                        </div>
+                                        <div class="msg-text">${pesanBaru.message}</div>
+                                    </div>
+                                </div>
+                            `;
+                            $('#kotak-pesan').append(htmlPesan).scrollTop($('#kotak-pesan').prop('scrollHeight'));
+                            $('#input-pesan').val('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Gagal mengirim pesan', error);
+                    }
+                });
+            });
+
+            ambilPesan();
+            setInterval(ambilPesan, 2000);
         });
     </script>
 @endsection

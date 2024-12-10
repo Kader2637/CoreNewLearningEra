@@ -38,6 +38,7 @@ class StudentCourseController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'profile' => $user->image,
+                'id_relation' => $relation->id,
             ];
         });
 
