@@ -168,7 +168,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-6 col-md-4 mt-4 text-center">
+                <div class="col-12 col-xxl-4 col-xl-6 col-lg-8 col-md-10 mt-4 text-center">
                     <a href="/register/student">
                         <div class="card role-card">
                             <div class="card-header">
@@ -189,7 +189,7 @@
                     </a>
                 </div>
 
-                <div class="col-6 col-md-4 mt-4 text-center">
+                <div class="col-12 col-xxl-4 col-xl-6 col-lg-8 col-md-10 mt-4 text-center">
                     <a href="/register/teacher">
                         <div class="card role-card">
                             <div class="card-header">
