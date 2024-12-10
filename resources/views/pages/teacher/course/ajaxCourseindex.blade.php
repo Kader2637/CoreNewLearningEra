@@ -210,6 +210,14 @@ Keluarkan
     $('#form-reject').on('submit', function(e) {
         e.preventDefault();
         const siswaId = $('#rejectStudentId').val();
+        const $button = $('#btn-reject');
+        const $text = $button.find('.btn-text');
+        const $loading = $button.find('.btn-loading');
+
+        // Disable button and show loading
+        $button.prop('disabled', true);
+        $text.hide();
+        $loading.show();
 
         $.ajax({
             url: `/api/reject/teacher/${siswaId}`,
@@ -228,9 +236,16 @@ Keluarkan
             },
             error: function(xhr, status, error) {
                 showAlert("Terjadi kesalahan.", 'error');
+            },
+            complete: function() {
+                // Re-enable button and hide loading
+                $button.prop('disabled', false);
+                $text.show();
+                $loading.hide();
             }
         });
     });
+
 
 
     const openKickModal = (studentId) => {

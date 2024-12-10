@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AcceptStudent;
+use App\Mail\RejectStudent;
 use App\Models\Classroom;
 use App\Models\StudentClassroomRelation;
 use App\Models\User;
@@ -91,7 +92,9 @@ class ClassroomTeacherController extends Controller
     public function reject($user_id)
     {
         $accept = StudentClassroomRelation::where('user_id', $user_id)->first();
+        $user = User::where('id' , $user_id)->first();
 
+        Mail::to($user->email)->send(new RejectStudent());
         $accept->status = 'reject';
         $accept->save();
         return response()->json([
