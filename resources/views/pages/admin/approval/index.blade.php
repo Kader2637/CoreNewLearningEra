@@ -105,7 +105,7 @@
                                     `);
                             } else {
                                 $.each(response.data, function(index, item) {
-                                    let profileImage = item.image || '{{ asset('user.png') }}';
+                                    let profileImage = `{{asset('storage/${item.image}')}}` || '{{ asset('user.png') }}';
 
                                     tbody.append(`
                                             <tr>

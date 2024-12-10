@@ -59,7 +59,7 @@ class LoginController extends Controller
             'nip' => 'required|numeric',
             'address' => 'required|string',
             'no_telephone' => 'required|numeric',
-            'image' => 'nullable'
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         if (User::where('email', $request->email)->exists()) {
@@ -80,7 +80,7 @@ class LoginController extends Controller
             'address' => $request->address,
             'no_telephone' => $request->no_telephone,
             'status' => 'pending',
-            'image' => $request->file('image')->store(path: 'images')
+            'image' => $request->file('image')->store('images'),
         ]);
 
         return response()->json([
@@ -97,6 +97,8 @@ class LoginController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'gender' => 'required|string',
             'no_telephone' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+
         ]);
 
         if (User::where('email', $request->email)->exists()) {
@@ -113,7 +115,9 @@ class LoginController extends Controller
             'role' => 'student',
             'gender' => $request->gender,
             'no_telephone' => $request->no_telephone,
-            'status' => 'accept'
+            'status' => 'accept',
+            'image' => $request->file('image')->store('images')
+
         ]);
 
         return response()->json([

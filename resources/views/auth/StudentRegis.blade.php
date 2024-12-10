@@ -21,6 +21,55 @@
         .card-input-element:checked+.card-input {
             box-shadow: 0 0 2px 2px #cb56fa;
         }
+        label {
+            width: 100%;
+            text-align: left; /* Aligning the label text to the left */
+        }
+
+        /* Styling for profile image inside the circle */
+        .profile-image-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* Make the image circular */
+            overflow: hidden; /* Hide overflowed parts of the image */
+            background-color: #f0f0f0; /* Background color if image is not available */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px; /* Add margin if needed */
+        }
+
+        .profile-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Maintain aspect ratio */
+        }
+
+        .form-grp {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align the label to the left */
+        }
+
+        .form-grp label {
+            margin-bottom: 8px;
+        }
+
+        .form-grp input, .form-grp textarea {
+            width: 100%;
+        }
+
+        /* Ensure the label and the image are on separate lines */
+        .profile-image-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the elements */
+            justify-content: center;
+        }
+
+        .profile-image-wrapper input {
+            margin-top: 10px; /* Add margin between image and file input */
+        }
     </style>
 @endsection
 
@@ -71,7 +120,16 @@
                         <div class="account__divider">
 
                         </div>
-                        <form id="registrationForm" class="account__form">
+                        <form id="registrationForm" class="account__form" enctype="multipart/form-data">
+                            <div class="col-12">
+                                <div class="form-grp profile-image-wrapper">
+                                    <div class="profile-image-container" id="profileImageContainer" style="display: none;">
+                                        <img id="profileImage" src="{{ asset('assets/img/user.png') }}" alt="Foto Profil">
+                                    </div>
+                                    <label for="image">Foto Profil</label>
+                                    <input id="image" name="image" type="file" onchange="previewImage(event)" required class="form-control">
+                                </div>
+                            </div>
                             <div class="form-grp">
                                 <label for="nama">Nama Lengkap</label>
                                 <input id="email" name="name" type="text" placeholder="nama lengkap">
@@ -134,14 +192,28 @@
 @endsection
 @section('script')
     <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('profileImage');
+                const container = document.getElementById('profileImageContainer');
+
+                // Display the profile image container when an image is selected
+                container.style.display = 'flex';
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
         $(document).ready(function() {
             $('#registrationForm').on('submit', function(e) {
                 e.preventDefault();
-
+                var formData = new FormData(this);
                 $.ajax({
                     type: 'POST',
                     url: '/api/Apiregister/student',
-                    data: $(this).serialize(),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     success: function(response) {
                         toastr.success(
                             'Pendaftaran berhasil!',
