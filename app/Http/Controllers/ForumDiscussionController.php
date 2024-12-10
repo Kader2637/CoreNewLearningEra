@@ -12,13 +12,23 @@ class ForumDiscussionController extends Controller
      * Display a listing of the resource.
      */
     public function index($id)
-    {
-        $forumDiscussion = ForumDiscussion::where('classroom_id' , $id)->get();
-        return response()->json([
-            'status' => 'success',
-            'data' => $forumDiscussion
-        ],200);
-    }
+{
+    $forumDiscussion = ForumDiscussion::with('user')->where('classroom_id', $id)->get();
+
+    return response()->json([
+        'status' => 'success',
+        'data' => $forumDiscussion->map(function ($discussion) {
+            return [
+                'id' => $discussion->id,
+                'message' => $discussion->message,
+                'created_at' => $discussion->created_at,
+                'user_id' => $discussion->user_id,
+                'user_name' => $discussion->user->name,
+                'user_image' => $discussion->user->image,
+            ];
+        })
+    ], 200);
+}
 
     /**
      * Show the form for creating a new resource.

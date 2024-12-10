@@ -24,7 +24,7 @@
         rel="stylesheet">
     <link href="{{ asset('assetsTeacher/vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
     <link href="{{ asset('assetsTeacher/css/style.css') }}" rel="stylesheet">
-
+@yield('style')
 </head>
 
 <body>
