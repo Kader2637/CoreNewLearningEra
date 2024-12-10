@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\AssigmentAsesmentTask;
 use App\Http\Requests\StoreAssigmentAsesmentTaskRequest;
 use App\Http\Requests\UpdateAssigmentAsesmentTaskRequest;
@@ -29,7 +30,12 @@ class AssigmentAsesmentTaskController extends Controller
      */
     public function store(StoreAssigmentAsesmentTaskRequest $request)
     {
-        //
+        $data = AssigmentAsesmentTask::create($request->all());
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil mengumpulkan jawaban.',
+            'data' => $data
+        ],200);
     }
 
     /**
@@ -53,7 +59,12 @@ class AssigmentAsesmentTaskController extends Controller
      */
     public function update(UpdateAssigmentAsesmentTaskRequest $request, AssigmentAsesmentTask $assigmentAsesmentTask)
     {
-        //
+        $assigmentAsesmentTask->update($request->all());
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil mengedit jawaban.',
+            'data' => $assigmentAsesmentTask
+        ],200);
     }
 
     /**
@@ -61,6 +72,11 @@ class AssigmentAsesmentTaskController extends Controller
      */
     public function destroy(AssigmentAsesmentTask $assigmentAsesmentTask)
     {
-        //
+        $assigmentAsesmentTask->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil menghapus jawaban.',
+            'data' => $assigmentAsesmentTask
+        ],200);
     }
 }

@@ -11,7 +11,7 @@ class StoreAssigmentAsesmentTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreAssigmentAsesmentTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'task_course_id' => 'required',
+            'user_id' => 'required',
+            'link' => 'nullable',
+            'file' => 'nullable'
         ];
     }
 }

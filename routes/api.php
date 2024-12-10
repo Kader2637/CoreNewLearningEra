@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\AssigmentAsesmentTaskController;
 use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Api\ClassroomTeacherController;
 use App\Http\Controllers\Api\CourseTeacherController;
@@ -92,4 +93,7 @@ Route::post('/task/course/post' , [TaskCourseController::class , 'store']);
 Route::put('/task/course/update/{taskCourse}' ,[TaskCourseController::class , 'update']);
 Route::delete('/task/course/delete/{taskCourse}' , [TaskCourseController::class , 'destroy']);
 
-
+// Assigment Asesment Task
+Route::post('/assigment/post' , [AssigmentAsesmentTaskController::class , 'store']);
+Route::put('/assigment/update/{taskCourse}' ,[AssigmentAsesmentTaskController::class , 'update']);
+Route::delete('/assigment/delete/{taskCourse}' , [AssigmentAsesmentTaskController::class , 'destroy']);
