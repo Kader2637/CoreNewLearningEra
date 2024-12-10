@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegisterRequest;
+use App\Mail\ConfirmationAddTeacherRegis;
 use App\Models\User;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
@@ -82,7 +83,7 @@ class LoginController extends Controller
             'status' => 'pending',
             'image' => $request->file('image')->store('images'),
         ]);
-
+        Mail::to($request->email)->send(new ConfirmationAddTeacherRegis());
         return response()->json([
             'status' => 'success',
             'data' => $user

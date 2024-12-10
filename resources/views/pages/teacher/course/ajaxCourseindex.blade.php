@@ -163,6 +163,13 @@ Keluarkan
     $('#form-accept').on('submit', function(e) {
         e.preventDefault();
         const siswaId = $('#acceptStudentId').val();
+        const $button = $('#btn-accept');
+        const $text = $button.find('.btn-text');
+        const $loading = $button.find('.btn-loading');
+
+        $button.prop('disabled', true);
+        $text.hide();
+        $loading.show();
 
         $.ajax({
             url: `/api/accept/teacher/${siswaId}`,
@@ -189,9 +196,15 @@ Keluarkan
                     }
                 } catch (e) {}
                 showAlert(errorMessage, 'error');
+            },
+            complete: function() {
+                $button.prop('disabled', false);
+                $text.show();
+                $loading.hide();
             }
         });
     });
+
 
 
     $('#form-reject').on('submit', function(e) {

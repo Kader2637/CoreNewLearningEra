@@ -4,7 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/test', [App\Http\Controllers\HomeController::class, 'testEmail']);
 
 require_once __DIR__ . '/kader.php';
 require_once __DIR__ . '/erik.php';

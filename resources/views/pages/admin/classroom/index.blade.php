@@ -59,7 +59,6 @@
     <script>
         $(document).ready(function() {
             $('#loading').removeClass('d-none');
-
             $.ajax({
                 url: '/api/classroom/admin',
                 type: 'GET',

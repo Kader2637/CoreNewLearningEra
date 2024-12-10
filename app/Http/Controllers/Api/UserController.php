@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function teacherAll()
     {
-        $user = User::where('role', 'teacher')->get();
+        $user = User::where('role', 'teacher')->where('status' , 'accept')->get();
         return response()->json([
             'status' => 'success',
             'data' => $user

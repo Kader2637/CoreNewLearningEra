@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AcceptStudent;
 use App\Models\Classroom;
 use App\Models\StudentClassroomRelation;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ClassroomTeacherController extends Controller
 {
@@ -68,6 +71,8 @@ class ClassroomTeacherController extends Controller
                 'message' => 'Kelas sudah penuh. Tidak dapat menerima siswa.'
             ], 400);
         }
+        $user = User::where('id' , $user_id)->first();
+        Mail::to($user->email)->send(new AcceptStudent());
 
         $accept->status = 'accept';
         $accept->save();
