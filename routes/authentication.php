@@ -23,11 +23,11 @@ Route::get('/register', function () {
 
 Route::get('/register/student', function () {
     return view('auth.StudentRegis');
-});
+})->name('student.register');
 
 Route::get('/register/teacher', function () {
     return view('auth.TeacherRegis');
-})->name('register/teacher');
+})->name('teacher.register');
 
 // logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
