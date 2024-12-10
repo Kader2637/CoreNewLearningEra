@@ -29,14 +29,14 @@
             <img src="assets/img/others/breadcrumb_shape05.svg" alt="Shape" data-aos="fade-left" data-aos-delay="400" />
         </div>
     </section>
-    <section class="courses-area pt-5 pb-4" style="background-image: url('assets/img/bg/courses_bg.jpg');">
+    <section class="pt-5 pb-4 courses-area" style="background-image: url('assets/img/bg/courses_bg.jpg');">
         <div class="container">
             <div id="classroom-container" class="row d-flex justify-content-center">
             </div>
         </div>
     </section>
 
-    <div id="no-data" class="text-center mt-5 mb-5" style="display: none;">
+    <div id="no-data" class="mt-5 mb-5 text-center" style="display: none;">
         <div class="d-flex justify-content-center">
             <img src="{{ asset('nodatalanding.jpg') }}" width="400px" alt="">
         </div>
@@ -80,7 +80,7 @@
 </a>
 
                                 <div class="card-body">
-                                    <ul class="courses__item-meta list-wrap list-unstyled mb-3">
+                                    <ul class="mb-3 courses__item-meta list-wrap list-unstyled">
                                         <li class="courses__item-tag">
                                             <a href="#">${classroom.statusClass}</a>
                                         </li>
@@ -93,12 +93,12 @@
                                         Teacher : <a href="#">${classroom.user_name || 'Unknown'}</a>
                                     </p>
                                     <div class="mt-3">
-                                        <div class="/login">
+                                        <a href="/login">
                                             <button class="w-100 join-button"
                                                 style="background: linear-gradient(90deg, #1e3c72, #2a5298); color: white; font-size: 13px; padding: 13px; border: none; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
                                                 Bergabung
                                             </button>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
