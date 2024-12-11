@@ -1,7 +1,7 @@
 @extends('layouts.teacher.app')
 
 @section('content')
-    <div class="d-flex justify-content-between mb-3">
+    <div class="mb-3 d-flex justify-content-between">
         <h4>Detail Materi dan Tugas <span id="class-name1"></span></h4>
         <div>
             <a id="back-button" href="#" class="btn btn-secondary btn-sm">Kembali</a>
@@ -19,11 +19,11 @@
         </li>
     </ul>
 
-    <div class="tab-content mt-3" id="v-pills-tabContent">
+    <div class="mt-3 tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="materi" role="tabpanel" aria-labelledby="materi-tab">
             <div id="link" style="display: none;"></div>
             <div id="document" style="display: none; position: relative; width: 100%; overflow: hidden;">
-                <div class="container-fluid d-flex justify-content-center mb-5">
+                <div class="mb-5 container-fluid d-flex justify-content-center">
                     <canvas id="pdf-canvas" style="width: 1100px; height: auto;"></canvas>
                 </div>
                 <div id="pdf-controls"
@@ -60,18 +60,18 @@
                 <div class="modal-body">
                     <form id="addTaskForm">
                         <div class="row">
-                            <div class="col-6 mb-3">
+                            <div class="mb-3 col-6">
                                 <label>Judul tugas</label>
                                 <input type="text" class="form-control" id="task-title" placeholder="Judul Tugas"
                                     required style="border: 1px solid #ddd; border-radius: 4px;">
                             </div>
-                            <div class="col-6 mb-3">
+                            <div class="mb-3 col-6">
                                 <label>Deadline</label>
                                 <input type="datetime-local" class="form-control" id="task-deadline" required
                                     style="border: 1px solid #ddd;  border-radius: 4px;">
                             </div>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="mb-3 col-12">
                             <label for="">Type Pengumpulan</label>
                             <select name="type" id="" class="form-select">
                                 <option value="" disabled selected>Pilih type pengumpulan tugas</option>
@@ -79,7 +79,7 @@
                                 <option value="file">link</option>
                             </select>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="mb-3 col-12">
                             <label for="" class="mb-1">Deskripsi</label>
                             <textarea name="" id="" class="form-control"></textarea>
                         </div>
