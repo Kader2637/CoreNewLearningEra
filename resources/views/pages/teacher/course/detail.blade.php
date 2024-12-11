@@ -46,7 +46,7 @@
                 <h4>
                     Data Tugas
                 </h4>
-                <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#addTaskModal">Tambah
+                <button class="btn btn-info btn-sm" id="createTask" data-bs-toggle="modal" data-bs-target="#addTaskModal">Tambah
                     Tugas</button>
             </div>
             <div id="tasks-list" class="">
@@ -160,13 +160,14 @@
 
             function fetchTasks() {
                 loadingMessage.style.display = 'block';
-                tasksContainer.empty(); // Clear previous tasks
+                tasksContainer.empty();
                 $.ajax({
                     url: `/api/task/course/${courseId}`,
                     method: 'GET',
                     success: function(data) {
                         loadingMessage.style.display = 'none';
                         if (data.status === 'success' && data.data.length > 0) {
+                            $('#createTask').hide();
                             $.each(data.data, function(index, task) {
                                 const taskDescription = task.description ? task.description
                                     .substring(0, 1000) + (task.description.length > 1000 ?
@@ -206,6 +207,7 @@
                                 tasksContainer.append(taskCard);
                             });
                         } else {
+                            $('#createTask').show();
                             tasksContainer.append('<p>No tasks available.</p>');
                         }
                     },
@@ -337,7 +339,8 @@
 
                         if (course.type === 'link' && course.link) {
                             if (course.link.includes('youtube.com') || course.link.includes('youtu.be')) {
-                                const videoId = new URL(course.link).searchParams.get('v') || course.link.split('/').pop();
+                                const videoId = new URL(course.link).searchParams.get('v') || course.link.split(
+                                    '/').pop();
                                 linkDiv.innerHTML =
                                     `<iframe width="100%" height="600" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
                                 linkDiv.style.display = 'block';
@@ -361,7 +364,9 @@
 
                             function renderPage(num) {
                                 pdfDoc.getPage(num).then(page => {
-                                    const viewport = page.getViewport({ scale: 1 });
+                                    const viewport = page.getViewport({
+                                        scale: 1
+                                    });
                                     const canvas = document.getElementById('pdf-canvas');
                                     const context = canvas.getContext('2d');
                                     canvas.height = viewport.height;

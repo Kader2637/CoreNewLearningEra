@@ -12,9 +12,13 @@ class AssigmentAsesmentTaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $data = AssigmentAsesmentTask::where('task_course_id' , $id)->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ], 200);
     }
 
     /**
@@ -30,14 +34,24 @@ class AssigmentAsesmentTaskController extends Controller
      */
     public function store(StoreAssigmentAsesmentTaskRequest $request)
     {
-        $data = AssigmentAsesmentTask::create($request->all());
+        $filePath = null;
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('uploads/assignments', 'public');
+        }
+
+        $data = AssigmentAsesmentTask::create([
+            'task_course_id' => $request->task_course_id,
+            'user_id' => $request->user_id,
+            'link' => $request->link,
+            'file' => $filePath
+        ]);
+
         return response()->json([
             'status' => 'success',
             'message' => 'Berhasil mengumpulkan jawaban.',
             'data' => $data
-        ],200);
+        ], 200);
     }
-
     /**
      * Display the specified resource.
      */

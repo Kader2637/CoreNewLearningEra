@@ -95,9 +95,10 @@ Route::put('/task/course/update/{taskCourse}' ,[TaskCourseController::class , 'u
 Route::delete('/task/course/delete/{taskCourse}' , [TaskCourseController::class , 'destroy']);
 
 // Assigment Asesment Task
+Route::get('/Apiassigment/{id}' , [AssigmentAsesmentTaskController::class , 'index']);
 Route::post('/assigment/post' , [AssigmentAsesmentTaskController::class , 'store']);
-Route::put('/assigment/update/{taskCourse}' ,[AssigmentAsesmentTaskController::class , 'update']);
-Route::delete('/assigment/delete/{taskCourse}' , [AssigmentAsesmentTaskController::class , 'destroy']);
+Route::put('/assigment/update/{assigmentAsesmentTask}' ,[AssigmentAsesmentTaskController::class , 'update']);
+Route::delete('/assigment/delete/{assigmentAsesmentTask}' , [AssigmentAsesmentTaskController::class , 'destroy']);
 
 // Statistika
 Route::get('/countTeacher', [AdminController::class ,'countTeacher']);

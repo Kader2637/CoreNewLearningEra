@@ -24,8 +24,8 @@ class StoreAssigmentAsesmentTaskRequest extends FormRequest
         return [
             'task_course_id' => 'required',
             'user_id' => 'required',
-            'link' => 'nullable',
-            'file' => 'nullable'
+            'link' => 'nullable|url',
+            'file' => 'nullable|mimes:zip'
         ];
     }
 }
