@@ -178,7 +178,7 @@
                                                 <div class="d-flex justify-content-between">
                                                     <h5 class="card-title text-uppercase font-weight-bold text-primary">${task.name}</h5>
                                                     <p>
-                                                        Deadline : ${task.deadline}
+                                                        Deadline : ${task.deadline_format}
                                                     </p>
                                                 </div>
                                                 <p class="card-text text-muted" style="font-size: 0.9em;">${taskDescription}</p>

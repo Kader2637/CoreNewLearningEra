@@ -14,19 +14,30 @@ class TaskCourseController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index($id)
-    {
-        $taskCourse = TaskCourse::where('course_id', $id)->get();
 
-        $taskCourse->each(function ($task) {
-            $task->deadline = Carbon::parse($task->deadline)->locale('id')->diffForHumans();
-        });
+     public function index($id)
+     {
+         $taskCourse = TaskCourse::where('course_id', $id)->get();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $taskCourse
-        ], 200);
-    }
+         $taskCourse->each(function($task) {
+             $task->deadline_format = Carbon::parse($task->deadline)->locale('id')->diffForHumans();
+         });
+
+         return response()->json([
+             'status' => 'success',
+             'data' => $taskCourse->map(function($task) {
+                 return [
+                     'id' => $task->id,
+                     'name' => $task->name,
+                     'description' => $task->description,
+                     'deadline' => $task->deadline,
+                     'deadline_format' => $task->deadline_format,
+                     'type' => $task->type,
+                     'course_id' => $task->course_id,
+                 ];
+             })
+         ], 200);
+     }
 
 
     /**
