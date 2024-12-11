@@ -55,6 +55,7 @@ Route::post('/teacher/course/create', [CourseController::class, 'store']);
 Route::get('/teacher/course/data/{id}', [CourseTeacherController::class, 'courseClass']);
 Route::delete('/teacher/course/delete/{course}', [CourseController::class, 'destroy']);
 Route::get('/teacher/course/show/{course}' , [CourseController::class , 'show']);
+Route::put('/teacher/course/update/{course}' , [CourseController::class , 'update']);
 
 
 // student classroom

@@ -45,7 +45,7 @@ class CourseController extends Controller
             'success' => true,
             'message' => 'Materi berhasil ditambahkan.',
             'data' => $course,
-        ], 201);
+        ], 200);
     }
 
     /**
@@ -72,7 +72,31 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        if ($request->type === 'document' && $request->hasFile('document')) {
+            if ($course->document) {
+                Storage::delete($course->document);
+            }
+            $documentPath = $request->file('document')->store('documents');
+        } else {
+            $documentPath = $course->document;
+        }
+
+        $course->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $request->type,
+            'classroom_id' => $request->classroom_id,
+            'document' => $request->type === 'document' ? $documentPath : null,
+            'link' => $request->type === 'link' ? $request->link : null,
+            'text_course' => $request->type === 'text_course' ? $request->text_course : null,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Materi berhasil diperbarui.',
+            'data' => $course,
+        ], 200);
+
     }
 
     /**

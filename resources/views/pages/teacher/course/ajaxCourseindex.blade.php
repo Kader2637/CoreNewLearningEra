@@ -214,7 +214,6 @@ Keluarkan
         const $text = $button.find('.btn-text');
         const $loading = $button.find('.btn-loading');
 
-        // Disable button and show loading
         $button.prop('disabled', true);
         $text.hide();
         $loading.show();
@@ -290,39 +289,47 @@ Keluarkan
 
                     materials.forEach(material => {
                         const truncatedDescription = material.description.length > 100 ?
-                            material.description.substring(0, 97) + '...' : material
-                            .description;
+                            material.description.substring(0, 97) + '...' :
+                            material.description;
 
                         const card = `
-                    <div class="mb-3 col-lg-4" id="material-${material.id}">
-                        <div class="card d-flex flex-column" style="height: 100%;">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">${material.name}</h5>
-                                <p class="card-text flex-grow-1">${truncatedDescription}</p>
-                                <div class="gap-2 mt-2 d-flex justify-content-end">
-                                    <button type="button" class="btn btn-warning btn-sm" title="Edit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="white" d="m19.71 8.04l-2.34 2.33l-3.75-3.75l2.34-2.33c.39-.39 1.04-.39 1.41 0l2.34 2.34c.39.37.39 1.02 0 1.41M3 17.25L13.06 7.18l3.75 3.75L6.75 21H3zM16.62 5.04l-1.54 1.54l2.34 2.34l1.54-1.54zM15.36 11L13 8.64l-9 9.02V20h2.34z"/></svg>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" title="Hapus" onclick="openDeleteModal(${material.id})">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="white" d="M18 19a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V7H4V4h4.5l1-1h4l1 1H19v3h-1zM6 7v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V7zm12-1V5h-4l-1-1h-3L9 5H5v1zM8 9h1v10H8zm6 0h1v10h-1z"/></svg>
-                                    </button>
-                                    <a href="/teacher/course/detail/${material.id}" class="btn btn-info btn-sm" title="Detail">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M9 7V5H4v5h2v1H3V4h7v3zm4 14v-3h1v2h5v-5h-2v-1h3v7zM8 9h7v7H8zm1 1v5h5v-5z"/></svg>
-                                    </a>
+                        <div class="mb-3 col-lg-4" id="material-${material.id}">
+                            <div class="card d-flex flex-column" style="height: 100%;">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">${material.name}</h5>
+                                    <p class="card-text flex-grow-1">${truncatedDescription}</p>
+                                    <div class="gap-2 mt-2 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-warning btn-sm edit-material-btn"
+                                            title="Edit"
+                                            data-id="${material.id}"
+                                            data-name="${material.name}"
+                                            data-description="${material.description}"
+                                            data-type="${material.type}"
+                                            data-document="${material.document || ''}"
+                                            data-link="${material.link || ''}"
+                                            data-text-course="${material.text_course || ''}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="white" d="m19.71 8.04l-2.34 2.33l-3.75-3.75l2.34-2.33c.39-.39 1.04-.39 1.41 0l2.34 2.34c.39.37.39 1.02 0 1.41M3 17.25L13.06 7.18l3.75 3.75L6.75 21H3zM16.62 5.04l-1.54 1.54l2.34 2.34l1.54-1.54zM15.36 11L13 8.64l-9 9.02V20h2.34z"/></svg>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" title="Hapus" onclick="openDeleteModal(${material.id})">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="white" d="M18 19a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V7H4V4h4.5l1-1h4l1 1H19v3h-1zM6 7v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V7zm12-1V5h-4l-1-1h-3L9 5H5v1zM8 9h1v10H8zm6 0h1v10h-1z"/></svg>
+                                        </button>
+                                        <a href="/teacher/course/detail/${material.id}" class="btn btn-info btn-sm" title="Detail">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M9 7V5H4v5h2v1H3V4h7v3zm4 14v-3h1v2h5v-5h-2v-1h3v7zM8 9h7v7H8zm1 1v5h5v-5z"/></svg>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
                         materialCards.append(card);
                     });
                 } else {
                     materialCards.append(`
-                <div class="d-flex justify-content-center">
-                    <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
-                </div>
-                <h3 class="text-center">Data Masih Kosong</h3>
-            `);
+                    <div class="d-flex justify-content-center">
+                        <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
+                    </div>
+                    <h3 class="text-center">Data Masih Kosong</h3>
+                `);
                 }
             },
             error: function(xhr, status, error) {
@@ -330,6 +337,7 @@ Keluarkan
             }
         });
     };
+
 
     function openDeleteModal(id) {
         $('#deleteClassId').val(id);
@@ -355,6 +363,116 @@ Keluarkan
                 showAlert("Terjadi kesalahan saat menghapus materi", 'error');
             }
         });
+    });
+
+    $('#materialCards').on('click', '.edit-material-btn', function() {
+        const id = $(this).data('id');
+        const name = $(this).data('name');
+        const description = $(this).data('description');
+        const type = $(this).data('type');
+        const document = $(this).data('document');
+        const link = $(this).data('link');
+        const textCourse = $(this).data('text-course');
+
+        $('#editMaterialId').val(id);
+        $('#editMaterialName').val(name);
+        $('#editMaterialDescription').val(description);
+        $('#editMaterialType').val(type);
+
+        const additionalInput = $('#editAdditionalInput');
+        additionalInput.empty();
+
+        if (type === 'link') {
+            additionalInput.append(`
+                <div class="mb-3">
+                    <label for="editMaterialLink" class="form-label">Link</label>
+                    <input type="url" class="form-control" id="editMaterialLink" name="link" value="${link}" >
+                </div>
+            `);
+        } else if (type === 'document') {
+            additionalInput.append(`
+                <div class="mb-3">
+                    <label for="editMaterialFile" class="form-label">Upload Dokumen</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="editMaterialFile" name="document" accept=".pdf,.doc,.docx" >
+                    </div>
+                </div>
+            `);
+        } else if (type === 'text_course') {
+            additionalInput.append(`
+                <div class="mb-3">
+                    <label for="editMaterialText" class="form-label">Text Course</label>
+                    <textarea class="form-control" id="editMaterialText" name="text_course" rows="5" >${textCourse}</textarea>
+                </div>
+            `);
+        }
+
+        $('#editMaterialModal').modal('show');
+    });
+
+    $('#editMaterialForm').on('submit', function(event) {
+        event.preventDefault();
+
+        const materialId = $('#editMaterialId').val();
+        const formData = new FormData(this);
+
+        $.ajax({
+            url: `/api/teacher/course/update/${materialId}`,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success) {
+                    showAlert('Materi berhasil diperbarui', 'success');
+                    $('#editMaterialModal').modal('hide');
+                    fetchMaterials();
+                } else {
+                    showAlert(response.message || "Gagal menambahkan materi", 'error');
+                }
+            },
+            error: function(xhr) {
+                showAlert(xhr.responseJSON?.message ||
+                    "Terjadi kesalahan saat memperbarui materi. Silakan coba lagi.", 'error');
+            }
+        });
+    });
+
+
+    $('#editMaterialType').on('change', function() {
+        const selectedType = $(this).val();
+        const additionalInput = $('#editAdditionalInput');
+        additionalInput.empty();
+
+        if (selectedType === 'link') {
+            additionalInput.append(`
+                <div class="mb-3">
+                    <label for="editMaterialLink" class="form-label">Link</label>
+                    <input type="url" class="form-control" id="editMaterialLink" name="link" required>
+                </div>
+            `);
+        } else if (selectedType === 'document') {
+            additionalInput.append(`
+                <div class="mb-3">
+                    <label for="editMaterialFile" class="form-label">Upload Dokumen</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="editMaterialFile" name="document" accept=".pdf,.doc,.docx" required>
+                        <button type="button" class="btn btn-outline-secondary" onclick="window.open('#', '_blank')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M12 2a5.5 5.5 0 0 0-5.5 5.5a5.48 5.48 0 0 0 1.05 3.22l3.1 4.65a.75.75 0 0 0 1.3 0l3.1-4.65A5.48 5.48 0 0 0 17.5 7.5A5.5 5.5 0 0 0 12 2zm0 1.5a4 4 0 0 1 4 4a3.98 3.98 0 0 1-.77 2.33L12 14.1l-3.23-4.27A3.98 3.98 0 0 1 8 7.5a4 4 0 0 1 4-4zM11 11h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `);
+        } else if (selectedType === 'text_course') {
+            additionalInput.append(`
+                <div class="mb-3">
+                    <label for="editMaterialText" class="form-label">Text Course</label>
+                    <textarea class="form-control" id="editMaterialText" name="text_course" rows="5" required></textarea>
+                </div>
+            `);
+        }
     });
 
     $('#materialForm').on('submit', function(e) {
