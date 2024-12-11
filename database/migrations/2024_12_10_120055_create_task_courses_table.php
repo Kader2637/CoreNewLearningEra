@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->date('deadline');
+            $table->dateTime('deadline');
             $table->enum('type' , ['link', 'file']);
             $table->foreignId('course_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
