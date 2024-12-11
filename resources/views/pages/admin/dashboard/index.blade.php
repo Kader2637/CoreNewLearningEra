@@ -3,7 +3,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-xl-4 col-sm-7 box-col-3">
-                <h3>Dashboard 
+                <h3>Dashboard
                 </h3>
             </div>
             <div class="col-5 d-none d-xl-block">
@@ -99,138 +99,100 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="d-flex justify-content-between">
-            <h4 class="mb-4">
-                Data Guru Menunggu approval
-            </h4>
-            <a href="#">
-                Lihat Selengkapnya...
-            </a>
-        </div>
-        <div class="col-xl-4 col-sm-6 col-xxl-3 col-ed-4 box-col-4">
-            <div class="card social-profile">
-                <div class="card-body">
-                    <div class="social-img-wrap">
-                        <div class="social-img">
-                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px" style="object-fit: cover"
-                                alt="profile" />
-                        </div>
-                        <div class="edit-icon">
-                            <svg>
-                                <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#profile-check">
-                                </use>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="social-details">
-                        <h5 class="mb-1">
-                            <a href="#">Abdul Kader</a>
-                        </h5>
-                        <span class="f-light">abdulkader0126@gmail.com</span>
-                        <div class="mt-4">
-                            <div class="">
-                                <a href="/admin/teacher/detail" class="btn btn-info w-100">
-                                    Detail
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-sm-6 col-xxl-3 col-ed-4 box-col-4">
-            <div class="card social-profile">
-                <div class="card-body">
-                    <div class="social-img-wrap">
-                        <div class="social-img">
-                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px" style="object-fit: cover"
-                                alt="profile" />
-                        </div>
-                        <div class="edit-icon">
-                            <svg>
-                                <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#profile-check">
-                                </use>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="social-details">
-                        <h5 class="mb-1">
-                            <a href="#">Abdul Kader</a>
-                        </h5>
-                        <span class="f-light">abdulkader0126@gmail.com</span>
-                        <div class="mt-4">
-                            <div class="">
-                                <a href="/admin/teacher/detail" class="btn btn-info w-100">
-                                    Detail
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-sm-6 col-xxl-3 col-ed-4 box-col-4">
-            <div class="card social-profile">
-                <div class="card-body">
-                    <div class="social-img-wrap">
-                        <div class="social-img">
-                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px"
-                                style="object-fit: cover" alt="profile" />
-                        </div>
-                        <div class="edit-icon">
-                            <svg>
-                                <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#profile-check">
-                                </use>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="social-details">
-                        <h5 class="mb-1">
-                            <a href="#">Abdul Kader</a>
-                        </h5>
-                        <span class="f-light">abdulkader0126@gmail.com</span>
-                        <div class="mt-4">
-                            <div class="">
-                                <a href="/admin/teacher/detail" class="btn btn-info w-100">
-                                    Detail
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-sm-6 col-xxl-3 col-ed-4 box-col-4">
-            <div class="card social-profile">
-                <div class="card-body">
-                    <div class="social-img-wrap">
-                        <div class="social-img">
-                            <img src="{{ asset('assets/img/others/kader.png') }}" width="75px"
-                                style="object-fit: cover" alt="profile" />
-                        </div>
-                        <div class="edit-icon">
-                            <svg>
-                                <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#profile-check">
-                                </use>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="social-details">
-                        <h5 class="mb-1">
-                            <a href="#">Abdul Kader</a>
-                        </h5>
-                        <span class="f-light">abdulkader0126@gmail.com</span>
-                        <div class="mt-4">
-                            <div class="">
-                                <a href="/admin/teacher/detail" class="btn btn-info w-100">
-                                    Detail
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="d-flex justify-content-between">
+        <h4 class="mb-4">
+            Data Guru Menunggu approval
+        </h4>
+        <a href="#">
+            Lihat Selengkapnya...
+        </a>
     </div>
+    <div class="row data-pending">
+
+    </div>
+@endsection
+@section('script')
+    <script>
+        function fetchData() {
+            $('#loader').show();
+
+            $.ajax({
+                url: '/api/teacher/pending',
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    $('#loader').hide();
+                    let container = $('.data-pending');
+                    container.empty();
+
+                    if (response.status === "success" && Array.isArray(response.data)) {
+                        if (response.data.length === 0) {
+                            container.append(`
+                       <div class="d-flex justify-content-center">
+                                <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
+                            </div>
+                            <h3 class="text-center">Data Masih Kosong</h3>    
+                    `);
+                        } else {
+                            const maxCards = Math.min(response.data.length, 8);
+                            for (let index = 0; index < maxCards; index++) {
+                                let item = response.data[index];
+                                let profileImage = item.image ? `{{ asset('storage/${item.image}') }}` :
+                                    '{{ asset('user.png') }}';
+
+                                container.append(`
+                            <div class="col-xl-4 col-sm-6 col-xxl-3 col-ed-4 box-col-4">
+                                <div class="card social-profile">
+                                    <div class="card-body">
+                                        <div class="social-img-wrap">
+                                            <div class="social-img">
+                                                <img src="${profileImage}" width="75px" style="object-fit: cover" alt="profile" />
+                                            </div>
+                                            <div class="edit-icon">
+                                                <svg>
+                                                    <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#profile-check"></use>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="social-details">
+                                            <h5 class="mb-1">
+                                                <a href="#">${item.name}</a>
+                                            </h5>
+                                            <span class="f-light">${item.email}</span>
+                                            <div class="mt-4">
+                                                <div class="">
+                                                    <a href="/admin/teacher/detail/${item.id}" class="btn btn-info w-100">
+                                                        Detail
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                            }
+                        }
+                    } else {
+                        container.append(`
+                            <div class="d-flex justify-content-center">
+                                <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
+                            </div>
+                            <h3 class="text-center">Data Masih Kosong</h3>
+                                        `);
+                        showAlert('Data masih kosong.', 'info');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX call failed:', textStatus, errorThrown);
+                    $('#loader').hide();
+                    showAlert('Kesalahan saat mengambil data.', 'danger');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            fetchData();
+        });
+    </script>
 @endsection

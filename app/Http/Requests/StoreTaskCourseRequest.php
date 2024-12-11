@@ -26,6 +26,7 @@ class StoreTaskCourseRequest extends FormRequest
             'description' => 'required',
             'course_id' => 'required',
             'type' => 'required',
+            'deadline' => 'required',
         ];
     }
 }

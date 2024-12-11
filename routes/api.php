@@ -97,3 +97,6 @@ Route::delete('/task/course/delete/{taskCourse}' , [TaskCourseController::class 
 Route::post('/assigment/post' , [AssigmentAsesmentTaskController::class , 'store']);
 Route::put('/assigment/update/{taskCourse}' ,[AssigmentAsesmentTaskController::class , 'update']);
 Route::delete('/assigment/delete/{taskCourse}' , [AssigmentAsesmentTaskController::class , 'destroy']);
+
+// Statistika
+Route::get('/countTeacher', [AdminController::class ,'countTeacher']);
