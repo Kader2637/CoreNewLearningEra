@@ -26,9 +26,9 @@
 </div>
 <div class="container-fluid">
     <div class="d-flex justify-content-between mb-3">
-        <h4>Detail Tugas <span id="task-name">Matematika - Tugas 1</span></h4>
+        <h4>Detail Tugas <span id="task-name">{{ $taskCourse->name }} </span></h4>
         <div>
-            <a href="http://127.0.0.1:8000/teacher/task" class="btn btn-secondary btn-sm">Kembali</a>
+            <a href="/teacher/course/detail/{{ $taskCourse->course_id }}" class="btn btn-secondary btn-sm">Kembali</a>
         </div>
     </div>
 
@@ -37,17 +37,16 @@
         <div class="col-lg-12">
             <div class="card card-body px-3 pt-3 pb-0">
                 <div class="mb-3">
-                    <h5>Lampiran Tugas &amp; Deskripsi</h5>
+                    <div class="d-flex justify-content-between">
+                        <h5>Lampiran Tugas &amp; Deskripsi</h5>
+                        <p>
+                            Deadline: {{ \Carbon\Carbon::parse($taskCourse->deadline)->locale('id')->diffForHumans() }}
+                        </p>
+
+                    </div>
                     <p>
-                        Untuk mendalami materi lebih lanjut, Anda dapat mengunduh lampiran tugas yang berisi soal-soal untuk dikerjakan.
-                        <br><br>
-                        Tugas ini bertujuan untuk menguji pemahaman siswa dalam materi dasar matematika. Soal-soal yang ada dirancang untuk mengevaluasi kemampuan analitis dan penerapan konsep matematika dalam situasi sehari-hari.
-                        <br><br>
-                        Pastikan untuk menyelesaikan soal-soal dengan teliti dan mengumpulkan jawaban tepat waktu. Jangan ragu untuk bertanya jika ada soal yang kurang dimengerti.
-                        <br><br>
-                        Kumpulkan tugas melalui platform ini setelah Anda menyelesaikan soal-soal yang ada. Selamat mengerjakan!
+                        {{ $taskCourse->description }}
                     </p>
-                    <a href="http://127.0.0.1:8000/storage/tasks/task1.pdf" class="btn btn-link" target="_blank">Download Lampiran Tugas</a>
                 </div>
             </div>
         </div>

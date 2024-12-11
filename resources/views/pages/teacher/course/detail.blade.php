@@ -175,7 +175,12 @@
                                     <div class="mb-3 col-12" id="task-${task.id}">
                                         <div class="card shadow-sm border-light rounded-3">
                                             <div class="card-body d-flex flex-column p-3">
-                                                <h5 class="card-title text-uppercase font-weight-bold text-primary">${task.name}</h5>
+                                                <div class="d-flex justify-content-between">
+                                                    <h5 class="card-title text-uppercase font-weight-bold text-primary">${task.name}</h5>
+                                                    <p>
+                                                        Deadline : ${task.deadline}
+                                                    </p>
+                                                </div>
                                                 <p class="card-text text-muted" style="font-size: 0.9em;">${taskDescription}</p>
                                                 <div class="d-flex justify-content-end gap-2 mt-1">
                                                     <button type="button" class="btn btn-warning btn-sm edit-task-btn" data-id="${task.id}" data-name="${task.name}" data-description="${task.description || ''}" data-deadline="${task.deadline || ''}" data-type="${task.type || ''}">
@@ -188,7 +193,7 @@
                                                             <path fill="white" d="M18 19a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V7H4V4h4.5l1-1h4l1 1H19v3h-1zM6 7v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V7zm12-1V5h-4l-1-1h-3L9 5H5v1zM8 9h1v10H8zm6 0h1v10h-1z"/>
                                                         </svg>
                                                     </button>
-                                                    <a href="/teacher/course/detail/${task.id}" class="btn btn-info btn-sm" title="Detail">
+                                                    <a href="/teacher/detailTask/${task.id}" class="btn btn-info btn-sm" title="Detail">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                                                             <path fill="currentColor" d="M9 7V5H4v5h2v1H3V4h7v3zm4 14v-3h1v2h5v-5h-2v-1h3v7zM8 9h7v7H8zm1 1v5h5v-5z"/>
                                                         </svg>

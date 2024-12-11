@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CourseTeacherController;
+use App\Http\Controllers\Api\TaskCourseController;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
@@ -23,9 +24,7 @@ Route::prefix('teacher')->middleware(['auth', CheckRole::class . ':teacher'])->g
         return view('pages.teacher.task.assignmentAssessment');
     })->name('task.assignmentAssessment');
 
-    Route::get('/detailTask', function() {
-        return view('pages.teacher.task.detailTask.detailTask');
-    })->name('task.detailTask');
+    Route::get('/detailTask/{taskCourse}', [TaskCourseController::class , 'show'])->name('task.detailTask');
 });
 
 Route::middleware(['auth', CheckRole::class . ':teacher'])->group(function () {
