@@ -2,7 +2,6 @@
 @section('content')
 <div class="d-flex justify-content-between mb-3">
     <h4>Detail Materi <span id="class-name1"></span></h4>
-
 </div>
 
 <!-- Tabs -->
@@ -12,6 +11,9 @@
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="tugas-tab" data-bs-toggle="tab" data-bs-target="#tugas" type="button" role="tab" aria-controls="tugas" aria-selected="false">Tugas</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pengumpulan-tugas-tab" data-bs-toggle="tab" data-bs-target="#pengumpulan-tugas" type="button" role="tab" aria-controls="pengumpulan-tugas" aria-selected="false">Pengumpulan Tugas</button>
     </li>
 </ul>
 
@@ -38,49 +40,61 @@
 
     <!-- Tab Tugas -->
     <div class="tab-pane fade" id="tugas" role="tabpanel" aria-labelledby="tugas-tab">
-        <form id="submit-task-form" action="/api/student/task/submit" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="mb-3">
-                <label for="description" class="form-label">Judul tugas</label>
-                <input class="form-control" id="description" name="description"placeholder="Tuliskan judul tugas..."></input>
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title m-3">Judul Tugas</h5>
+                    <div class="d-flex align-items-center bg-danger rounded p-1">
+                        <span class="badge text-white p-2">Deadline:</span>
+                        <span class="badge text-white p-2">2024-12-12</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula ante in volutpat venenatis. Sed malesuada nisi quis diam hendrerit, ac posuere sapien efficitur. Proin non vulputate ante, vel tincidunt neque. Vivamus sollicitudin, nulla in luctus ullamcorper, metus velit varius metus, vel dapibus orci augue vel dui.</p>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="deadline" class="form-label">Deadline</label>
-                <input type="date" class="form-control" id="deadline" name="deadline" placeholder="Pilih tanggal deadline">
-            </div>
-            <div class="mb-3">
-                <label for="deadline" class="form-label">Tanggal pengumpulan</label>
-                <input type="date" class="form-control" id="tanggalPengumpulan" name="tanggalPengumpulan" placeholder="Pilih tanggal deadline">
-            </div>
-            <div class="mb-3">
-                <label for="file" class="form-label">Unggah File</label>
-                <input type="file" class="form-control" id="file" name="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
-            </div>
-            <div class="mb-3">
-                <label for="link" class="form-label">Link Tugas</label>
-                <input type="url" class="form-control" id="link" name="link" placeholder="https://example.com">
-            </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Deskripsi</label>
-                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Tuliskan deskripsi tugas..."></textarea>
-            </div>
+            <hr>
+        </div>
+    </div>
 
-            <div class="d-flex justify-content-end align-items-center">
-                <!-- Button Kembali -->
-                <a href="" id="class-link" class="btn btn-primary" style="background: linear-gradient(90deg, #1e3c72, #2a5298); border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; margin-right: 10px;">
-                    Kembali
-                </a>
-
-                <!-- Button Kirim Tugas -->
-                <button type="submit" class="btn btn-primary" style="background: linear-gradient(90deg, #ff0800, #ff0000); border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer;">
-                    Kirim Tugas
-                </button>
+    <!-- Tab Pengumpulan Tugas -->
+    <div class="tab-pane fade" id="pengumpulan-tugas" role="tabpanel" aria-labelledby="pengumpulan-tugas-tab">
+        <div class="container mt-5">
+            <div class="d-flex justify-content-between align-items-center" style="border: 1px solid #ddd; padding: 10px;">
+                <div>
+                    <h5 style="margin-bottom: 40;">Pengumpulan tugas</h5>
+                </div>
+                <span class="badge bg-success text-white p-2" style="margin-bottom: 0;">Ditugaskan</span>
             </div>
 
 
-
-
-        </form>
+            <div >
+            </div>
+            <hr>
+            <form>
+                <div class="mb-3">
+                    <label for="tugasFile" class="form-label">Upload Tugas</label>
+                    <input type="file" class="form-control" id="tugasFile" required>
+                </div>
+                <p>kalau link</p>
+                <div class="mb-3">
+                    <label for="tugasLink" class="form-label">Upload Tugas</label>
+                    <input type="url" class="form-control" id="tugasLink" required>
+                </div>
+                <div class="mb-3">
+                    <label for="tugasDescription" class="form-label">Deskripsi Tugas</label>
+                    <textarea class="form-control" id="tugasDescription" rows="4" required></textarea>
+                </div>
+                <div>
+                    <a href="" id="class-link" class="btn btn-primary flex-grow-1 ml-3 m-3">
+                        Tambah tugas
+                    </a>
+                    <a href="" id="class-link" class="btn btn-primary flex-grow-1 ml-3">
+                        Tandai sebagai selesai
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
