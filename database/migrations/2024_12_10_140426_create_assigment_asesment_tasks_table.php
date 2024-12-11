@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('link')->nullable();
             $table->text('file')->nullable();
+            $table->string('grade');
             $table->timestamps();
         });
     }

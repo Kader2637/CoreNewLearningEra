@@ -6,20 +6,39 @@ use App\Http\Controllers\Controller;
 use App\Models\TaskCourse;
 use App\Http\Requests\StoreTaskCourseRequest;
 use App\Http\Requests\UpdateTaskCourseRequest;
+use Carbon\Carbon;
 
 class TaskCourseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
-    {
-        $taskCourse = TaskCourse::where('course_id' , $id)->get();
-        return response()->json([
-            'status' => 'success',
-            'data' => $taskCourse
-        ],200);
-    }
+
+
+     public function index($id)
+     {
+         $taskCourse = TaskCourse::where('course_id', $id)->get();
+
+         $taskCourse->each(function($task) {
+             $task->deadline_format = Carbon::parse($task->deadline)->locale('id')->diffForHumans();
+         });
+
+         return response()->json([
+             'status' => 'success',
+             'data' => $taskCourse->map(function($task) {
+                 return [
+                     'id' => $task->id,
+                     'name' => $task->name,
+                     'description' => $task->description,
+                     'deadline' => $task->deadline,
+                     'deadline_format' => $task->deadline_format,
+                     'type' => $task->type,
+                     'course_id' => $task->course_id,
+                 ];
+             })
+         ], 200);
+     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -39,7 +58,7 @@ class TaskCourseController extends Controller
             'status' => 'success',
             'message' => 'Berhasil menambah tugas',
             'data' => $taskCourse
-        ],200);
+        ], 200);
     }
 
     /**
@@ -47,7 +66,7 @@ class TaskCourseController extends Controller
      */
     public function show(TaskCourse $taskCourse)
     {
-        //
+        return view('pages.admin.task.detailTask.detailTask', compact('taskCourse'));
     }
 
     /**
@@ -68,7 +87,7 @@ class TaskCourseController extends Controller
             'status' => 'success',
             'message' => 'Berhasil mengedit tugas',
             'data' => $taskCourse
-        ],200);
+        ], 200);
     }
 
     /**
@@ -81,6 +100,6 @@ class TaskCourseController extends Controller
             'status' => 'success',
             'message' => 'Berhasil menghapus tugas',
             'data' => $taskCourse
-        ],200);
+        ], 200);
     }
 }

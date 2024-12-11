@@ -267,6 +267,47 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="editMaterialModal" tabindex="-1" aria-labelledby="editMaterialModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMaterialModalLabel">Edit Materi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editMaterialForm" enctype="multipart/form-data">
+                        <input type="hidden" name="classroom_id" value="{{ $id }}">
+                        <input type="hidden" id="editMaterialId" name="id">
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="editMaterialName" class="form-label">Nama Materi</label>
+                            <input type="text" class="form-control" id="editMaterialName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editMaterialDescription" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" id="editMaterialDescription" name="description" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editMaterialType" class="form-label">Tipe Materi</label>
+                            <select class="form-select" id="editMaterialType" name="type" required>
+                                <option value="">Pilih Tipe</option>
+                                <option value="document">Dokumen</option>
+                                <option value="link">Link</option>
+                                <option value="text_course">Text Course</option>
+                            </select>
+                        </div>
+                        <div id="editAdditionalInput"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary" form="editMaterialForm">Simpan Perubahan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     @include('components.modal-delete')
     @include('components.teacher.kick')
     @include('components.teacher.accept')
