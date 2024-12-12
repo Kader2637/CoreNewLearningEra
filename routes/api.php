@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\StudentClassroomRelationController;
 use App\Http\Controllers\Api\StudentCourseController;
 use App\Http\Controllers\Api\TaskCourseController;
+use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\ForumDiscussionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -101,4 +102,7 @@ Route::put('/assigment/update/{assigmentAsesmentTask}' ,[AssigmentAsesmentTaskCo
 Route::delete('/assigment/delete/{assigmentAsesmentTask}' , [AssigmentAsesmentTaskController::class , 'destroy']);
 
 // Statistika
-Route::get('/countTeacher', [AdminController::class ,'countTeacher']);
+Route::get('/admin/count/teacher', [AdminController::class ,'countTeacher']);
+
+// Statistikaguru
+Route::get('/count/statistika/{id}', [TeacherController::class, 'count']);
