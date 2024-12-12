@@ -86,76 +86,84 @@
     </div>
 @endsection
 @section('script')
-<script>
-    $(document).ready(function() {
-        var taskId = "{{ $id }}";
+    <script>
+        $(document).ready(function() {
+            var taskId = "{{ $id }}";
 
-        // Fungsi untuk menampilkan alert menggunakan SweetAlert
-        function showAlert(message, type) {
-            Swal.fire({
-                icon: type,
-                title: message,
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-            });
-        }
+            // Fungsi untuk menampilkan alert menggunakan SweetAlert
+            function showAlert(message, type) {
+                Swal.fire({
+                    icon: type,
+                    title: message,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+            }
 
-        // Ambil data tugas saat halaman dimuat
-        function fetchTaskData() {
-            $.ajax({
-                url: '/api/task/course/' + taskId,
-                method: 'GET',
-                success: function(response) {
-                    if (response.status === "success" && response.data.length > 0) {
-                        var task = response.data[0];
-                        var type = task.type;
+            // Ambil data tugas saat halaman dimuat
+            function fetchTaskData() {
+                $.ajax({
+                    url: '/api/task/course/' + taskId,
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.status === "success" && response.data.length > 0) {
+                            var task = response.data[0];
+                            var type = task.type;
 
-                        $('#task_course_id').val(task.id);
-                        $('#taskTitle').text(task.name);
-                        $('#deadlineDate').text(task.deadline_format);
-                        $('#taskDescription').text(task.description);
+                            $('#task_course_id').val(task.id);
+                            $('#taskTitle').text(task.name);
+                            $('#deadlineDate').text(task.deadline_format);
+                            $('#taskDescription').text(task.description);
 
-                        $.ajax({
-                            url: '/api/Apiassigment/' + task.id,
-                            method: 'GET',
-                            success: function(assignmentResponse) {
-                                if (assignmentResponse.status === "success" &&
-                                    assignmentResponse.data.length > 0) {
-                                    var assignments = assignmentResponse.data;
-                                    var assignmentCards = '';
+                            $.ajax({
+                                url: '/api/Apiassigment/' + task.id,
+                                method: 'GET',
+                                success: function(assignmentResponse) {
+                                    if (assignmentResponse.status === "success" &&
+                                        assignmentResponse.data.length > 0) {
+                                        var assignments = assignmentResponse.data;
+                                        var assignmentCards = '';
 
-                                    var deadline = new Date(task.deadline);
+                                        var deadline = new Date(task.deadline);
 
-                                    $.each(assignments, function(index, assignment) {
-                                        var createdAt = new Date(assignment.created_at);
-                                        var formattedTime = createdAt.toLocaleTimeString('id-ID', {
-                                            hour: '2-digit',
-                                            minute: '2-digit'
-                                        });
+                                        $.each(assignments, function(index, assignment) {
+                                            var createdAt = new Date(assignment
+                                                .created_at);
+                                            var formattedTime = createdAt
+                                                .toLocaleTimeString('id-ID', {
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                });
 
-                                        var now = new Date();
-                                        var isDeadlinePassed = now > deadline;
-                                        var deadlineMessage = isDeadlinePassed ?
-                                            `<span class="text-danger">Tugas sudah ditutup</span>` :
-                                            '';
+                                            var now = new Date();
+                                            var isDeadlinePassed = now >= deadline;
+                                            var deadlineMessage = isDeadlinePassed ?
+                                                `<span class="text-danger">Tugas sudah ditutup</span>` :
+                                                '';
 
-                                        var icon = task.type === 'file' ?
-                                            '<i class="fa fa-file" style="font-size: 24px; color: #1e3c72;"></i>' :
-                                            '<i class="fa fa-link" style="font-size: 24px; color: #1e3c72;"></i>';
+                                            var icon = task.type === 'file' ?
+                                                '<i class="fa fa-file" style="font-size: 24px; color: #1e3c72;"></i>' :
+                                                '<i class="fa fa-link" style="font-size: 24px; color: #1e3c72;"></i>';
 
-                                        var actionButton = assignment.value == null && !isDeadlinePassed ?
-                                            `<span class="delete-assignment btn btn-danger btn-sm" data-id="${assignment.id}" style="cursor: pointer;">Hapus</span>` :
-                                            `<span class="text-success">Sudah Mengumpulkan</span>`;
+                                            var actionButton = assignment.grade ==
+                                                null && !isDeadlinePassed ?
+                                                (assignment.grade ?
+                                                    `<span class="text-success">Sudah Dinilai</span>` :
+                                                    `<span class="delete-assignment btn btn-danger btn-sm" data-id="${assignment.id}" style="cursor: pointer;">Hapus</span>`
+                                                    ) :
+                                                `<span class="text-success">Sudah Mengumpulkan</span>`;
 
-                                        var detailButton = task.type === 'file' ?
-                                            `<a href="{{ asset('storage/${assignment.file}') }}" class="btn btn-primary btn-sm" target="_blank">Unduh</a>` :
-                                            `<a href="${assignment.link}" class="btn btn-primary btn-sm" target="_blank">Detail</a>`;
 
-                                        assignmentCards += `
-                                        <div class="card mb-3 assignment-card" data-assignment-id="${assignment.id}" style="display: flex; align-items: center; justify-content: space-between; padding: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                            var detailButton = task.type ===
+                                                'file' ?
+                                                `<a href="{{ asset('storage/${assignment.file}') }}" class="btn btn-primary btn-sm" target="_blank">Unduh</a>` :
+                                                `<a href="${assignment.link}" class="btn btn-primary btn-sm" target="_blank">Detail</a>`;
+
+                                            assignmentCards += `
+                                        <div class="mb-3 card assignment-card" data-assignment-id="${assignment.id}" style="display: flex; align-items: center; justify-content: space-between; padding: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                                             <div class="d-flex align-items-center">
                                                 ${icon}
                                                 <div style="margin-left: 15px;">
@@ -169,34 +177,34 @@
                                             </div>
                                         </div>
                                     `;
-                                    });
+                                        });
 
-                                    // Pastikan menghapus semua kartu tugas yang ada sebelumnya
-                                    $('#taskSubmissionContainer').empty();
-                                    // Menambahkan kartu tugas yang baru
-                                    $('#taskSubmissionContainer').html(assignmentCards);
-                                    $('#submitTaskButton').remove();
-                                } else {
-                                    // Jika data kosong, tampilkan form pengiriman tugas
-                                    if (type === "file") {
-                                        $('#taskSubmissionContainer').append(`
+                                        // Pastikan menghapus semua kartu tugas yang ada sebelumnya
+                                        $('#taskSubmissionContainer').empty();
+                                        // Menambahkan kartu tugas yang baru
+                                        $('#taskSubmissionContainer').html(assignmentCards);
+                                        $('#submitTaskButton').remove();
+                                    } else {
+                                        // Jika data kosong, tampilkan form pengiriman tugas
+                                        if (type === "file") {
+                                            $('#taskSubmissionContainer').append(`
                                         <div class="mb-3">
                                             <label for="formFile" class="form-label">Upload Tugas</label>
                                             <input class="form-control" name="file" type="file" id="formFile">
                                             <small class="form-text text-muted">* File harus berformat ZIP.</small>
                                         </div>
                                     `);
-                                    } else if (type === "link") {
-                                        $('#taskSubmissionContainer').append(`
+                                        } else if (type === "link") {
+                                            $('#taskSubmissionContainer').append(`
                                         <div class="mb-3">
                                             <label for="exampleFormControlInput1" class="form-label">Link Tugas</label>
                                             <input type="url" class="form-control" name="link" id="exampleFormControlInput1" placeholder="Masukan Disini">
                                             <small class="form-text text-muted">* Masukkan URL yang valid (contoh: https://example.com).</small>
                                         </div>
                                     `);
-                                    }
+                                        }
 
-                                    $('#taskSubmissionContainer').append(`
+                                        $('#taskSubmissionContainer').append(`
                                     <div class="d-flex justify-content-end">
                                         <button type="button" class="w-25 join-button" id="submitTaskButton"
                                             style="background: linear-gradient(90deg, #1e3c72, #2a5298); color: white; font-size: 13px; padding: 13px; border: none; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
@@ -204,89 +212,94 @@
                                         </button>
                                     </div>
                                 `);
+                                    }
+                                },
+                                error: function() {
+                                    showAlert(
+                                        'Terjadi kesalahan saat memeriksa assignment.',
+                                        'error');
+                                }
+                            });
+                        } else {
+                            showAlert('Data tidak ditemukan.', 'error');
+                        }
+                    },
+                    error: function() {
+                        showAlert('Terjadi kesalahan saat mengambil data tugas.', 'error');
+                    }
+                });
+            }
+
+            // Panggil fungsi fetchTaskData saat halaman dimuat
+            fetchTaskData();
+
+            // Konfirmasi dan hapus assignment
+            $(document).on('click', '.delete-assignment', function() {
+                var assignmentId = $(this).data('id'); // ambil id dari tombol Hapus
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Tugas ini akan dihapus!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Lakukan permintaan untuk menghapus assignment
+                        $.ajax({
+                            url: '/api/assigment/delete/' + assignmentId,
+                            method: 'DELETE',
+                            success: function(response) {
+                                if (response.status === 'success') {
+                                    // Tampilkan notifikasi sukses
+                                    showAlert('Tugas berhasil dihapus', 'success');
+
+                                    // Sembunyikan kartu tugas yang dihapus
+                                    $(`.assignment-card[data-assignment-id="${assignmentId}"]`)
+                                        .hide();
+
+                                    // Panggil ulang fetchTaskData untuk memperbarui tampilan
+                                    fetchTaskData
+                                (); // Ini akan menampilkan ulang kartu tugas dan form input dengan benar
+                                } else {
+                                    showAlert('Gagal menghapus tugas', 'error');
                                 }
                             },
                             error: function() {
-                                showAlert('Terjadi kesalahan saat memeriksa assignment.', 'error');
+                                showAlert('Terjadi kesalahan saat menghapus tugas',
+                                    'error');
                             }
                         });
-                    } else {
-                        showAlert('Data tidak ditemukan.', 'error');
                     }
-                },
-                error: function() {
-                    showAlert('Terjadi kesalahan saat mengambil data tugas.', 'error');
-                }
+                });
             });
-        }
 
-        // Panggil fungsi fetchTaskData saat halaman dimuat
-        fetchTaskData();
+            // Submit tugas
+            $(document).on('click', '#submitTaskButton', function() {
+                var formData = new FormData($('#submit-task-form')[0]);
 
-        // Konfirmasi dan hapus assignment
-        $(document).on('click', '.delete-assignment', function() {
-            var assignmentId = $(this).data('id'); // ambil id dari tombol Hapus
-
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: 'Tugas ini akan dihapus!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Lakukan permintaan untuk menghapus assignment
-                    $.ajax({
-                        url: '/api/assigment/delete/' + assignmentId,
-                        method: 'DELETE',
-                        success: function(response) {
-                            if (response.status === 'success') {
-                                // Tampilkan notifikasi sukses
-                                showAlert('Tugas berhasil dihapus', 'success');
-
-                                // Sembunyikan kartu tugas yang dihapus
-                                $(`.assignment-card[data-assignment-id="${assignmentId}"]`).hide();
-
-                                // Panggil ulang fetchTaskData untuk memperbarui tampilan
-                                fetchTaskData(); // Ini akan menampilkan ulang kartu tugas dan form input dengan benar
-                            } else {
-                                showAlert('Gagal menghapus tugas', 'error');
-                            }
-                        },
-                        error: function() {
-                            showAlert('Terjadi kesalahan saat menghapus tugas', 'error');
+                $.ajax({
+                    url: '/api/assigment/post',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            showAlert('Tugas berhasil dikirim!', 'success');
+                            fetchTaskData(); // Memperbarui data setelah tugas dikirim
+                        } else {
+                            showAlert('Gagal mengirim tugas: ' + response.message, 'error');
                         }
-                    });
-                }
-            });
-        });
-
-        // Submit tugas
-        $(document).on('click', '#submitTaskButton', function() {
-            var formData = new FormData($('#submit-task-form')[0]);
-
-            $.ajax({
-                url: '/api/assigment/post',
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    if (response.status === 'success') {
-                        showAlert('Tugas berhasil dikirim!', 'success');
-                        fetchTaskData(); // Memperbarui data setelah tugas dikirim
-                    } else {
-                        showAlert('Gagal mengirim tugas: ' + response.message, 'error');
+                    },
+                    error: function() {
+                        showAlert('Terjadi kesalahan saat mengirim tugas.', 'error');
                     }
-                },
-                error: function() {
-                    showAlert('Terjadi kesalahan saat mengirim tugas.', 'error');
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
     <script>
