@@ -13,9 +13,9 @@
                             <div class="col-8">
                                 <div class="gap-3 d-flex">
                                     <img src="{{ asset('logoCopy.png') }}" width="70px" alt="" srcset="">
-                                    <h5 class="mt-4">
+                                    <h4 class="mt-4">
                                         Selamat datang {{ auth()->user()->name }}
-                                    </h5>
+                                    </h4>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -186,3 +186,4 @@
     </div>
     </div>
 @endsection
+
