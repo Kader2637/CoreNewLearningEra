@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Classroom;
+use App\Models\StudentClassroomRelation;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -63,6 +64,15 @@ class AdminController extends Controller
         return response()->json([
             'status' => 'success',
             'count' => $countTeacher
+        ],200);
+    }
+
+    public function CountClassroom()
+    {
+        $count = Classroom::where('status' , 'accept')->count();
+        return response()->json([
+            'status' => 'success',
+            'count' => $count
         ],200);
     }
 }

@@ -106,3 +106,12 @@ Route::get('/admin/count/teacher', [AdminController::class ,'countTeacher']);
 
 // Statistikaguru
 Route::get('/count/statistika/{id}', [TeacherController::class, 'count']);
+Route::get('/countTeacher', [AdminController::class ,'countTeacher']);
+
+// Count admin
+Route::get('count_classroom' , [AdminController::class , 'CountClassroom']);
+
+// assigment
+Route::get('/not/assigment/task/{id}' , [TeacherController::class , 'notStudentAssigment']);
+Route::get('/done/assigment/task/{id}' , [TeacherController::class , 'studentAssigment']);
+Route::patch('/assigment/grade/{id}', [AssigmentAsesmentTaskController::class, 'grade'])->name('assigment.grade');
