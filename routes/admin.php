@@ -32,6 +32,6 @@ Route::prefix('admin')->middleware(['auth', CheckRole::class . ':admin'])->group
         return view('pages.admin.task.index');
     })->name('admin.task');
 
-    Route::get('/deatailTask', [TaskCourseController::class, 'show'])->name('admin.detailTask');
+    Route::get('/detailTask/{taskCourse}', [TaskCourseController::class, 'show'])->name('admin.detailTask');
 
 });

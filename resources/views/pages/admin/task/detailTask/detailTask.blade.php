@@ -28,7 +28,7 @@
         <div class="d-flex justify-content-between mb-3">
             <h4>Detail Tugas <span id="task-name">{{ $taskCourse->name }} </span></h4>
             <div>
-                <a href="/teacher/course/detail/{{ $taskCourse->course_id }}" class="btn btn-secondary btn-sm">Kembali</a>
+                <a href="/admin/classroom/detail/course/{{ $taskCourse->course_id }}" class="btn btn-secondary btn-sm">Kembali</a>
             </div>
         </div>
 
@@ -84,7 +84,6 @@
                         <th>No</th>
                         <th>Nama Siswa</th>
                         <th>Nilai</th>
-                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="submitted-tbody">
@@ -155,12 +154,12 @@
                                 row.append(`<td>${item.name}</td>`);
 
                                 row.append(
-                                    `<td><input type="text" name="grade" placeholder="Masukkan Nilai" class="form-control" value="${item.grade !== null ? item.grade : ''}"></td>`
+                                    `<td><input type="text" name="grade" placeholder="Masukkan Nilai" class="form-control" value="${item.grade !== null ? item.grade : ''}" disabled></td>`
                                 );
 
-                                const actionCell = $('<td class="text-center"></td>');
+                                const actionCell = $('');
                                 const gradeButton = $(
-                                    '<button class="btn btn-primary">Nilai</button>');
+                                    '');
                                 gradeButton.on('click', function() {
                                     const gradeInput = row.find('input[name="grade"]')
                                         .val();
