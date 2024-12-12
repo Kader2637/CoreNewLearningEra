@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ClassroomController;
+use App\Http\Controllers\Api\TaskCourseController;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
@@ -31,8 +32,6 @@ Route::prefix('admin')->middleware(['auth', CheckRole::class . ':admin'])->group
         return view('pages.admin.task.index');
     })->name('admin.task');
 
-    Route::get('/deatailTask', function () {
-        return view('pages.admin.task.detailTask.detailTask');
-    })->name('admin.detailTask');
+    Route::get('/deatailTask', [TaskCourseController::class, 'show'])->name('admin.detailTask');
 
 });
