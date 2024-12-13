@@ -72,17 +72,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
-            function showAlert(message, type) {
-                Swal.fire({
-                    icon: type,
-                    title: message,
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                });
-            }
 
             function fetchData() {
                 $('#loader').show();
@@ -105,7 +94,8 @@
                                     `);
                             } else {
                                 $.each(response.data, function(index, item) {
-                                    let profileImage = `{{asset('storage/${item.image}')}}` || '{{ asset('user.png') }}';
+                                    let profileImage = `{{ asset('storage/${item.image}') }}` ||
+                                        '{{ asset('user.png') }}';
 
                                     tbody.append(`
                                             <tr>
@@ -144,7 +134,7 @@
             }
 
 
-            
+
 
             fetchData();
         });
@@ -245,9 +235,21 @@
         fetchClassroomData();
 
         $(document).on('click', '.reject-button', function() {
+
             const classId = $(this).data('id');
             $('#RejectClassId').val(classId);
         });
+        function showAlert(message, type) {
+            Swal.fire({
+                icon: type,
+                title: message,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        }
 
         $('#form-tolak').on('submit', function(e) {
             e.preventDefault();
@@ -257,7 +259,7 @@
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
-                    toastr.success('Kelas Berhasil Ditolak.');
+                    showAlert('Kelas berhasil ditolak', 'success');
                     $('#modal-reject').modal('hide');
                     fetchClassroomData();
                 },
@@ -268,9 +270,21 @@
         });
 
         $(document).on('click', '.accept-button', function() {
+
             const classId = $(this).data('id');
             $('#AcceptClassId').val(classId);
         });
+        function showAlert(message, type) {
+            Swal.fire({
+                icon: type,
+                title: message,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        }
 
         $('#form-accept').on('submit', function(e) {
             e.preventDefault();
@@ -281,7 +295,7 @@
                 data: $(this).serialize(),
                 success: function(response) {
                     $('#modal-accept').modal('hide');
-                    toastr.success('Kelas berhasil diterima!');
+                    showAlert('Kelas berhasil diterima', 'success');
                     fetchClassroomData();
                 },
                 error: function() {

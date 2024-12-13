@@ -276,6 +276,7 @@
                 dataType: 'json',
                 success: function(response) {
                     showAlert('User berhasil diterima', 'success');
+                    location.reload();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     showAlert('Kesalahan saat menerima pengguna.', 'danger');
@@ -292,6 +293,7 @@
                 dataType: 'json',
                 success: function(response) {
                     showAlert('User berhasil ditolak', 'success');
+                    location.reload();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     showAlert('Kesalahan saat menolak pengguna.', 'danger');

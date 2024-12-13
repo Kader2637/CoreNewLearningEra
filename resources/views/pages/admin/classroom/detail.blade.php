@@ -248,8 +248,18 @@
             showContent('detail');
         </script>
     <script>
+        function showAlert(message, type) {
+                Swal.fire({
+                    icon: type,
+                    title: message,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+            }
         const classId = '{{ $id }}';
-
         const ambilDataKelas = () => {
             $.ajax({
                 url: `/api/student/classroom/show/${classId}`,
