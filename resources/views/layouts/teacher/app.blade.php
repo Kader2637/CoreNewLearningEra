@@ -14,14 +14,13 @@
 
     <!-- PAGE TITLE HERE -->
     <title>New Learning Era</title>
-    <!-- Favicon icon -->
 
 
 
-    <!-- Vectormap -->
 
-    <link href="{{ asset('assetsTeacher/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}"
-        rel="stylesheet">
+
+
+
 
     <link href="{{ asset('assetsTeacher/css/style.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -51,10 +50,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="{{ asset('assetsTeacher/vendor/global/global.min.js') }}"></script>
-    <script src="{{ asset('assetsTeacher/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('assetsTeacher/vendor/chart.js/Chart.bundle.min.js') }}"></script>
-
-    <!-- Chart piety plugin files -->
 
 
 
