@@ -299,7 +299,6 @@
                     $('#modal-delete').modal('show');
                 });
 
-                // Event handler untuk tombol Edit
                 $('#classroom-data').on('click', '.edit-btn', function() {
                     const classId = $(this).data('id');
                     const codeClass = $(this).data('code');
@@ -413,33 +412,6 @@
         </script>
 
         <script>
-            document.querySelectorAll('.detail-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    document.getElementById('detailKodeKelas').innerText = this.dataset.kode;
-                    document.getElementById('detailNamaKelas').innerText = this.dataset.nama;
-                    document.getElementById('detailJumlahSiswa').innerText = this.dataset.jumlah;
-                    document.getElementById('detailDeskripsi').innerText = this.dataset.deskripsi;
-                    document.getElementById('detailThumbnail').src = this.dataset.thumbnail;
-
-                    const detailModal = new bootstrap.Modal(document.getElementById('detailClassModal'));
-                    detailModal.show();
-                });
-            });
-
-            document.getElementById('filterKelas').addEventListener('change', function() {
-                const selectedClass = this.value;
-                const rows = document.querySelectorAll('tbody tr');
-
-                rows.forEach(row => {
-                    if (selectedClass === 'all' || row.classList.contains(selectedClass)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            });
-
-
             document.getElementById('autoGenerateCode').addEventListener('change', function() {
                 const kodeKelasInput = document.getElementById('codeClass');
                 if (this.checked) {

@@ -38,6 +38,7 @@ Route::get('/classroom/teacher/data/{id}', [ClassroomController::class, 'classro
 Route::get('/classroom/show/{classroom}', [ClassroomController::class, 'show']);
 Route::delete('/classroom/delete/{classroom}', [ClassroomController::class, 'destroy']);
 Route::put('/classroom/update/{classroom}', [ClassroomController::class, 'update']);
+Route::get('/my/classroom/teacher/data/{id}', [TeacherController::class, 'myClass']);
 
 // admin approval class
 Route::get('approval/classroom' , [AdminController::class , 'approvalClass']);
@@ -104,7 +105,6 @@ Route::delete('/assigment/delete/{assigmentAsesmentTask}' , [AssigmentAsesmentTa
 
 // Statistikaguru
 Route::get('/count/statistika/{id}', [TeacherController::class, 'count']);
-Route::get('/countTeacher', [AdminController::class ,'countTeacher']);
 
 // Count admin
 Route::get('count/statistika/admin/data' , [AdminController::class , 'countAdmin']);
@@ -113,3 +113,6 @@ Route::get('count/statistika/admin/data' , [AdminController::class , 'countAdmin
 Route::get('/not/assigment/task/{id}' , [TeacherController::class , 'notStudentAssigment']);
 Route::get('/done/assigment/task/{id}' , [TeacherController::class , 'studentAssigment']);
 Route::patch('/assigment/grade/{id}', [AssigmentAsesmentTaskController::class, 'grade'])->name('assigment.grade');
+
+// count student 
+Route::get('count/student/{id}', [StudentClassroomRelationController::class, 'countStudent']);

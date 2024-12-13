@@ -92,4 +92,15 @@ class TeacherController extends Controller
             'data' => $data
         ], 200);
     }
+
+    public function myClass($id)
+    {
+        $data = Classroom::where('user_id' , $id)
+        ->where('status' , 'accept')
+        ->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ], 200);
+    }
 }
