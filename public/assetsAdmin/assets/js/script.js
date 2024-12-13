@@ -1,6 +1,6 @@
 /*! -----------------------------------------------------------------------------------
     Template Name: Zono Admin
-    Template URI: https://admin.pixelstrap.net/Zono/template/
+    Template URI: https://admin.pixelstrap.net/template/
     Description: This is Admin theme
     Author: Pixelstrap
     Author URI: https://themeforest.net/user/pixelstrap
@@ -279,9 +279,9 @@
     },
     {
       en: "Default",
-      pt: "PadrÃ£o", 
+      pt: "PadrÃ£o",
       es: "Vaikimisi",
-      fr: "DÃ©faut", 
+      fr: "DÃ©faut",
       de: "Standaard",
       cn: "é›»å­å•†å‹™",
       ae: "ÙˆØ¥ÙØªØ±Ø§Ø¶ÙŠ",

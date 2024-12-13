@@ -13,11 +13,9 @@
 
     <script>
         $(document).ready(function() {
-            // Mengambil detail user dari local storage
-            const user = JSON.parse(localStorage.getItem('user')); // Ambil detail user
+            const user = JSON.parse(localStorage.getItem('user')); 
 
             if (user) {
-                // Menampilkan informasi pengguna
                 $('#userInfo').html('<p>Welcome, ' + user.name + '!</p>');
             } else {
                 $('#userInfo').html('<p>No user is logged in.</p>');

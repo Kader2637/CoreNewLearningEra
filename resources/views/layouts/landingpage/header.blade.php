@@ -12,7 +12,7 @@
                             <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                                 <ul class="navigation">
                                     <li class="menu-item {{ request()->is('/') ? 'active' : '' }}">
-                                        <a href="/">Dashboard</a>
+                                        <a href="/">Home</a>
                                     </li>
                                     <li class="menu-item {{ request()->is('about') ? 'active' : '' }}">
                                         <a href="/about">Tentang Kami</a>

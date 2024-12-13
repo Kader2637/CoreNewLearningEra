@@ -15,44 +15,24 @@
             <div class="form-group">
                 <div class="Typeahead Typeahead--twitterUsers">
                     <div class="u-posRelative">
-                        {{-- <input class="demo-input Typeahead-input form-control-plaintext w-100" type="text"
-                            placeholder="Type to Search .." name="q" title="" autofocus>
-                        <svg class="search-bg svg-color">
-                            <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#search">
-                            </use>
-                        </svg> --}}
                     </div>
                 </div>
             </div>
         </form>
         <div class="nav-right col-xl-8 col-lg-12 col-auto pull-right right-header p-0">
             <ul class="nav-menus">
-                <li>
-                    <div class="mode">
-                        <svg class="for-dark">
-                            <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#moon">
-                            </use>
-                        </svg>
-                        <svg class="for-light">
-                            <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#Sun"></use>
-                        </svg>
-                    </div>
-                </li>
+
                 <li class="profile-nav onhover-dropdown pe-0 py-0">
                     <div class="d-flex align-items-center profile-media"><img class="b-r-25"
                             src="assetsAdmin/assets/images/dashboard/profile.png" alt="">
                         <div class="flex-grow-1 user"><span>New Learning</span>
                             <p class="mb-0 font-nunito">Admin
-                                <svg>
-                                    <use
-                                        href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#header-arrow-down">
-                                    </use>
-                                </svg>
+
                             </p>
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="user-profile.html"><i data-feather="user"></i><span>Account </span></a></li>
+
                         <li>
                             <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display:none;">
                                 @csrf

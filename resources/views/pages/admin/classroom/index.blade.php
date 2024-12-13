@@ -80,7 +80,7 @@
                                 .description;
 
                             $('#classroom-container').append(`
-                            <div class="col-xl-3 col-12">
+                            <div class="col-xxl-3 col-xl-5 col-lg-6 col-12">
                                 <div class="shadow-sm card border-light">
                                     <div class="card-body">
                                         <div class="mb-3 d-flex justify-content-between align-items-center">
@@ -95,12 +95,12 @@
 </span>
     </div>                                        </div>
                                         <div class="mb-3 d-flex align-items-center">
-                                            <img class="img-20 me-2 rounded-circle" src="${authorImage}" alt="User Avatar" title="">
+                                            <img class="img-20 me-2 rounded-circle" src="${authorImage}"  title="">
                                             <div class="flex-grow-1">
                                                 <p class="mb-0 font-weight-bold">${course.user_name}</p>
                                             </div>
                                         </div>
-                                        <img src="${courseThumbnail}" class="mb-3 img-fluid" alt="${course.name} Thumbnail">
+                                        <img src="${courseThumbnail}" class="mb-3 img-fluid w-100" alt="${course.name}" style="max-height:150px;object-fit:cover">
                                         <p class="text-muted">${courseDescription}</p>
                                         <div class="row details">
                                             <div class="col-6">

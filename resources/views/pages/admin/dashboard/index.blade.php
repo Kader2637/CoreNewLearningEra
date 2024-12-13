@@ -103,7 +103,7 @@
         <h4 class="mb-4">
             Data Guru Menunggu approval
         </h4>
-        <a href="/admin/classroom">
+        <a href="/admin/approval">
             Lihat Selengkapnya...
         </a>
     </div>
@@ -149,9 +149,7 @@
                                                 <img src="${profileImage}" width="75px" style="object-fit: cover" alt="profile" />
                                             </div>
                                             <div class="edit-icon">
-                                                <svg>
-                                                    <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#profile-check"></use>
-                                                </svg>
+                                               
                                             </div>
                                         </div>
                                         <div class="social-details">
