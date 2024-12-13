@@ -15,14 +15,14 @@
     <!-- PAGE TITLE HERE -->
     <title>New Learning Era</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
-    <link href="{{ asset('assetsTeacher/vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assetsTeacher/vendor/chartist/css/chartist.min.css') }}">
+
+
+
     <!-- Vectormap -->
-    <link href="{{ asset('assetsTeacher/vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
+
     <link href="{{ asset('assetsTeacher/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}"
         rel="stylesheet">
-    <link href="{{ asset('assetsTeacher/vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
+
     <link href="{{ asset('assetsTeacher/css/style.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @yield('style')
@@ -53,10 +53,10 @@
     <script src="{{ asset('assetsTeacher/vendor/global/global.min.js') }}"></script>
     <script src="{{ asset('assetsTeacher/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('assetsTeacher/vendor/chart.js/Chart.bundle.min.js') }}"></script>
-    <script src="{{ asset('assetsTeacher/vendor/owl-carousel/owl.carousel.js') }}"></script>
+
     <!-- Chart piety plugin files -->
-    <script src="{{ asset('assetsTeacher/vendor/peity/jquery.peity.min.js') }}"></script>
-    <script src="{{ asset('assetsTeacher/vendor/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
+
+
 
     <!-- Dashboard 1 -->
     <script src="{{ asset('assetsTeacher/js/dashboard/dashboard-1.js') }}"></script>
