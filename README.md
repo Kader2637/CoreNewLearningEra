@@ -40,7 +40,7 @@ Ikuti langkah-langkah berikut untuk memulai proyek ini:
 5. *Jalankan Proyek*:
     bash
     php artisan optimize,
-    php artisan seve
+    php artisan serve
     
 
 7. Buka browser Anda dan navigasikan ke:
