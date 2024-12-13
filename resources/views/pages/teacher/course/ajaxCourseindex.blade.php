@@ -53,7 +53,7 @@
                                 <div class="card-body">
                                     <div class="media">
                                         <div class="image-bx me-3 me-lg-2 me-xl-3">
-                                            <img src="${siswa.profile || '{{ asset('user.png') }}'}" alt="" class="rounded-circle" width="70">
+                                            <img src="{{ asset('storage') }}/${siswa.profile}" alt="" class="rounded-circle" width="70" height="70" style="object-fit:cover">
                                             <span class="active"></span>
                                         </div>
                                         <div class="media-body">

@@ -173,90 +173,62 @@
     <div class="row">
         <div class="col">
             <div class="mb-4 courses__details-thumb">
-                <img id="class-thumbnail" class="rounded w-100"
-                    style="max-height: 500px; object-fit: cover;">
+                <img id="class-thumbnail" class="rounded w-100" style="max-height: 500px; object-fit: cover;">
             </div>
             <div class="courses__details-content">
                 <h2 class="text-center title" id="title"></h2>
                 <div class="mb-3 text-center courses__details-meta">
                     <ul class="list-wrap list-inline">
                         <li class="author-two list-inline-item">
-                            <img id="profileUser" class="rounded-circle"
-                                style="width: 40px; height: 40px;" src="">
+                            <img id="profileUser" class="rounded-circle" style="width: 40px; height: 40px;" src="">
                             By <a href="#" id="nameTeacher"></a>
                         </li>
                     </ul>
                 </div>
-                <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <button class="nav-link active" id="detail-tab" data-bs-toggle="tab"
-                            data-bs-target="#detail-tab-pane" type="button" role="tab" aria-controls="detail-tab-pane"
-                            aria-selected="true">Detail</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="materi-tab" data-bs-toggle="tab" data-bs-target="#materi-tab-pane"
-                            type="button" role="tab" aria-controls="materi-tab-pane"
-                            aria-selected="false">Materi</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="siswa-tab" data-bs-toggle="tab" data-bs-target="#siswa-tab-pane"
-                            type="button" role="tab" aria-controls="siswa-tab-pane"
-                            aria-selected="false">Siswa</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="discussion-tab" data-bs-toggle="tab"
-                            data-bs-target="#discussion-tab-pane" type="button" role="tab"
-                            aria-controls="discussion-tab-pane" aria-selected="false">Diskusi</button>
-                    </li>
-                </ul>
-                <div class="mt-3 tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="detail-tab-pane" role="tabpanel" aria-labelledby="detail-tab"
-                        tabindex="0">
-                        <div class="courses__overview-wrap">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h3 class="title">Deskripsi Kelas</h3>
-                                    <p id="description_classroom" class="mt-2 text-muted"></p>
-                                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary" onclick="showContent('detail')">Detail</button>
+                    <button class="btn btn-primary" onclick="showContent('materi')">Materi</button>
+                    <button class="btn btn-primary" onclick="showContent('siswa')">Siswa</button>
+                    <button class="btn btn-primary" onclick="showContent('discussion')">Diskusi</button>
+                </div>
+                <div class="mt-3" id="content">
+                    <div id="detail-content" class="content-pane active">
+                        <h3 class="title mb-3">Deskripsi Kelas</h3>
+                        <div class="card">
+                            <div class="card-body">
+                                <p id="description_classroom" class="mt-2 text-muted"></p>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="materi-tab-pane" role="tabpanel" aria-labelledby="materi-tab"
-                        tabindex="0">
-                        <div class="courses__curriculum-wrap">
-                            <h3 class="title">Materi</h3>
-                            <ul class="curriculum-list list-unstyled" id="curriculum-list">
-                            </ul>
-                        </div>
+                    <div id="materi-content" class="content-pane" style="display: none;">
+                        <h3 class="title mb-3">Materi</h3>
+                        <ul class="curriculum-list list-unstyled" id="curriculum-list"></ul>
                     </div>
-                    <div class="tab-pane fade" id="siswa-tab-pane" role="tabpanel" aria-labelledby="siswa-tab"
-                        tabindex="0">
-                        <h3 class="title">Siswa</h3>
-                        <div class="row" id="student-list">
-                        </div>
+                    <div id="siswa-content" class="content-pane" style="display: none;">
+                        <h3 class="title mb-3">Siswa</h3>
+                        <div class="row" id="student-list"></div>
                     </div>
-                    <div class="tab-pane fade" id="discussion-tab-pane" role="tabpanel" aria-labelledby="discussion-tab"
-                        tabindex="0">
-                        <h3 class="title">Diskusi</h3>
-                                <section class="msger mb-5d mt-3 ">
-                                    <header class="msger-header">
-                                        <div class="msger-header-title">
-                                            <i class="fas fa-comment-alt"></i> Ruang Diskusi
-                                        </div>
-                                    </header>
-                                    <main class="msger-chat" id="kotak-pesan" style="height: 650px; overflow-y: auto;"></main>
-                                    <form class="msger-inputarea" id="form-pesan">
-                                        <input type="text" class="msger-input" name="message" id="input-pesan"
-                                            placeholder="Tulis pesan di sini...">
-                                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                        <input type="hidden" name="classroom_id" value="{{ $id }}">
-                                        <button type="submit" class="msger-send-btn">Kirim</button>
-                                    </form>
-                                </section>
+                    <div id="discussion-content" class="content-pane" style="display: none;">
+                        <h3 class="title mb-3">Diskusi</h3>
+                        <section class="msger mb-5 d mt-3">
+                            <header class="msger-header">
+                                <div class="msger-header-title">
+                                    <i class="fas fa-comment-alt"></i> Ruang Diskusi
+                                </div>
+                            </header>
+                            <main class="msger-chat" id="kotak-pesan" style="height: 650px; overflow-y: auto;"></main>
+                            <form class="msger-inputarea" id="form-pesan">
+                                <input type="text" class="msger-input" name="message" id="input-pesan" placeholder="Tulis pesan di sini...">
+                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                <input type="hidden" name="classroom_id" value="{{ $id }}">
+                                <button type="submit" class="msger-send-btn">Kirim</button>
+                            </form>
+                        </section>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
     @include('components.modal-delete')
     @include('components.teacher.kick')
@@ -264,6 +236,17 @@
 @endsection
 
 @section('script')
+        <script>
+            function showContent(content) {
+                document.querySelectorAll('.content-pane').forEach(pane => {
+                    pane.style.display = 'none';
+                });
+
+                document.getElementById(content + '-content').style.display = 'block';
+            }
+
+            showContent('detail');
+        </script>
     <script>
         const classId = '{{ $id }}';
 

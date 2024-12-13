@@ -1,5 +1,44 @@
 @extends('layouts.admin.app')
+@section('style')
+    <style>
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
 
+        .nav-link {
+            padding: 10px 20px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #007bff;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-link.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+            }
+
+            .nav-link {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+@endsection
 @section('content')
     <div class="page-title mb-2">
         <div class="row">
@@ -26,55 +65,53 @@
     <div class="text-end mb-4">
         <a id="back-button" class="btn btn-primary" href="#" style="margin-top: 20px;">Kembali</a>
     </div>
+    <div class="col">
+        <ul class="nav" id="tabContent" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="materi-tab" onclick="showContent('materi')">Materi</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tugas-tab" onclick="showContent('tugas')">Tugas</button>
+            </li>
+        </ul>
 
-    <ul class="nav nav-tabs" id="tabContent" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="materi-tab" data-bs-toggle="pill" href="#materi" role="tab"
-                aria-controls="materi" aria-selected="true">Materi</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="tugas-tab" data-bs-toggle="pill" href="#tugas" role="tab" aria-controls="tugas"
-                aria-selected="false">Tugas</a>
-        </li>
-    </ul>
-
-    <div class="mt-3 tab-content" id="v-pills-tabContent">
-        <div class="tab-pane fade show active" id="materi" role="tabpanel" aria-labelledby="materi-tab">
-            <div id="link" style="display: none;"></div>
-            <div id="document" style="display: none; position: relative; width: 100%; overflow: hidden;">
-                <div class="mb-5 container-fluid d-flex justify-content-center">
-                    <canvas id="pdf-canvas" style="width: 1100px; height: auto;"></canvas>
+        <div class="mt-3" id="v-pills-tabContent">
+            <div class="tab-pane active" id="materi" role="tabpanel" aria-labelledby="materi-tab">
+                <div id="link" style="display: none;"></div>
+                <div id="document" style="display: none; position: relative; width: 100%; overflow: hidden;">
+                    <div class="mb-5 container-fluid d-flex justify-content-center">
+                        <canvas id="pdf-canvas" style="width: 1100px; height: auto;"></canvas>
+                    </div>
+                    <div id="pdf-controls"
+                        style="position: fixed; top: 50%; right: 20px; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center;">
+                        <button id="prev"
+                            style="width: 80px; height: 80px; margin-bottom: 10px; background-color: rgba(128, 128, 128, 0.5); color: white; border: none; border-radius: 50%; cursor: pointer; display: none;">
+                            <img src="https://img.icons8.com/material-outlined/40/ffffff/chevron-left.png" alt="Previous" />
+                        </button>
+                        <button id="next"
+                            style="width: 80px; height: 80px; background-color: rgba(128, 128, 0.5); color: white; border: none; border-radius: 50%; cursor: pointer; display: none;">
+                            <img src="https://img.icons8.com/material-outlined/40/ffffff/chevron-right.png"
+                                alt="Next" />
+                        </button>
+                    </div>
                 </div>
-                <div id="pdf-controls"
-                    style="position: fixed; top: 50%; right: 20px; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center;">
-                    <button id="prev"
-                        style="width: 80px; height: 80px; margin-bottom: 10px; background-color: rgba(128, 128, 128, 0.5); color: white; border: none; border-radius: 50%; cursor: pointer; display: none;">
-                        <img src="https://img.icons8.com/material-outlined/40/ffffff/chevron-left.png" alt="Previous" />
-                    </button>
-                    <button id="next"
-                        style="width: 80px; height: 80px; background-color: rgba(128, 128, 0.5); color: white; border: none; border-radius: 50%; cursor: pointer; display: none;">
-                        <img src="https://img.icons8.com/material-outlined/40/ffffff/chevron-right.png" alt="Next" />
-                    </button>
-                </div>
+                <div id="text"></div>
             </div>
-            <div id="text"></div>
-        </div>
 
-        <div class="tab-pane fade" id="tugas" role="tabpanel" aria-labelledby="tugas-tab">
-            <div class="d-flex justify-content-between mb-4">
-                <h4>
-                    Data Tugas
-                </h4>
-                <button class="btn btn-info btn-sm" id="createTask" data-bs-toggle="modal"
-                    data-bs-target="#addTaskModal">Tambah
-                    Tugas</button>
-            </div>
-            <div id="tasks-list" class="">
-                <p id="loading-message">Loading tasks...</p>
-                <div id="tasks-container" class="row"></div>
+            <div class="tab-pane" id="tugas" role="tabpanel" aria-labelledby="tugas-tab" style="display: none;">
+                <div class="d-flex justify-content-between mb-4">
+                    <h4>Data Tugas</h4>
+                    <button class="btn btn-info btn-sm" id="createTask" data-bs-toggle="modal"
+                        data-bs-target="#addTaskModal">Tambah Tugas</button>
+                </div>
+                <div id="tasks-list" class="">
+                    <p id="loading-message">Loading tasks...</p>
+                    <div id="tasks-container" class="row"></div>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -172,6 +209,23 @@
 @endsection
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function showContent(content) {
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.style.display = 'none';
+            });
+
+            document.getElementById(content).style.display = 'block';
+
+            document.querySelectorAll('.nav-link').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(content + '-tab').classList.add('active');
+        }
+
+        showContent('materi');
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const courseId = {{ $id }};

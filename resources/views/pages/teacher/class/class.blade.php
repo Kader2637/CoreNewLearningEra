@@ -91,7 +91,7 @@
                             @method('PUT')
                             <div class="mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail</label> <br>
-                                <img src="" id="img-thumbnail-edit" width="400px" class=""
+                                <img src="" id="img-thumbnail-edit" class="w-100" style="max-height: 400px" class=""
                                     alt="" srcset="">
                                 <input type="file" class="form-control" id="thumbnail" name="thumbnail">
                             </div>
