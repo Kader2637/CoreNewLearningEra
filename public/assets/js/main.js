@@ -682,23 +682,6 @@ $(".qtybutton").on("click", function () {
 	$button.parent().find("input").val(newVal);
 });
 
-/*=============================================
-	=    		player Active  	       =
-=============================================*/
-const player = new Plyr('#player');
-
-/*===========================================
-      =       Odometer Active    =
-=============================================*/
-$('.odometer').appear(function (e) {
-	var odo = $(".odometer");
-	odo.each(function () {
-		var countNumber = $(this).attr("data-count");
-		$(this).html(countNumber);
-	});
-});
-
-
 /*===========================================
       =       Coupon Active    =
 =============================================*/
@@ -706,23 +689,6 @@ $('#coupon-element').on('click', function () {
     $('.coupon__code-form').slideToggle(500);
     return false
 })
-
-
-/*===========================================
-	=        Magnific Popup    =
-=============================================*/
-$('.popup-image').magnificPopup({
-	type: 'image',
-	gallery: {
-		enabled: true
-	}
-});
-
-/* magnificPopup video view */
-$('.popup-video').magnificPopup({
-	type: 'iframe'
-});
-
 
 /*===========================================
 	=        Wow Active      =

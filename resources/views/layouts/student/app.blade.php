@@ -68,34 +68,38 @@
             </div>
             <div class="container">
                 <section class="mb-5 breadcrumb__area breadcrumb__bg"
-        style="background-image: url('{{ asset('assets/img/bg/breadcrumb_bg.jpg') }}');">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb__content">
-                        <h3 class="title">Dasboard</h3>
-                        <nav class="breadcrumb">
-                            <span property="itemListElement" typeof="ListItem">
-                                <a href="/">Home</a>
-                            </span>
-                            <span class="breadcrumb-separator">
-                                <i class="fas fa-angle-right"></i>
-                            </span>
-                            <span property="itemListElement" typeof="ListItem">Dashboard</span>
-                        </nav>
+                    style="background-image: url('{{ asset('assets/img/bg/breadcrumb_bg.jpg') }}');">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="breadcrumb__content">
+                                    <h3 class="title">Dasboard</h3>
+                                    <nav class="breadcrumb">
+                                        <span property="itemListElement" typeof="ListItem">
+                                            <a href="/">Home</a>
+                                        </span>
+                                        <span class="breadcrumb-separator">
+                                            <i class="fas fa-angle-right"></i>
+                                        </span>
+                                        <span property="itemListElement" typeof="ListItem">Dashboard</span>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="breadcrumb__shape-wrap">
-            <img src="{{ asset('assets/img/others/breadcrumb_shape01.svg') }}" alt="Shape" class="alltuchtopdown" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape02.svg') }}" alt="Shape" data-aos="fade-right" data-aos-delay="300" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape03.svg') }}" alt="Shape" data-aos="fade-up" data-aos-delay="400" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape04.svg') }}" alt="Shape" data-aos="fade-down-left"
-                data-aos-delay="400" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape05.svg') }}" alt="Shape" data-aos="fade-left" data-aos-delay="400" />
-        </div>
-    </section>
+                    <div class="breadcrumb__shape-wrap">
+                        <img src="{{ asset('assets/img/others/breadcrumb_shape01.svg') }}" alt="Shape"
+                            class="alltuchtopdown" />
+                        <img src="{{ asset('assets/img/others/breadcrumb_shape02.svg') }}" alt="Shape"
+                            data-aos="fade-right" data-aos-delay="300" />
+                        <img src="{{ asset('assets/img/others/breadcrumb_shape03.svg') }}" alt="Shape"
+                            data-aos="fade-up" data-aos-delay="400" />
+                        <img src="{{ asset('assets/img/others/breadcrumb_shape04.svg') }}" alt="Shape"
+                            data-aos="fade-down-left" data-aos-delay="400" />
+                        <img src="{{ asset('assets/img/others/breadcrumb_shape05.svg') }}" alt="Shape"
+                            data-aos="fade-left" data-aos-delay="400" />
+                    </div>
+                </section>
                 <div class="dashboard__inner-wrap">
                     <div class="row">
                         @if (!request()->is('student/materi/detail'))
@@ -122,18 +126,19 @@
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer__widget">
                             <div class="logo mb-35">
-                            <a href="javascript:void(0);"><img src="{{ asset('logo.png') }}" width="200px" alt="Logo"></a>
+                                <a href="javascript:void(0);"><img src="{{ asset('logo.png') }}" width="200px"
+                                        alt="Logo"></a>
                             </div>
                             <div class="footer__content">
-                            <p>New Learning space</p>
-                            <ul class="list-wrap">
-                                <li>Jl. Pisang No.50, Malang, Kec. Lowokwaru,
-                                    Kota Malang,
-                                    Jawa Timur 65145</li>
-                                </li>
-                                <li></li>
-                            </ul>
-                        </div>
+                                <p>New Learning space</p>
+                                <ul class="list-wrap">
+                                    <li>Jl. Pisang No.50, Malang, Kec. Lowokwaru,
+                                        Kota Malang,
+                                        Jawa Timur 65145</li>
+                                    </li>
+                                    <li></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">

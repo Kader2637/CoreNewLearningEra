@@ -33,13 +33,8 @@
                                 <a href="javascrip:void(0)"><img src="{{ asset('logo.png') }}" width="200px"
                                         alt="Logo"></a>
                             </div>
-                            <div class="tgmobile__search">
-                                <form action="#">
-                                    <input type="text" placeholder="Search here...">
-                                    <button><i class="fas fa-search"></i></button>
-                                </form>
-                            </div>
                             <div class="tgmobile__menu-outer">
+                                
                             </div>
                         </nav>
                     </div>
