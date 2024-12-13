@@ -9,18 +9,22 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="gap-3 d-flex">
-                                        <img src="{{ asset('logoCopy.png') }}" width="70px" alt="" srcset="">
-                                        <h4 class="mt-4">
+                            <div class="row align-items-center">
+                                <!-- Bagian kiri -->
+                                <div class="col-12 col-md-8">
+                                    <div class="flex-wrap gap-3 d-flex align-items-center">
+                                        <div class="d-flex justify-content-center">
+                                            <img src="{{ asset('logoCopy.png') }}" width="70px" alt="Logo" />
+                                        </div>
+                                        <h4 class="mt-2 text-center mt-md-4">
                                             Selamat datang {{ auth()->user()->name }}
                                         </h4>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <p class="text-end text-success">
-                                        Kelas yang di ikuti : <span id="count">0</span>
+                                <!-- Bagian kanan -->
+                                <div class="col-12 col-md-4">
+                                    <p class="mt-2 text-end text-success mt-md-0">
+                                        Kelas yang diikuti: <span id="count">0</span>
                                     </p>
                                 </div>
                             </div>
@@ -28,6 +32,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <div class="mt-4 progress__courses-wrap">

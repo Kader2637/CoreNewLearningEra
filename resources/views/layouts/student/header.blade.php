@@ -19,11 +19,11 @@
                             </div>
                             <div class="tgmenu__action">
                             </div>
-                            <div class="mobile-login-btn">
+                            {{-- <div class="mobile-login-btn">
                                 <a href="{{ route('login') }}"><img src="assets/img/icons/user.svg" alt=""
                                         class="injectable"></a>
-                            </div>
-                            <div class="mobile-nav-toggler"><i class="tg-flaticon-menu-1"></i></div>
+                            </div> --}}
+                            {{-- <div class="mobile-nav-toggler"><i class="tg-flaticon-menu-1"></i></div> --}}
                         </nav>
                     </div>
                     <div class="tgmobile__menu">
@@ -34,7 +34,7 @@
                                         alt="Logo"></a>
                             </div>
                             <div class="tgmobile__menu-outer">
-                                
+
                             </div>
                         </nav>
                     </div>

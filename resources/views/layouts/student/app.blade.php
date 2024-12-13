@@ -196,12 +196,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="app-download">
-                                <a href="#"><img src="{{ asset('assets/img/others/google-play.svg') }}"
-                                        alt="img"></a>
-                                <a href="#"><img src="{{ asset('assets/img/others/apple-store.svg') }}"
-                                        alt="img"></a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
