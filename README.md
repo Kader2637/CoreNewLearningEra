@@ -61,7 +61,7 @@ Ikuti langkah-langkah berikut untuk memulai proyek ini:
 - *Frontend*: bootstrap 5
 - *Backend*: Laravel 11
 - *Database*: Mysql
-- *Version Control*: Git, GitHub, Vs code
+- *Version Control*: Git, GitHub
 - *Libry*: Ajax, jquery
 
 ---
