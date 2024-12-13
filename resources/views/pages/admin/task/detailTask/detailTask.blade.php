@@ -154,7 +154,7 @@
                                 row.append(`<td>${item.name}</td>`);
 
                                 row.append(
-                                    `<td><input type="text" name="grade" placeholder="Masukkan Nilai" class="form-control" value="${item.grade !== null ? item.grade : ''}" disabled></td>`
+                                    `<td><input type="text" name="grade" placeholder="0" class="form-control" value="${item.grade !== null ? item.grade : ''}" disabled></td>`
                                 );
 
                                 const actionCell = $('');
