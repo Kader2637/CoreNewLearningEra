@@ -103,7 +103,7 @@
         <h4 class="mb-4">
             Data Guru Menunggu approval
         </h4>
-        <a href="/admin/classroom">
+        <a href="/admin/approval">
             Lihat Selengkapnya...
         </a>
     </div>
