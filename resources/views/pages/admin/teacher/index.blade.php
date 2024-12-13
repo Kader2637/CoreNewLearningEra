@@ -74,9 +74,9 @@
                                                     <div class="mt-4">
                                                         <div class="row">
                                                             <div class="col">
-                                                                <button class="btn btn-info w-100">
+                                                                <a href="/admin/teacher/detail/${teacher.id}" class="btn btn-info w-100">
                                                                     Detail
-                                                                </button>
+                                                                </a>
                                                             </div>
                                                             <div class="col">
                                                                 <button class="btn btn-danger w-100 delete-button" data-id="${teacher.id}" data-bs-toggle="modal" data-bs-target="#modal-delete">

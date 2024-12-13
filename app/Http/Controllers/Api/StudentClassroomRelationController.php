@@ -114,6 +114,8 @@ class StudentClassroomRelationController extends Controller
         //
     }
 
+   
+
     /**
      * Update the specified resource in storage.
      */
@@ -174,5 +176,14 @@ class StudentClassroomRelationController extends Controller
         } else {
             return response()->json(['message' => 'ID kelas atau status kelas tidak valid.'], 400);
         }
+    }
+
+    public function countStudent($id)
+    {
+        $count = StudentClassroomRelation::where('user_id' , $id)->count();
+        return response()->json([
+            'status' => 'success',
+            'count' => $count,
+        ],200);
     }
 }

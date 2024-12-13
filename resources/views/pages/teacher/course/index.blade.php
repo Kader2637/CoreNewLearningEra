@@ -164,8 +164,8 @@
                     </div>
                     <div class="class-info">
                         <div class="cover-photo" style="width: 100%; overflow: hidden;">
-                            <img src="" id="class-thumbnail" class="rounded img-fluid" alt="Class Thumbnail"
-                                style="object-fit: contai; width: 100%; height: 300px;">
+                            <img src="" id="class-thumbnail" class="rounded img-fluid" 
+                                style="object-fit: cover; width: 100%; height: 300px;">
                         </div>
                     </div>
                     <div class="mt-3 mb-3">

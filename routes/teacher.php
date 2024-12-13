@@ -24,7 +24,7 @@ Route::prefix('teacher')->middleware(['auth', CheckRole::class . ':teacher'])->g
         return view('pages.teacher.task.assignmentAssessment');
     })->name('task.assignmentAssessment');
 
-    Route::get('/detailTask/{taskCourse}', [TaskCourseController::class , 'show'])->name('task.detailTask');
+    Route::get('/detailTask/{taskCourse}', [TaskCourseController::class , 'teacher'])->name('task.detailTask');
 });
 
 Route::middleware(['auth', CheckRole::class . ':teacher'])->group(function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Classroom;
+use App\Models\StudentClassroomRelation;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -56,13 +57,18 @@ class AdminController extends Controller
             'message' => 'Kelas berhasil diterima.'
         ]);
     }
-
-    public function countTeacher()
+    public function countAdmin()
     {
-        $countTeacher = User::where('role', 'teacher')->count();
+        $countClassroom = Classroom::where('status' , 'accept')->count();
+        $countTeacher = User::where('role', 'teacher')->where('status' , 'accept')->count();
+        $countStudent = User::where('role', 'student')->where('status' , 'accept')->count();
+        $countCourse = User::where('role', 'student')->where('status' , 'accept')->count();
         return response()->json([
             'status' => 'success',
-            'count' => $countTeacher
+            'countClassroom' => $countClassroom,
+            'countTeacher' => $countTeacher,
+            'countStudent' => $countStudent,
+            'countCourse' => $countCourse
         ],200);
     }
 }

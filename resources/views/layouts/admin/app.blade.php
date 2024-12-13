@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     @yield('style')
 </head>
 
@@ -50,6 +51,7 @@
             <div class="page-body">
                 <div class="container-fluid">
                     @yield('content')
+
                 </div>
             </div>
             <footer class="footer">
@@ -102,6 +104,7 @@
     <script src="{{ asset('assetsAdmin/assets/js/script.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/theme-customizer/customizer.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     @yield('script')
 </body>
 

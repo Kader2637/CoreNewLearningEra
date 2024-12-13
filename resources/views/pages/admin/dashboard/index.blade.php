@@ -37,7 +37,7 @@
                         <div class="mt-3">
                             <div class="d-flex justify-content-between">
                                 <h4>Teacher</h4>
-                                <p><span class="pull">30 Teacher</span></p>
+                                <p><span class="pull" id="countTeacher"></span>&nbsp;Teacher</p>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         <div class="mt-3">
                             <div class="d-flex justify-content-between">
                                 <h4>Student</h4>
-                                <p><span class="pull">30 Student</span></p>
+                                <p><span class="pull" id="countStudent"></span>&nbsp;Student</p>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                         <div class="mt-3">
                             <div class="d-flex justify-content-between">
                                 <h4>Kelas</h4>
-                                <p><span class="pull">30 Kelas</span></p>
+                                <p><span class="pull" id="countClassroom"></span>&nbsp;Kelas</p>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                         <div class="mt-3">
                             <div class="d-flex justify-content-between">
                                 <h4>Materi</h4>
-                                <p><span class="pull">30 Materi</span></p>
+                                <p><span class="pull" id="countCourse"></span>&nbsp;Materi</p>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
         <h4 class="mb-4">
             Data Guru Menunggu approval
         </h4>
-        <a href="#">
+        <a href="/admin/classroom">
             Lihat Selengkapnya...
         </a>
     </div>
@@ -131,7 +131,7 @@
                        <div class="d-flex justify-content-center">
                                 <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
                             </div>
-                            <h3 class="text-center">Data Masih Kosong</h3>    
+                            <h3 class="text-center">Data Masih Kosong</h3>
                     `);
                         } else {
                             const maxCards = Math.min(response.data.length, 8);
@@ -191,8 +191,29 @@
             });
         }
 
+
+
+        function fetchCount() {
+            $.ajax({
+                url: '/api/count/statistika/admin/data',
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    $('#countTeacher').text(response.countTeacher);
+                    $('#countStudent').text(response.countStudent);
+                    $('#countCourse').text(response.countCourse);
+                    $('#countClassroom').text(response.countClassroom);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX call failed:', textStatus, errorThrown);
+                    showAlert('Kesalahan saat mengambil data.', 'danger');
+                }
+            });
+        }
+
         $(document).ready(function() {
             fetchData();
+            fetchCount();
         });
     </script>
 @endsection

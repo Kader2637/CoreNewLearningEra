@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssigmentAsesmentTask;
 use App\Http\Requests\StoreAssigmentAsesmentTaskRequest;
 use App\Http\Requests\UpdateAssigmentAsesmentTaskRequest;
+use Illuminate\Http\Request;
 
 class AssigmentAsesmentTaskController extends Controller
 {
@@ -14,7 +15,7 @@ class AssigmentAsesmentTaskController extends Controller
      */
     public function index($id)
     {
-        $data = AssigmentAsesmentTask::where('task_course_id' , $id)->get();
+        $data = AssigmentAsesmentTask::where('task_course_id', $id)->get();
         return response()->json([
             'status' => 'success',
             'data' => $data
@@ -78,9 +79,37 @@ class AssigmentAsesmentTaskController extends Controller
             'status' => 'success',
             'message' => 'Berhasil mengedit jawaban.',
             'data' => $assigmentAsesmentTask
-        ],200);
+        ], 200);
     }
 
+    public function grade(Request $request, $id)
+    {
+        $assigmentAsesmentTask = AssigmentAsesmentTask::find($id);
+
+        if (!$assigmentAsesmentTask) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Tugas tidak ditemukan.',
+            ], 404);
+        }
+
+        $validatedData = $request->validate([
+            'grade' => 'required|numeric|min:0|max:100', 
+        ], [
+            'grade.required' => 'Nilai harus diisi.',
+            'grade.numeric' => 'Nilai harus berupa angka.',
+            'grade.min' => 'Nilai tidak boleh kurang dari 0.',
+            'grade.max' => 'Nilai tidak boleh lebih dari 100.',
+        ]);
+
+        $assigmentAsesmentTask->update($validatedData);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil memberikan nilai.',
+            'data' => $assigmentAsesmentTask
+        ], 200);
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -91,6 +120,6 @@ class AssigmentAsesmentTaskController extends Controller
             'status' => 'success',
             'message' => 'Berhasil menghapus jawaban.',
             'data' => $assigmentAsesmentTask
-        ],200);
+        ], 200);
     }
 }

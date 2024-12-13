@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Api\TaskCourseController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
@@ -20,9 +21,7 @@ Route::prefix('admin')->middleware(['auth', CheckRole::class . ':admin'])->group
         return view('pages.admin.teacher.index');
     })->name('admin.teacher');
 
-    Route::get('/teacher/detail', function () {
-        return view('pages.admin.teacher.detail');
-    })->name('admin.teacher.detail');
+    Route::get('/teacher/detail/{id}',[UserController::class , 'show'])->name('admin.teacher.detail');
 
     Route::get('/approval', function () {
         return view('pages.admin.approval.index');
@@ -32,6 +31,6 @@ Route::prefix('admin')->middleware(['auth', CheckRole::class . ':admin'])->group
         return view('pages.admin.task.index');
     })->name('admin.task');
 
-    Route::get('/deatailTask', [TaskCourseController::class, 'show'])->name('admin.detailTask');
+    Route::get('/detailTask/{taskCourse}', [TaskCourseController::class, 'show'])->name('admin.detailTask');
 
 });
