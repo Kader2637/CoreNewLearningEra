@@ -9,7 +9,7 @@
             <div class="col-5 d-none d-xl-block">
 
             </div>
-            <div class="col-xl-3 col-sm-5 box-col-4">
+            <div class="col-xl-3 col-lg-6 col-12 folder-box">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="/admin/dashboard">
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="row folder">
-        <div class="col-xl-3 col-lg-5 col-12 folder-box">
+        <div class="col-xl-3 col-lg-6 col-12 folder-box">
             <div class="card">
                 <div class="card-body">
                     <div class="d-block">
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-5 col-12 folder-box">
+        <div class="col-xl-3 col-lg-6 col-12 folder-box">
             <div class="card">
                 <div class="card-body">
                     <div class="d-block">
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-5 col-12 folder-box">
+        <div class="col-xl-3 col-lg-6 col-12 folder-box">
             <div class="card">
                 <div class="card-body">
                     <div class="d-block">
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-5 col-12 folder-box">
+        <div class="col-xl-3 col-lg-6 col-12 folder-box">
             <div class="card">
                 <div class="card-body">
                     <div class="d-block">
@@ -149,7 +149,7 @@
                                                 <img src="${profileImage}" width="75px" style="object-fit: cover" alt="profile" />
                                             </div>
                                             <div class="edit-icon">
-                                               
+
                                             </div>
                                         </div>
                                         <div class="social-details">
