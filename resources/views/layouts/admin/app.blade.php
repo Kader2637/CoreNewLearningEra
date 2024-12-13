@@ -14,16 +14,6 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/icofont.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/themify.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/flag-icon.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/feather-icon.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/slick.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/slick-theme.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/scrollbar.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/animate.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/datatables.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/owlcarousel.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/style.css') }}">
     <link id="color" rel="stylesheet" href="{{ asset('assetsAdmin/assets/css/color-1.css') }}" media="screen">
@@ -70,15 +60,10 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('assetsAdmin/assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/scrollbar/simplebar.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/scrollbar/custom.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/config.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/sidebar-menu.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/sidebar-pin.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/typeahead/handlebars.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/typeahead/typeahead.bundle.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/typeahead/typeahead.custom.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/script.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/theme-customizer/customizer.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
