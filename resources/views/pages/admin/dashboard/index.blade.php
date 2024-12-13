@@ -149,9 +149,7 @@
                                                 <img src="${profileImage}" width="75px" style="object-fit: cover" alt="profile" />
                                             </div>
                                             <div class="edit-icon">
-                                                <svg>
-                                                    <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#profile-check"></use>
-                                                </svg>
+                                               
                                             </div>
                                         </div>
                                         <div class="social-details">

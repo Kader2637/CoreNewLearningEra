@@ -14,7 +14,6 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/font-awesome.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/icofont.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/themify.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assetsAdmin/assets/css/vendors/flag-icon.css') }}">
@@ -85,14 +84,8 @@
     <script src="{{ asset('assetsAdmin/assets/js/chart/morris-chart/raphael.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/chart/morris-chart/morris.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/chart/morris-chart/prettify.min.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/chart/apex-chart/apex-chart.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/chart/apex-chart/stock-prices.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/chart/apex-chart/moment.min.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/dashboard/default.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/notify/index.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/datatable/datatables/datatable.custom.js') }}"></script>
-    <script src="{{ asset('assetsAdmin/assets/js/datatable/datatables/datatable.custom1.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/owlcarousel/owl.carousel.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/owlcarousel/owl-custom.js') }}"></script>
     <script src="{{ asset('assetsAdmin/assets/js/typeahead/handlebars.js') }}"></script>

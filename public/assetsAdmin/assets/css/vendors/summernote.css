@@ -66,8 +66,8 @@
   font-family: summernote;
   font-style: normal;
   font-weight: normal;
-  src: url(https://admin.pixelstrap.net/zono/assets/fonts/summernote/summernote.eot?dbafe969167589eda84514394d126413);
-  src: url(https://admin.pixelstrap.net/zono/assets/fonts/summernote/summernote.eot?#iefix) format("embedded-opentype"), url(https://admin.pixelstrap.net/zono/assets/fonts/summernote/summernote.woff?dbafe969167589eda84514394d126413) format("woff"), url(https://admin.pixelstrap.net/zono/assets/fonts/summernote/summernote.ttf?dbafe969167589eda84514394d126413) format("truetype");
+  src: url(https://admin.pixelstrap.net/assets/fonts/summernote/summernote.eot?dbafe969167589eda84514394d126413);
+  src: url(https://admin.pixelstrap.net/assets/fonts/summernote/summernote.eot?#iefix) format("embedded-opentype"), url(https://admin.pixelstrap.net/assets/fonts/summernote/summernote.woff?dbafe969167589eda84514394d126413) format("woff"), url(https://admin.pixelstrap.net/assets/fonts/summernote/summernote.ttf?dbafe969167589eda84514394d126413) format("truetype");
 }
 .note-editor {
   position: relative;
