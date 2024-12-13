@@ -34,12 +34,12 @@ Ikuti langkah-langkah berikut untuk memulai proyek ini:
    
 4. *Jalankan*:
     bash
-    php artisan migrate --seed
+    php artisan migrate --seed,
     php artisan key:genearate
 
 5. *Jalankan Proyek*:
     bash
-    php artisan optimize
+    php artisan optimize,
     php artisan seve
     
 
