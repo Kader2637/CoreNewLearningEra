@@ -15,12 +15,7 @@
             <div class="form-group">
                 <div class="Typeahead Typeahead--twitterUsers">
                     <div class="u-posRelative">
-                        {{-- <input class="demo-input Typeahead-input form-control-plaintext w-100" type="text"
-                            placeholder="Type to Search .." name="q" title="" autofocus>
-                        <svg class="search-bg svg-color">
-                            <use href="https://admin.pixelstrap.net/zono/assets/svg/icon-sprite.svg#search">
-                            </use>
-                        </svg> --}}
+                 
                     </div>
                 </div>
             </div>
@@ -52,7 +47,7 @@
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="user-profile.html"><i data-feather="user"></i><span>Account </span></a></li>
+                        
                         <li>
                             <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display:none;">
                                 @csrf
