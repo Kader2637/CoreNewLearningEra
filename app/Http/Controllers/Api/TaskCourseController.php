@@ -68,6 +68,10 @@ class TaskCourseController extends Controller
     {
         return view('pages.admin.task.detailTask.detailTask', compact('taskCourse'));
     }
+    public function teacher(TaskCourse $taskCourse)
+    {
+        return view('pages.teacher.task.detailTask.detailTask', compact('taskCourse'));
+    }
 
     /**
      * Show the form for editing the specified resource.
