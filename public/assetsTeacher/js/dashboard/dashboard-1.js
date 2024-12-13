@@ -5,7 +5,7 @@
  var dlabChartlist = function(){
 	//let draw = Chart.controllers.line.__super__.draw; //draw shadow
 	var screenWidth = $(window).width();
-	
+
 	var donutChart1 = function(){
 		$("span.donut1").peity("donut", {
 			width: "50",
@@ -35,9 +35,9 @@
 				{
 					name: "Retained Clients",
 					data: [-60, -10, -50, -25, -30, -65, -22, -10, -50, -20, -70, -35, -60, -20]
-				} 
+				}
 			],
-			
+
 			plotOptions: {
 				bar: {
 					columnWidth: "30%",
@@ -53,7 +53,7 @@
 				distributed: true
 			},
 			colors:['#2953E8', '#09268A'],
-			
+
 			grid: {
 				show: false,
 			},
@@ -82,7 +82,7 @@
 						fontSize: '13px',
 						fontFamily: 'Poppins',
 						fontWeight: 400
-						
+
 					},
 				},
 				crosshairs: {
@@ -92,7 +92,7 @@
 					show: false,
 				},
 			},
-			
+
 			yaxis: {
 				//show: false
 				labels: {
@@ -102,19 +102,17 @@
 						fontSize: '13px',
 						fontFamily: 'Poppins',
 						fontWeight: 400
-						
+
 					},
 				},
 			},
-			
+
 			tooltip: {
 				x: {
 					show: true
 				}
 			}
 		};
-		var chartTimelineRender =  new ApexCharts(document.querySelector("#chartTimeline"), optionsTimeline);
-		 chartTimelineRender.render();
 	}
 	var chartTimeline2 = function(){
 		var optionsTimeline = {
@@ -139,9 +137,9 @@
 				{
 					name: "Retained Clients",
 					data: [-60, -10, -30, -25, -30, -45, -72, -10, -50, -20, -70, -35, -60, -20]
-				} 
+				}
 			],
-			
+
 			plotOptions: {
 				bar: {
 					columnWidth: "30%",
@@ -157,7 +155,7 @@
 				distributed: true
 			},
 			colors:['#2953E8', '#09268A'],
-			
+
 			grid: {
 				show: false,
 			},
@@ -186,7 +184,7 @@
 						fontSize: '13px',
 						fontFamily: 'Poppins',
 						fontWeight: 400
-						
+
 					},
 				},
 				crosshairs: {
@@ -196,7 +194,7 @@
 					show: false,
 				},
 			},
-			
+
 			yaxis: {
 				//show: false
 				labels: {
@@ -206,19 +204,18 @@
 						fontSize: '13px',
 						fontFamily: 'Poppins',
 						fontWeight: 400
-						
+
 					},
 				},
 			},
-			
+
 			tooltip: {
 				x: {
 					show: true
 				}
 			}
 		};
-		var chartTimelineRender =  new ApexCharts(document.querySelector("#chartTimeline2"), optionsTimeline);
-		 chartTimelineRender.render();
+
 	}
 	var chartTimeline3 = function(){
 		var optionsTimeline = {
@@ -243,9 +240,9 @@
 				{
 					name: "Retained Clients",
 					data: [-40, -60, -90, -25, -40, -45, -22, -20, -40, -30, -56, -35, -60, -20]
-				} 
+				}
 			],
-			
+
 			plotOptions: {
 				bar: {
 					columnWidth: "30%",
@@ -261,7 +258,7 @@
 				distributed: true
 			},
 			colors:['#2953E8', '#09268A'],
-			
+
 			grid: {
 				show: false,
 			},
@@ -290,7 +287,7 @@
 						fontSize: '13px',
 						fontFamily: 'Poppins',
 						fontWeight: 400
-						
+
 					},
 				},
 				crosshairs: {
@@ -300,7 +297,7 @@
 					show: false,
 				},
 			},
-			
+
 			y: {
 				//show: false
 				labels: {
@@ -310,19 +307,18 @@
 						fontSize: '13px',
 						fontFamily: 'Poppins',
 						fontWeight: 400
-						
+
 					},
 				},
 			},
-			
+
 			tooltip: {
 				x: {
 					show: true
 				}
 			}
 		};
-		var chartTimelineRender =  new ApexCharts(document.querySelector("#chartTimeline3"), optionsTimeline);
-		 chartTimelineRender.render();
+
 	}
 	var radialChart = function(){
 		 var options = {
@@ -350,7 +346,7 @@
               strokeWidth: '67%',
               margin: 0, // margin is in pixels
             },
-        
+
             dataLabels: {
               show: true,
               value: {
@@ -393,7 +389,7 @@
 					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
 
 					datasets: [{
-						
+
 						label: "Sales Stats",
 						backgroundColor: ['rgba(234, 73, 137, 0)'],
 						borderColor: '#2953E8',
@@ -404,7 +400,7 @@
 						pointHoverBackgroundColor: '#2953E8',
 						pointHoverBorderColor: '#2953E8',
 						tension: 0.4,
-						
+
 						data: [20, 10, 20, 10, 25, 20, 35, 30]
 					}]
 				},
@@ -427,7 +423,7 @@
 						yPadding: 10,
 						caretPadding: 10
 					},
-					
+
 					legend: {
 						display: false,
 					},
@@ -437,9 +433,9 @@
 						mode: "index"
 					},
 					scales: {
-						
+
 						y: [{
-							
+
 							display: !1,
 							gridLines: !1,
 							scaleLabel: {
@@ -449,7 +445,7 @@
 							ticks: {
 								beginAtZero: !0
 							},
-							
+
 						}],
 						y:{
 							grid:{
@@ -459,7 +455,7 @@
 							ticks: {
 								display: false,
 							}
-							
+
 						},
 					},
 					elements: {
@@ -485,37 +481,23 @@
 		return {
 			init:function(){
 			},
-			
-			
+
+
 			load:function(){
 				chartTimeline();
 				chartTimeline2();
 				chartTimeline3();
-				donutChart1();
 				radialChart();
 				widgetChart1();
 			},
-			
+
 			resize:function(){
-				
+
 			}
 		}
-	
+
 	}();
 
-	jQuery(document).ready(function(){
-	});
-		
-	jQuery(window).on('load',function(){
-		setTimeout(function(){
-			dlabChartlist.load();
-		}, 1000); 
-		
-	});
 
-	jQuery(window).on('resize',function(){
-		
-		
-	});     
 
-})(jQuery);
+})
