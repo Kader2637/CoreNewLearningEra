@@ -66,6 +66,5 @@
     @yield('script')
 </body>
 
-<!-- Mirrored from vora.dexignlab.com/xhtml/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 05 Dec 2023 10:44:14 GMT -->
 
 </html>
