@@ -110,7 +110,7 @@ Keluarkan
                         <div class="card-body">
                             <div class="media">
                                 <div class="image-bx me-3 me-lg-2 me-xl-3">
-                                    <img src="${siswa.profile || '{{ asset('user.png') }}'}" alt="" class="rounded-circle" width="70">
+                                    <img src="{{ asset('storage') }}/${siswa.profile}" alt="" class="rounded-circle" width="70" height="70" style="object-fit:cover">
                                     <span class="active"></span>
                                 </div>
                                 <div class="media-body">
@@ -119,10 +119,10 @@ Keluarkan
                                     </h6>
                                     <p class="fs-14">${siswa.email}</p>
                                     <div class="gap-2 mt-2 d-flex justify-content-end">
-                                        <button type="button" class="btn btn-danger btn-sm" title="Tolak" data-id="${siswa.id}">
+                                        <button type="button" class="btn btn-danger btn-danger-reject btn-sm" title="Tolak" data-id="${siswa.id_relation}">
                                             Tolak
                                         </button>
-                                        <button type="button" class="btn btn-info btn-sm" title="Terima" data-id="${siswa.id}">
+                                        <button type="button" class="btn btn-info btn-info-accept btn-sm" title="Terima" data-id="${siswa.id_relation}">
                                             Terima
                                         </button>
                                     </div>
@@ -134,13 +134,13 @@ Keluarkan
                 `);
                     });
 
-                    $('.btn-info').on('click', function() {
+                    $('.btn-info-accept').on('click', function() {
                         const siswaId = $(this).data('id');
                         $('#acceptStudentId').val(siswaId);
                         $('#modal-accept-student').modal('show');
                     });
 
-                    $('.btn-danger').on('click', function() {
+                    $('.btn-danger-reject').on('click', function() {
                         const siswaId = $(this).data('id');
                         $('#rejectStudentId').val(siswaId);
                         $('#modal-reject-student').modal('show');

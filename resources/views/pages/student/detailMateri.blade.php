@@ -124,39 +124,39 @@
                                         var deadline = new Date(task.deadline);
 
                                         $.each(assignments, function(index, assignment) {
-                                            var createdAt = new Date(assignment
-                                                .created_at);
-                                            var formattedTime = createdAt
-                                                .toLocaleTimeString('id-ID', {
-                                                    hour: '2-digit',
-                                                    minute: '2-digit'
-                                                });
+                                            if (assignment.grade !== null) {
+                                                var createdAt = new Date(assignment
+                                                    .created_at);
+                                                var formattedTime = createdAt
+                                                    .toLocaleTimeString('id-ID', {
+                                                        hour: '2-digit',
+                                                        minute: '2-digit'
+                                                    });
 
-                                            var now = new Date();
-                                            var isDeadlinePassed = now >= deadline;
-                                            var deadlineMessage = isDeadlinePassed ?
-                                                `<span class="text-danger">Tugas sudah ditutup</span>` :
-                                                '';
+                                                var now = new Date();
+                                                var isDeadlinePassed = now >=
+                                                    deadline;
+                                                var deadlineMessage =
+                                                    isDeadlinePassed ?
+                                                    `<span class="text-danger">Tugas sudah ditutup</span>` :
+                                                    '';
 
-                                            var icon = task.type === 'file' ?
-                                                '<i class="fa fa-file" style="font-size: 24px; color: #1e3c72;"></i>' :
-                                                '<i class="fa fa-link" style="font-size: 24px; color: #1e3c72;"></i>';
+                                                var icon = task.type === 'file' ?
+                                                    '<i class="fa fa-file" style="font-size: 24px; color: #1e3c72;"></i>' :
+                                                    '<i class="fa fa-link" style="font-size: 24px; color: #1e3c72;"></i>';
 
-                                            var actionButton = assignment.grade ==
-                                                null && !isDeadlinePassed ?
-                                                (assignment.grade ?
-                                                    `<span class="text-success">Sudah Dinilai</span>` :
-                                                    `<span class="delete-assignment btn btn-danger btn-sm" data-id="${assignment.id}" style="cursor: pointer;">Hapus</span>`
-                                                    ) :
-                                                `<span class="text-success">Sudah Mengumpulkan</span>`;
+                                                var actionButton = assignment
+                                                    .grade == null && !
+                                                    isDeadlinePassed ?
+                                                    `<span class="delete-assignment btn btn-danger btn-sm" data-id="${assignment.id}" style="cursor: pointer;">Hapus</span>` :
+                                                    `<span class="text-success">Nilai  : ${assignment.grade}</span>`;
 
+                                                var detailButton = task.type ===
+                                                    'file' ?
+                                                    `<a href="{{ asset('storage/${assignment.file}') }}" class="btn btn-primary btn-sm" target="_blank">Unduh</a>` :
+                                                    `<a href="${assignment.link}" class="btn btn-primary btn-sm" target="_blank">Detail</a>`;
 
-                                            var detailButton = task.type ===
-                                                'file' ?
-                                                `<a href="{{ asset('storage/${assignment.file}') }}" class="btn btn-primary btn-sm" target="_blank">Unduh</a>` :
-                                                `<a href="${assignment.link}" class="btn btn-primary btn-sm" target="_blank">Detail</a>`;
-
-                                            assignmentCards += `
+                                                assignmentCards += `
                                         <div class="mb-3 card assignment-card" data-assignment-id="${assignment.id}" style="display: flex; align-items: center; justify-content: space-between; padding: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                                             <div class="d-flex align-items-center">
                                                 ${icon}
@@ -171,38 +171,44 @@
                                             </div>
                                         </div>
                                     `;
+                                            }
                                         });
 
-                                        $('#taskSubmissionContainer').empty();
-                                        $('#taskSubmissionContainer').html(assignmentCards);
+                                        $('#taskSubmissionContainer').empty().html(
+                                            assignmentCards);
+                                        if (assignmentCards.length === 0) {
+                                            $('#taskSubmissionContainer').append(
+                                                '<p class="text-muted">Tidak ada tugas yang tersedia.</p>'
+                                                );
+                                        }
                                         $('#submitTaskButton').remove();
                                     } else {
                                         if (type === "file") {
                                             $('#taskSubmissionContainer').append(`
-                                        <div class="mb-3">
-                                            <label for="formFile" class="form-label">Upload Tugas</label>
-                                            <input class="form-control" name="file" type="file" id="formFile">
-                                            <small class="form-text text-muted">* File harus berformat ZIP.</small>
-                                        </div>
-                                    `);
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">Upload Tugas</label>
+                                        <input class="form-control" name="file" type="file" id="formFile">
+                                        <small class="form-text text-muted">* File harus berformat ZIP.</small>
+                                    </div>
+                                `);
                                         } else if (type === "link") {
                                             $('#taskSubmissionContainer').append(`
-                                        <div class="mb-3">
-                                            <label for="exampleFormControlInput1" class="form-label">Link Tugas</label>
-                                            <input type="url" class="form-control" name="link" id="exampleFormControlInput1" placeholder="Masukan Disini">
-                                            <small class="form-text text-muted">* Masukkan URL yang valid (contoh: https://example.com).</small>
-                                        </div>
-                                    `);
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Link Tugas</label>
+                                        <input type="url" class="form-control" name="link" id="exampleFormControlInput1" placeholder="Masukan Disini">
+                                        <small class="form-text text-muted">* Masukkan URL yang valid (contoh: https://example.com).</small>
+                                    </div>
+                                `);
                                         }
 
                                         $('#taskSubmissionContainer').append(`
-                                    <div class="d-flex justify-content-end">
-                                        <button type="button" class="w-25 join-button" id="submitTaskButton"
-                                            style="background: linear-gradient(90deg, #1e3c72, #2a5298); color: white; font-size: 13px; padding: 13px; border: none; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
-                                            Kirim
-                                        </button>
-                                    </div>
-                                `);
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="w-25 join-button" id="submitTaskButton"
+                                        style="background: linear-gradient(90deg, #1e3c72, #2a5298); color: white; font-size: 13px; padding: 13px; border: none; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                                        Kirim
+                                    </button>
+                                </div>
+                            `);
                                     }
                                 },
                                 error: function() {
@@ -220,11 +226,10 @@
                     }
                 });
             }
-
             fetchTaskData();
 
             $(document).on('click', '.delete-assignment', function() {
-                var assignmentId = $(this).data('id'); 
+                var assignmentId = $(this).data('id');
 
                 Swal.fire({
                     title: 'Apakah Anda yakin?',
@@ -246,7 +251,7 @@
                                         .hide();
 
                                     fetchTaskData
-                                (); 
+                                        ();
                                 } else {
                                     showAlert('Gagal menghapus tugas', 'error');
                                 }
@@ -272,7 +277,7 @@
                     success: function(response) {
                         if (response.status === 'success') {
                             showAlert('Tugas berhasil dikirim!', 'success');
-                            fetchTaskData(); 
+                            fetchTaskData();
                         } else {
                             showAlert('Gagal mengirim tugas: ' + response.message, 'error');
                         }

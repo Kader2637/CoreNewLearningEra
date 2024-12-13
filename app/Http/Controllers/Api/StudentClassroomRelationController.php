@@ -68,7 +68,8 @@ class StudentClassroomRelationController extends Controller
     public function store(StoreStudentClassroomRelationRequest $request)
     {
         $classroom = Classroom::where('codeClass', $request->classroom_code)
-            ->first();
+        ->where('status' , 'accept')
+        ->first();
 
         if ($classroom) {
             $existingRelation = StudentClassroomRelation::where('user_id', $request->user_id)
@@ -114,7 +115,7 @@ class StudentClassroomRelationController extends Controller
         //
     }
 
-   
+
 
     /**
      * Update the specified resource in storage.

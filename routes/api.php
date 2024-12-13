@@ -78,8 +78,8 @@ Route::delete('/kick/student/{studentClassroomRelation}', [StudentClassroomRelat
 
 // pending approval classroom teacher
 Route::get('/pending/teacher/{id}' , [ClassroomTeacherController::class , 'pendingStudent']);
-Route::post('/accept/teacher/{user_id}' , [ClassroomTeacherController::class , 'accept']);
-Route::post('/reject/teacher/{user_id}' , [ClassroomTeacherController::class , 'reject']);
+Route::post('/accept/teacher/{id}' , [ClassroomTeacherController::class , 'accept']);
+Route::post('/reject/teacher/{id}' , [ClassroomTeacherController::class , 'reject']);
 
 // landing page
 Route::get('/classroom' , [ClassroomController::class , 'index']);
@@ -114,5 +114,5 @@ Route::get('/not/assigment/task/{id}' , [TeacherController::class , 'notStudentA
 Route::get('/done/assigment/task/{id}' , [TeacherController::class , 'studentAssigment']);
 Route::patch('/assigment/grade/{id}', [AssigmentAsesmentTaskController::class, 'grade'])->name('assigment.grade');
 
-// count student 
+// count student
 Route::get('count/student/{id}', [StudentClassroomRelationController::class, 'countStudent']);

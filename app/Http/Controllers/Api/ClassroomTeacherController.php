@@ -46,9 +46,9 @@ class ClassroomTeacherController extends Controller
         ], 200);
     }
 
-    public function accept($user_id)
+    public function accept($id)
     {
-        $accept = StudentClassroomRelation::where('user_id', $user_id)->first();
+        $accept = StudentClassroomRelation::where('id', $id)->first();
 
         if (!$accept) {
             return response()->json([
@@ -72,7 +72,7 @@ class ClassroomTeacherController extends Controller
                 'message' => 'Kelas sudah penuh. Tidak dapat menerima siswa.'
             ], 400);
         }
-        $user = User::where('id' , $user_id)->first();
+        $user = User::where('id' , $accept->user_id)->first();
         Mail::to($user->email)->send(new AcceptStudent());
 
         $accept->status = 'accept';
@@ -89,10 +89,10 @@ class ClassroomTeacherController extends Controller
 
 
 
-    public function reject($user_id)
+    public function reject($id)
     {
-        $accept = StudentClassroomRelation::where('user_id', $user_id)->first();
-        $user = User::where('id' , $user_id)->first();
+        $accept = StudentClassroomRelation::where('id', $id)->first();
+        $user = User::where('id' , $accept->user_id)->first();
 
         Mail::to($user->email)->send(new RejectStudent());
         $accept->status = 'reject';

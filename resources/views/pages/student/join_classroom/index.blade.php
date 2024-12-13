@@ -35,8 +35,9 @@
                             const classroomThumbnail = classroom.thumbnail ?
                                 `/storage/${classroom.thumbnail}` : '/user.png';
                             const userImage = classroom.user_image ?
-                                `/assets/img/users/${classroom.user_image}` : '/user.png';
-                                const courseDescription = classroom.description.length > 80 ? classroom.description.substring(0, 80) + '...' : classroom.description;
+                                `/storage/${classroom.user_image}` : '/user.png';
+                            const courseDescription = classroom.description.length > 80 ? classroom
+                                .description.substring(0, 80) + '...' : classroom.description;
 
                             let classroomHtml = `
                             <div class="col-xl-5 col-12">
