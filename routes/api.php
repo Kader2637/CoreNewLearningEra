@@ -101,15 +101,13 @@ Route::post('/assigment/post' , [AssigmentAsesmentTaskController::class , 'store
 Route::put('/assigment/update/{assigmentAsesmentTask}' ,[AssigmentAsesmentTaskController::class , 'update']);
 Route::delete('/assigment/delete/{assigmentAsesmentTask}' , [AssigmentAsesmentTaskController::class , 'destroy']);
 
-// Statistika
-Route::get('/admin/count/teacher', [AdminController::class ,'countTeacher']);
 
 // Statistikaguru
 Route::get('/count/statistika/{id}', [TeacherController::class, 'count']);
 Route::get('/countTeacher', [AdminController::class ,'countTeacher']);
 
 // Count admin
-Route::get('count_classroom' , [AdminController::class , 'CountClassroom']);
+Route::get('count/statistika/admin/data' , [AdminController::class , 'countAdmin']);
 
 // assigment
 Route::get('/not/assigment/task/{id}' , [TeacherController::class , 'notStudentAssigment']);

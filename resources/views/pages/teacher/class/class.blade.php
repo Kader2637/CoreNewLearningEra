@@ -179,19 +179,8 @@
             </div>
         </div>
 
-        <!-- Filter Berdasarkan Kelas -->
         <div class="row">
             <div class="col-lg-12">
-                <div class="mb-3">
-                    <label for="filterKelas" class="form-label text-black font-w500">Filter Berdasarkan Kelas:</label>
-                    <select id="filterKelas" class="form-select">
-                        <option value="all">Semua Kelas</option>
-                        <option value="kelasA">Kelas A</option>
-                        <option value="kelasB">Kelas B</option>
-                        <option value="kelasC">Kelas C</option>
-                    </select>
-                </div>
-                <!-- Tabel Data Kelas -->
                 <div class="table-responsive card-table rounded table-hover fs-14">
                     <table class="table table-bordered mb-4 dataTablesCard project-bx dataTable no-footer" id="example5"
                         role="grid">
@@ -207,7 +196,6 @@
                             </tr>
                         </thead>
                         <tbody id="classroom-data">
-                            <!-- Data rows will be populated here -->
                         </tbody>
                     </table>
                 </div>
@@ -217,7 +205,6 @@
         @include('components.modal-delete')
     @endsection
     @section('script')
-        <!-- Pastikan Toastr CSS dan JS sudah diimpor di bagian head -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script>

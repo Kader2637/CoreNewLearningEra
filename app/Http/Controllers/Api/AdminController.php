@@ -57,22 +57,18 @@ class AdminController extends Controller
             'message' => 'Kelas berhasil diterima.'
         ]);
     }
-
-    public function countTeacher()
+    public function countAdmin()
     {
-        $countTeacher = User::where('role', 'teacher')->count();
+        $countClassroom = Classroom::where('status' , 'accept')->count();
+        $countTeacher = User::where('role', 'teacher')->where('status' , 'accept')->count();
+        $countStudent = User::where('role', 'student')->where('status' , 'accept')->count();
+        $countCourse = User::where('role', 'student')->where('status' , 'accept')->count();
         return response()->json([
             'status' => 'success',
-            'count' => $countTeacher
-        ],200);
-    }
-
-    public function CountClassroom()
-    {
-        $count = Classroom::where('status' , 'accept')->count();
-        return response()->json([
-            'status' => 'success',
-            'count' => $count
+            'countClassroom' => $countClassroom,
+            'countTeacher' => $countTeacher,
+            'countStudent' => $countStudent,
+            'countCourse' => $countCourse
         ],200);
     }
 }

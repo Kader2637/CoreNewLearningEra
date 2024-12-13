@@ -27,6 +27,12 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function show($id)
+    {
+        $user = User::where('id', $id)->first();
+        return view('pages.admin.teacher.detail' , compact('user'));
+    }
+
 
     public function destroy(User $user)
     {

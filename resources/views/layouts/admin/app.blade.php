@@ -51,6 +51,7 @@
             <div class="page-body">
                 <div class="container-fluid">
                     @yield('content')
+
                 </div>
             </div>
             <footer class="footer">
