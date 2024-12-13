@@ -119,24 +119,13 @@
                                                 <td class="text-center">${item.email}</td>
                                                 <td class="d-flex justify-content-center">
                                                     <div class="d-flex gap-2">
-                                                        <button class="btn btn-info btn-sm accept-button-user" data-id="${item.id}">Terima</button>
-                                                        <button class="btn btn-danger btn-sm reject-button-user" data-id="${item.id}">Tolak</button>
-                                                        <button class="btn btn-success btn-sm">View</button>
+                                                        <a href="/admin/teacher/detail/${item.id}" class="btn btn-success btn-sm">Detail</a>
                                                     </div>
                                                 </td>
                                             </tr>
                                         `);
                                 });
 
-                                $('.accept-button-user').off('click').on('click', function() {
-                                    const userId = $(this).data('id');
-                                    acceptUser(userId);
-                                });
-
-                                $('.reject-button-user').off('click').on('click', function() {
-                                    const userId = $(this).data('id');
-                                    rejectUser(userId);
-                                });
                             }
                         } else {
                             tbody.append(`
@@ -154,45 +143,8 @@
                 });
             }
 
-            function acceptUser(userId) {
-                $('#loader').show();
 
-                $.ajax({
-                    url: `/api/accept/${userId}`,
-                    method: 'POST',
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#loader').hide();
-                        showAlert('User berhasil diterima', 'success');
-
-                        fetchData();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        $('#loader').hide();
-                        showAlert('Kesalahan saat menerima pengguna.', 'danger');
-                    }
-                });
-            }
-
-            function rejectUser(userId) {
-                $('#loader').show();
-
-                $.ajax({
-                    url: `/api/reject/${userId}`,
-                    method: 'POST',
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#loader').hide();
-                        showAlert('User berhasil ditolak', 'success');
-
-                        fetchData();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        $('#loader').hide();
-                        showAlert('Kesalahan saat menolak pengguna.', 'danger');
-                    }
-                });
-            }
+            
 
             fetchData();
         });

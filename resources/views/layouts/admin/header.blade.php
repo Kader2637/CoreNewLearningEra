@@ -15,7 +15,6 @@
             <div class="form-group">
                 <div class="Typeahead Typeahead--twitterUsers">
                     <div class="u-posRelative">
-
                     </div>
                 </div>
             </div>
@@ -28,12 +27,12 @@
                             src="assetsAdmin/assets/images/dashboard/profile.png" alt="">
                         <div class="flex-grow-1 user"><span>New Learning</span>
                             <p class="mb-0 font-nunito">Admin
-                                
+
                             </p>
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="user-profile.html"><i data-feather="user"></i><span>Account </span></a></li>
+
                         <li>
                             <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display:none;">
                                 @csrf
