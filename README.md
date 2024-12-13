@@ -24,39 +24,44 @@ Ikuti langkah-langkah berikut untuk memulai proyek ini:
 1. *Clone Repository*:
     bash
     git clone https://github.com/Kader2637/CoreNewLearningEra.git
-    
 
 2. *Instal Dependensi*:
     bash
     cd CoreNewLearningEra
-    npm install
-    
-
-3. *Jalankan Proyek*:
-    bash
     composer install
+   
+3. *buat file .env dan copy dari enc.example yang sudah kami persiapkan*
+   
+4. *Jalankan*:
+    bash
+    php artisan migrate --seed
+    php artisan key:genearate
+
+5. *Jalankan Proyek*:
+    bash
+    php artisan optimize
+    php artisan seve
     
 
-4. Buka browser Anda dan navigasikan ke:
-    
+7. Buka browser Anda dan navigasikan ke:
     http://localhost:XXXX
     
 
-5. *Jalankan Perintah Laravel* (jika proyek mencakup backend Laravel):
+8. *Jalankan Perintah Laravel* (jika proyek mencakup backend Laravel):
     bash
     php artisan storage:link
     
 
-6. *Salin Gambar*: Salin file user.png dan tempelkan ke dalam folder storage.
+9. *Salin Gambar*: Salin file user.png dan tempelkan ke dalam folder storage.
 
 ---
 
 ## 🛠️ Teknologi yang Digunakan
 
-- *Frontend*: bootstrap
-- *Backend*: Laravel
+- *Frontend*: bootstrap 5
+- *Backend*: Laravel 11
 - *Database*: Mysql
-- *Version Control*: Git, GitHub
+- *Version Control*: Git, GitHub, Vs code
 - *Libry*: Ajax, jquery
 
 ---
