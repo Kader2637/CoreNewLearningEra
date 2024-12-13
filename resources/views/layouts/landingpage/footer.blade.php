@@ -33,13 +33,6 @@
                     <div class="footer__widget">
                         <h4 class=""></h4>
                         <div class="footer__link">
-                            {{-- <ul class="list-wrap">
-                                <li><a href="">Contact Us</a></li>
-                                <li><a href="">Become Teacher</a></li>
-                                <li><a href="">Blog</a></li>
-                                <li><a href="">Instructor</a></li>
-                                <li><a href="">Events</a></li>
-                            </ul> --}}
                         </div>
                     </div>
                 </div>

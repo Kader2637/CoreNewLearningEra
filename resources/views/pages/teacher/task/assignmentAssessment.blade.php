@@ -1,7 +1,6 @@
 @extends('layouts.teacher.app')
 @section('content')
 <div class="container-fluid">
-    <!-- Modal Buat Tugas Baru -->
     <div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -46,7 +45,6 @@
         </div>
     </div>
 
-    <!-- Modal Edit Tugas -->
     <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -96,12 +94,10 @@
         <a class="text-black fs-3">Semua Tugas</a>
     </div>
     <div class="d-flex justify-content-between w-100">
-        <!-- Tombol Kembali (sebelah kiri) -->
         <a href="{{ route('teacher.classroom.course') }}" class="btn btn-secondary btn-sm rounded" style="width: 180px;">
             Kembali
         </a>
 
-        <!-- Tombol Buat Tugas Baru (sebelah kanan) -->
         <button type="button" class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#createTaskModal" style="width: 180px;">
             Buat Tugas Baru
         </button>
@@ -110,7 +106,6 @@
 
 
 
-    <!-- Filter Berdasarkan Tugas -->
     <div class="row">
         <div class="col-lg-12">
             <div class="mb-3">
@@ -123,7 +118,6 @@
                 </select>
             </div>
 
-            <!-- Tabel Data Tugas -->
             <div class="table-responsive" style="overflow-x: auto;">
                 <table class="table table-hover table-bordered text-nowrap" style="white-space: nowrap; table-layout: auto; width: 100%; background-color: white;">
                     <thead>

@@ -2,7 +2,6 @@
 <html class="no-js" lang="en">
 
 
-<!-- Mirrored from html.themegenix.com/skillgro/student-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 25 Nov 2024 20:53:12 GMT -->
 
 <head>
     <meta charset="utf-8">
@@ -12,9 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
-    <!-- Place favicon.ico in the root directory -->
 
-    <!-- CSS here -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
@@ -47,7 +44,6 @@
 
 <body>
 
-    <!--Preloader-->
     <div id="preloader">
         <div id="loader" class="loader">
             <div class="loader-container">
@@ -55,60 +51,22 @@
             </div>
         </div>
     </div>
-    <!--Preloader-end -->
 
-    <!-- Scroll-top -->
     <button class="scroll__top scroll-to-target" data-target="html">
         <i class="tg-flaticon-arrowhead-up"></i>
     </button>
-    <!-- Scroll-top-end-->
 
-    <!-- header-area -->
     @include('layouts.student.header')
-    <!-- header-area-end -->
 
 
 
-    <!-- main-area -->
     <main class="main-area">
 
-        <!-- dashboard-area -->
         <section class="dashboard__area section-pb-120">
             <div class="dashboard__bg">
                 <img src="{{ asset('assets/img/bg/dashboard_bg.jpg') }}" alt="">
             </div>
             <div class="container">
-                {{-- <div class="dashboard__top-wrap">
-                    <div class="dashboard__top-bg"
-                        style="background-image: url('{{ asset('assets/img/bg/student_bg.jpg') }}');"></div>
-                    <div class="dashboard__instructor-info">
-                        <div class="dashboard__instructor-info-left">
-                            <div class="thumb">
-                                <img src="{{ asset('assets/img/courses/details_instructors02.jpg') }}" alt="img">
-                            </div>
-                            <div class="content">
-                                <h4 class="title">Emily Hannah</h4>
-                                <ul class="list-wrap">
-                                    <li>
-                                        <img src="{{ asset('assets/img/icons/course_icon03.svg') }}" alt="img"
-                                            class="injectable">
-                                        10 Courses Enrolled
-                                    </li>
-                                    <li>
-                                        <img src="{{ asset('assets/img/icons/course_icon05.svg') }}" alt="img"
-                                            class="injectable">
-                                        7 Certificate
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="dashboard__instructor-info-right">
-                            <a href="#" class="btn btn-two arrow-btn">Become an Instructor <img
-                                    src="{{ asset('assets/img/icons/right_arrow.svg') }}" alt="img"
-                                    class="injectable"></a>
-                        </div>
-                    </div>
-                </div> --}}
                 <section class="mb-5 breadcrumb__area breadcrumb__bg"
         style="background-image: url('{{ asset('assets/img/bg/breadcrumb_bg.jpg') }}');">
         <div class="container">
@@ -152,14 +110,11 @@
                 </div>
             </div>
         </section>
-        <!-- dashboard-area-end -->
 
     </main>
-    <!-- main-area-end -->
 
 
 
-    <!-- footer-area -->
     <footer class="footer__area">
         <div class="footer__top">
             <div class="container">
@@ -195,13 +150,6 @@
                         <div class="footer__widget">
                             <h4 class=""></h4>
                             <div class="footer__link">
-                                {{-- <ul class="list-wrap">
-                                    <li><a href="contact.html">Contact Us</a></li>
-                                    <li><a href="instructor-details.html">Become Teacher</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="instructor-details.html">Instructor</a></li>
-                                    <li><a href="events-details.html">Events</a></li>
-                                </ul> --}}
                             </div>
                         </div>
                     </div>
@@ -274,11 +222,9 @@
             </div>
         </div>
     </footer>
-    <!-- footer-area-end -->
 
 
 
-    <!-- JS here -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>

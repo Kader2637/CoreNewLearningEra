@@ -6,7 +6,6 @@
 
     </div>
 
-    <!-- Tabs -->
     <ul class="nav nav-tabs" id="contentTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="materi-tab" data-bs-toggle="tab" data-bs-target="#materi" type="button"
@@ -18,9 +17,7 @@
         </li>
     </ul>
 
-    <!-- Tab Content -->
     <div class="mt-3 tab-content" id="contentTabsContent">
-        <!-- Tab Materi -->
         <div class="tab-pane fade show active" id="materi" role="tabpanel" aria-labelledby="materi-tab">
             <div id="link" style="display: none;"></div>
             <div id="document" style="display: none; position: relative; width: 100%; overflow: hidden;">
@@ -42,7 +39,6 @@
             <div id="text"></div>
         </div>
 
-        <!-- Tab Tugas -->
         <div class="tab-pane fade" id="tugas" role="tabpanel" aria-labelledby="tugas-tab">
             <form id="submit-task-form" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -90,7 +86,6 @@
         $(document).ready(function() {
             var taskId = "{{ $id }}";
 
-            // Fungsi untuk menampilkan alert menggunakan SweetAlert
             function showAlert(message, type) {
                 Swal.fire({
                     icon: type,
@@ -103,7 +98,6 @@
                 });
             }
 
-            // Ambil data tugas saat halaman dimuat
             function fetchTaskData() {
                 $.ajax({
                     url: '/api/task/course/' + taskId,
@@ -179,13 +173,10 @@
                                     `;
                                         });
 
-                                        // Pastikan menghapus semua kartu tugas yang ada sebelumnya
                                         $('#taskSubmissionContainer').empty();
-                                        // Menambahkan kartu tugas yang baru
                                         $('#taskSubmissionContainer').html(assignmentCards);
                                         $('#submitTaskButton').remove();
                                     } else {
-                                        // Jika data kosong, tampilkan form pengiriman tugas
                                         if (type === "file") {
                                             $('#taskSubmissionContainer').append(`
                                         <div class="mb-3">
@@ -230,12 +221,10 @@
                 });
             }
 
-            // Panggil fungsi fetchTaskData saat halaman dimuat
             fetchTaskData();
 
-            // Konfirmasi dan hapus assignment
             $(document).on('click', '.delete-assignment', function() {
-                var assignmentId = $(this).data('id'); // ambil id dari tombol Hapus
+                var assignmentId = $(this).data('id'); 
 
                 Swal.fire({
                     title: 'Apakah Anda yakin?',
@@ -246,22 +235,18 @@
                     cancelButtonText: 'Batal',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Lakukan permintaan untuk menghapus assignment
                         $.ajax({
                             url: '/api/assigment/delete/' + assignmentId,
                             method: 'DELETE',
                             success: function(response) {
                                 if (response.status === 'success') {
-                                    // Tampilkan notifikasi sukses
                                     showAlert('Tugas berhasil dihapus', 'success');
 
-                                    // Sembunyikan kartu tugas yang dihapus
                                     $(`.assignment-card[data-assignment-id="${assignmentId}"]`)
                                         .hide();
 
-                                    // Panggil ulang fetchTaskData untuk memperbarui tampilan
                                     fetchTaskData
-                                (); // Ini akan menampilkan ulang kartu tugas dan form input dengan benar
+                                (); 
                                 } else {
                                     showAlert('Gagal menghapus tugas', 'error');
                                 }
@@ -275,7 +260,6 @@
                 });
             });
 
-            // Submit tugas
             $(document).on('click', '#submitTaskButton', function() {
                 var formData = new FormData($('#submit-task-form')[0]);
 
@@ -288,7 +272,7 @@
                     success: function(response) {
                         if (response.status === 'success') {
                             showAlert('Tugas berhasil dikirim!', 'success');
-                            fetchTaskData(); // Memperbarui data setelah tugas dikirim
+                            fetchTaskData(); 
                         } else {
                             showAlert('Gagal mengirim tugas: ' + response.message, 'error');
                         }

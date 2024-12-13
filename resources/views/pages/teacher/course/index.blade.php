@@ -229,7 +229,6 @@
         </div>
     </div>
 
-    <!-- Modal -->
     <div class="modal fade" id="addMaterialModal" tabindex="-1" aria-labelledby="addMaterialModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

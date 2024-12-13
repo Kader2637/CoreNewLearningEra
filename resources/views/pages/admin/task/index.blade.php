@@ -26,7 +26,6 @@
     </div>
 </div>
 <div class="container-fluid">
-    <!-- Modal Buat Tugas Baru -->
     <div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -68,7 +67,6 @@
         </div>
     </div>
 
-    <!-- Modal Edit Tugas -->
     <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -112,7 +110,6 @@
         </div>
     </div>
 
-    <!-- Header -->
     <div class="d-lg-flex d-block mb-3 pb-3 border-bottom" style="margin-top: 20px;"> <!-- Menambahkan margin-top -->
         <div class="card-tabs mb-lg-0 mb-3 me-auto">
             <a class="text-black fs-3">Semua Tugas</a>
@@ -124,7 +121,6 @@
         </div>
     </div>
 
-    <!-- Filter Berdasarkan Tugas -->
     <div class="row">
         <div class="col-lg-12">
             <div class="mb-3">
@@ -137,7 +133,6 @@
                 </select>
             </div>
 
-            <!-- Tabel Data Tugas -->
             <div class="table-responsive" style="overflow-x: auto;">
                 <table class="table table-hover table-bordered text-nowrap" style="white-space: nowrap; table-layout: auto; width: 100%; background-color: white;">
                     <thead>

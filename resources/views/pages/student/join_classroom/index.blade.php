@@ -5,7 +5,6 @@
         <h4>Bergabung Kelas</h4>
     </div>
     <div class="row" id="classroom-list">
-        <!-- Kursus akan dimuat di sini menggunakan AJAX -->
     </div>
 @endsection
 @section('script')

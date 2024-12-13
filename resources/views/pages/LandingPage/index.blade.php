@@ -148,10 +148,6 @@
                         <h2 class="title">Bingung cari <span>pembelajaran online?</span><br>New Learning Era,
                             <span>solusinya!</span></h2>
                         <div class="newsletter__form">
-                            {{-- <form action="#">
-                                <input type="email" placeholder="Type your e-mail">
-                                <button type="submit" class="btn">Subscribe Now</button>
-                            </form> --}}
                         </div>
                     </div>
                 </div>

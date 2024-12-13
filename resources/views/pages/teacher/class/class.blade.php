@@ -1,7 +1,6 @@
 @extends('layouts.teacher.app')
 @section('content')
     <style>
-        /* Menambahkan border pada tabel dan sel */
         .table-bordered {
             border: 1px solid #ddd;
         }
@@ -14,7 +13,6 @@
 
 
     <div class="container-fluid">
-        <!-- Modal Buat Kelas Baru -->
         <div class="modal fade" id="createClassModal" tabindex="-1" aria-labelledby="createClassModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -78,7 +76,6 @@
                 </div>
             </div>
         </div>
-        {{-- edit modla  --}}
         <div class="modal fade" id="edit-class-modal" tabindex="-1" aria-labelledby="updateClassModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -149,7 +146,6 @@
             </div>
         </div>
 
-        <!-- Modal Detail Kelas -->
         <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailClassModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -166,7 +162,6 @@
         </div>
 
 
-        <!-- Header -->
         <div class="d-lg-flex d-block mb-3 pb-3 border-bottom">
             <div class="card-tabs mb-lg-0 mb-3 me-auto">
                 <a class="text-black fs-3">Semua kelas</a>
@@ -327,7 +322,6 @@
                 });
 
 
-                // Event handler untuk form update kelas
                 $('#updateClassForm').on('submit', function(event) {
                     event.preventDefault();
 

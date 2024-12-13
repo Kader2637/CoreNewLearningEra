@@ -12,8 +12,8 @@
     <meta property="og:image" content="social-image.png" />
     <meta name="format-detection" content="telephone=no">
 
-    <!-- PAGE TITLE HERE -->
     <title>New Learning Era</title>
+<<<<<<< Updated upstream
 
 
 
@@ -22,6 +22,15 @@
 
 
 
+=======
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
+    <link href="{{ asset('assetsTeacher/vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assetsTeacher/vendor/chartist/css/chartist.min.css') }}">
+    <link href="{{ asset('assetsTeacher/vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assetsTeacher/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}"
+        rel="stylesheet">
+    <link href="{{ asset('assetsTeacher/vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
+>>>>>>> Stashed changes
     <link href="{{ asset('assetsTeacher/css/style.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @yield('style')
@@ -50,10 +59,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="{{ asset('assetsTeacher/vendor/global/global.min.js') }}"></script>
+<<<<<<< Updated upstream
 
 
+=======
+    <script src="{{ asset('assetsTeacher/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assetsTeacher/vendor/chart.js/Chart.bundle.min.js') }}"></script>
+    <script src="{{ asset('assetsTeacher/vendor/owl-carousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('assetsTeacher/vendor/peity/jquery.peity.min.js') }}"></script>
+    <script src="{{ asset('assetsTeacher/vendor/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
+>>>>>>> Stashed changes
 
-    <!-- Dashboard 1 -->
     <script src="{{ asset('assetsTeacher/js/dashboard/dashboard-1.js') }}"></script>
     <script src="{{ asset('assetsTeacher/js/custom.min.js') }}"></script>
     <script src="{{ asset('assetsTeacher/js/dlabnav-init.js') }}"></script>

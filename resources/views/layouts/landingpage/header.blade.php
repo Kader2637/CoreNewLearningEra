@@ -36,12 +36,11 @@
                             <div class="mobile-nav-toggler"><i class="tg-flaticon-menu-1"></i></div>
                         </nav>
                     </div>
-                    <!-- Mobile Menu  -->
                     <div class="tgmobile__menu">
                         <nav class="tgmobile__menu-box">
                             <div class="close-btn"><i class="tg-flaticon-close-1"></i></div>
                             <div class="nav-logo">
-                                <a href="index-2.html"><img src="{{ asset('logo.png') }}" width="200px" alt="Logo"></a>
+                                <a href="javascrip:void(0)"><img src="{{ asset('logo.png') }}" width="200px" alt="Logo"></a>
                             </div>
                             <div class="tgmobile__search">
                                 <form action="#">

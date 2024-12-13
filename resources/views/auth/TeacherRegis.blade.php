@@ -24,29 +24,28 @@
             box-shadow: 0 0 2px 2px #cb56fa;
         }
 
-        /* Styling for profile image inside the circle */
         .profile-image-container {
             width: 120px;
             height: 120px;
-            border-radius: 50%; /* Make the image circular */
-            overflow: hidden; /* Hide overflowed parts of the image */
-            background-color: #f0f0f0; /* Background color if image is not available */
+            border-radius: 50%;
+            overflow: hidden; 
+            background-color: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 10px; /* Add margin if needed */
+            margin-top: 10px;
         }
 
         .profile-image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Maintain aspect ratio */
+            object-fit: cover;
         }
 
         .form-grp {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Align the label to the left */
+            align-items: flex-start; 
         }
 
         .form-grp label {
@@ -57,21 +56,20 @@
             width: 100%;
         }
 
-        /* Ensure the label and the image are on separate lines */
         .profile-image-wrapper {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center the elements */
+            align-items: center; 
             justify-content: center;
         }
 
         .profile-image-wrapper input {
-            margin-top: 10px; /* Add margin between image and file input */
+            margin-top: 10px;
         }
 
         .spinner {
-            border: 4px solid #f3f3f3; /* Light grey */
-            border-top: 4px solid #3498db; /* Blue */
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db; 
             border-radius: 50%;
             width: 20px;
             height: 20px;
@@ -85,7 +83,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Adjust button styles to make space for spinner */
         .btn-spinner {
             position: relative;
             display: inline-flex;
@@ -143,7 +140,6 @@
                         </div>
                         <form action="#" class="account__form" id="registrationForm" enctype="multipart/form-data">
                             <div class="row">
-                                <!-- Profile Picture (hidden initially) -->
                                 <div class="col-12">
                                     <div class="form-grp profile-image-wrapper">
                                         <div class="profile-image-container" id="profileImageContainer" style="display: none;">
@@ -154,7 +150,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Form Fields -->
                                 <div class="col-12 col-xl-6">
                                     <div class="form-grp">
                                         <label for="username">Username</label>
@@ -230,7 +225,6 @@
 
 @section('script')
     <script>
-        // Function to display the selected profile image
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function() {
@@ -246,10 +240,9 @@
             $('#registrationForm').on('submit', function(e) {
                 e.preventDefault();
 
-                // Show the spinner
-                $('#submitButton span').hide(); // Hide text
-                $('#loadingSpinner').show(); // Show the spinner
-                $('#submitButton').prop('disabled', true); // Disable the button
+                $('#submitButton span').hide(); 
+                $('#loadingSpinner').show(); 
+                $('#submitButton').prop('disabled', true); 
 
                 var formData = new FormData(this);
                 $.ajax({
@@ -268,10 +261,9 @@
                         toastr.error('Pendaftaran gagal! Coba lagi!', 'Gagal');
                     },
                     complete: function() {
-                        // Hide the spinner after the request is complete
                         $('#loadingSpinner').hide();
-                        $('#submitButton span').show(); // Show text again
-                        $('#submitButton').prop('disabled', false); // Enable the button again
+                        $('#submitButton span').show(); 
+                        $('#submitButton').prop('disabled', false); 
                     }
                 });
             });

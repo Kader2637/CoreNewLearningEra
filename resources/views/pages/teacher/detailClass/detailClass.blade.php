@@ -1,6 +1,5 @@
 @extends('layouts.teacher.app')
 @section('content')
-                <!-- row -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="profile card card-body px-3 pt-3 pb-0">
@@ -52,7 +51,6 @@
 											<a href="javascript:void(0);" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">Send Message</a>
                                         </div>
                                     </div>
-									<!-- Modal -->
 									<div class="modal fade" id="sendMessageModal">
 										<div class="modal-dialog modal-dialog-centered" role="document">
 											<div class="modal-content">
@@ -95,7 +93,7 @@
                                 </div>
                                 <div class="profile-blog mb-5">
                                     <img src="images/profile/1.jpg" alt="" class="img-fluid mt-4 mb-4 w-100 b-radius">
-                                    <h4><a href="post-details.html" class="text-black">Deskripsi</a></h4>
+                                    <h4><a href="javascrip:void(0)" class="text-black">Deskripsi</a></h4>
                                     <p class="mb-0">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
                                 </div>
                                 <div class="profile-news">
@@ -103,21 +101,21 @@
                                     <div class="media pt-3 pb-3">
                                         <img src="{{ asset('assetsTeacher/images/profile/5.jpg') }}" alt="image" class="me-3 rounded" width="75">
                                         <div class="media-body">
-                                            <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of textile samples</a></h5>
+                                            <h5 class="m-b-5"><a href="javascrip:void(0)" class="text-black">Collection of textile samples</a></h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
                                         </div>
                                     </div>
                                     <div class="media pt-3 pb-3">
                                         <img src="{{ asset('assetsTeacher/images/profile/6.jpg') }}" alt="image" class="me-3 rounded" width="75">
                                         <div class="media-body">
-                                            <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of textile samples</a></h5>
+                                            <h5 class="m-b-5"><a href="javascrip:void(0)" class="text-black">Collection of textile samples</a></h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
                                         </div>
                                     </div>
                                     <div class="media pt-3 pb-3">
                                         <img  alt="image" class="me-3 rounded" width="75">
                                         <div class="media-body">
-                                            <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of textile samples</a></h5>
+                                            <h5 class="m-b-5"><a href="javascrip:void(0)" class="text-black">Collection of textile samples</a></h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
                                         </div>
                                     </div>
@@ -140,7 +138,7 @@
 
                                                     <div class="profile-uoloaded-post border-bottom-1 pb-5">
                                                         <img src="{{ asset('assetsTeacher/images/profile/1.jpg') }}" alt="" class="img-fluid">
-														<a class="post-title" href="post-details.html">
+														<a class="post-title" href="javascrip:void(0)">
 															<h3 class="text-black">Collection of textile samples lay spread</h3>
 														</a>
                                                         <p>A wonderful serenity has take possession of my entire soul like these sweet morning of spare which enjoy whole heart.A wonderful serenity has take possession of my entire soul like these sweet morning
@@ -150,7 +148,7 @@
                                                     </div>
                                                     <div class="profile-uoloaded-post border-bottom-1 pb-5">
                                                         <img src="{{ asset('assetsTeacher/images/profile/1.jpg') }}" alt="" class="img-fluid">
-														<a class="post-title" href="post-details.html">
+														<a class="post-title" href="javascrip:void(0)">
 															<h3 class="text-black">Collection of textile samples lay spread</h3>
 														</a>
                                                         <p>A wonderful serenity has take possession of my entire soul like these sweet morning of spare which enjoy whole heart.A wonderful serenity has take possession of my entire soul like these sweet morning
@@ -160,7 +158,7 @@
                                                     </div>
                                                     <div class="profile-uoloaded-post pb-3">
                                                         <img src="{{ asset('assetsTeacher/images/profile/1.jpg') }}" alt="" class="img-fluid">
-														<a class="post-title" href="post-details.html">
+														<a class="post-title" href="javascrip:void(0)">
 															<h3 class="text-black">Collection of textile samples lay spread</h3>
 														</a>
                                                         <p>A wonderful serenity has take possession of my entire soul like these sweet morning of spare which enjoy whole heart.A wonderful serenity has take possession of my entire soul like these sweet morning

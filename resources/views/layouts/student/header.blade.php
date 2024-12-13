@@ -18,12 +18,6 @@
                                 </ul>
                             </div>
                             <div class="tgmenu__action">
-                                {{-- <ul class="list-wrap">
-                                    <li class="header-btn login-btn">
-                                        <button id="logoutButton" type="button"
-                                       action="{{ route('logout') }}" class="btn btn-primary" method="POST" >Logout</button>
-                                    </li>
-                                </ul> --}}
                             </div>
                             <div class="mobile-login-btn">
                                 <a href="{{ route('login') }}"><img src="assets/img/icons/user.svg" alt=""
@@ -32,12 +26,11 @@
                             <div class="mobile-nav-toggler"><i class="tg-flaticon-menu-1"></i></div>
                         </nav>
                     </div>
-                    <!-- Mobile Menu  -->
                     <div class="tgmobile__menu">
                         <nav class="tgmobile__menu-box">
                             <div class="close-btn"><i class="tg-flaticon-close-1"></i></div>
                             <div class="nav-logo">
-                                <a href="index-2.html"><img src="{{ asset('logo.png') }}" width="200px"
+                                <a href="javascrip:void(0)"><img src="{{ asset('logo.png') }}" width="200px"
                                         alt="Logo"></a>
                             </div>
                             <div class="tgmobile__search">

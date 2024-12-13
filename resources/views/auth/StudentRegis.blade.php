@@ -25,32 +25,32 @@
 
         label {
             width: 100%;
-            text-align: left; /* Aligning the label text to the left */
+            text-align: left;
         }
 
-        /* Styling for profile image inside the circle */
+      
         .profile-image-container {
             width: 120px;
             height: 120px;
-            border-radius: 50%; /* Make the image circular */
-            overflow: hidden; /* Hide overflowed parts of the image */
-            background-color: #f0f0f0; /* Background color if image is not available */
+            border-radius: 50%; 
+            overflow: hidden; 
+            background-color: #f0f0f0; 
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 10px; /* Add margin if needed */
+            margin-top: 10px;
         }
 
         .profile-image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Maintain aspect ratio */
+            object-fit: cover; 
         }
 
         .form-grp {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Align the label to the left */
+            align-items: flex-start;
         }
 
         .form-grp label {
@@ -62,16 +62,16 @@
             width: 100%;
         }
 
-        /* Ensure the label and the image are on separate lines */
+       
         .profile-image-wrapper {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center the elements */
+            align-items: center; 
             justify-content: center;
         }
 
         .profile-image-wrapper input {
-            margin-top: 10px; /* Add margin between image and file input */
+            margin-top: 10px; 
         }
     </style>
 @endsection
@@ -202,7 +202,6 @@
                 const output = document.getElementById('profileImage');
                 const container = document.getElementById('profileImageContainer');
 
-                // Display the profile image container when an image is selected
                 container.style.display = 'flex';
                 output.src = reader.result;
             }
@@ -213,7 +212,6 @@
             $('#registrationForm').on('submit', function(e) {
                 e.preventDefault();
 
-                // Menonaktifkan tombol dan menampilkan spinner
                 $('#submitButton').prop('disabled', true);
                 $('#spinner').show();
 
@@ -235,7 +233,6 @@
                         toastr.error('Terjadi kesalahan: ' + xhr.responseText, 'Kesalahan');
                     },
                     complete: function() {
-                        // Menonaktifkan spinner dan mengaktifkan kembali tombol setelah request selesai
                         $('#submitButton').prop('disabled', false);
                         $('#spinner').hide();
                     }

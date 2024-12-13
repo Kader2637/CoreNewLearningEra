@@ -32,7 +32,6 @@
             </div>
         </div>
 
-        <!-- Lampiran Tugas dan Deskripsi -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="card card-body px-3 pt-3 pb-0">
@@ -74,7 +73,6 @@
             </div>
         </div>
 
-        <!-- Daftar Siswa yang Mengumpulkan -->
         <div id="submitted" class="mt-4" style="background-color: #ffffff; border-radius: 8px; padding: 20px;">
             <h5>Siswa yang Mengumpulkan</h5>
             <p>Berikut adalah daftar siswa yang sudah mengumpulkan tugas. Anda bisa memberikan nilai langsung di sini.</p>
@@ -92,7 +90,6 @@
             </table>
         </div>
 
-        <!-- Daftar Siswa yang Belum Mengumpulkan -->
         <div id="not-submitted" class="mt-4" style="background-color: #ffffff; border-radius: 8px; padding: 20px;">
             <h5>Siswa yang Belum Mengumpulkan</h5>
             <p>Berikut adalah daftar siswa yang belum mengumpulkan tugas. Anda dapat menandai siswa-siswa ini setelah mereka
@@ -141,7 +138,7 @@
                     url: submittedApiUrl,
                     method: 'GET',
                     success: function(response) {
-                        tbody.empty(); // Clear loading message
+                        tbody.empty();
 
                         if (response.data.length === 0) {
                             tbody.append(

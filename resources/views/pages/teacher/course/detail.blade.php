@@ -99,7 +99,6 @@
         </div>
     </div>
 
-    <!-- Modal Update Tugas -->
     <div class="modal fade" id="updateTaskModal" tabindex="-1" aria-labelledby="updateTaskModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">

@@ -9,8 +9,7 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
 
-    <!-- CSS here -->
-    <!-- CSS Assets -->
+
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
@@ -31,7 +30,6 @@
 
 <body>
 
-    <!--Preloader-->
     <div id="preloader">
         <div id="loader" class="loader">
             <div class="loader-container">
@@ -39,30 +37,21 @@
             </div>
         </div>
     </div>
-    <!--Preloader-end -->
 
-    <!-- Scroll-top -->
     <button class="scroll__top scroll-to-target" data-target="html">
         <i class="tg-flaticon-arrowhead-up"></i>
     </button>
-    <!-- Scroll-top-end-->
 
-    <!-- header-area -->
     @include('layouts.landingpage.header')
-    <!-- header-area-end -->
 
 
-    <!-- main-area -->
     <main class="main-area fix">
         @yield('content')
     </main>
-    <!-- main-area-end -->
 
 
 
-    <!-- footer-area -->
     @include('layouts.landingpage.footer')
-    <!-- footer-area-end -->
 
 
     <div id="loading" style="text-align: center; display: none;">
@@ -102,7 +91,6 @@
 
 
 
-    <!-- JS Assets -->
     <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
@@ -122,7 +110,6 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @yield('script')
 </body>

@@ -237,7 +237,6 @@ Keluarkan
                 showAlert("Terjadi kesalahan.", 'error');
             },
             complete: function() {
-                // Re-enable button and hide loading
                 $button.prop('disabled', false);
                 $text.show();
                 $loading.hide();
