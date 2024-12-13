@@ -1,4 +1,3 @@
-# CoreNewLearningEra
 
 [New Learning Era]
 
@@ -35,7 +34,7 @@ Ikuti langkah-langkah berikut untuk memulai proyek ini:
 
 3. *Jalankan Proyek*:
     bash
-    npm start
+    composer install
     
 
 4. Buka browser Anda dan navigasikan ke:
@@ -58,34 +57,26 @@ Ikuti langkah-langkah berikut untuk memulai proyek ini:
 - *Backend*: Laravel
 - *Database*: Mysql
 - *Version Control*: Git, GitHub
+- *Libry*: Ajax, jquery
 
 ---
-
-## 🌍 Berkontribusi
-
-Kami menyambut kontribusi dari siapa saja! Untuk memulai:
-
-1. Fork repository ini.
-2. Buat branch baru:
-    bash
-    git checkout -b fitur/nama-fitur-anda
-    
-3. Commit perubahan Anda:
-    bash
-    git commit -m "Tambah deskripsi fitur Anda"
-    
-4. Push ke branch:
-    bash
-    git push origin fitur/nama-fitur-anda
-    
-5. Ajukan pull request.
-
----
-
 
 ## ⭐ Dukungan
 
-"Mohon doanya yang terbaik agar kami bisa tetap semangat dan aktif mengikuti perlombaan berikutnya. Dukungan kalian adalah motivasi terbesar kami untuk terus maju dan meraih prestasi! 🙏✨"
+Mohon doanya yang terbaik agar kami bisa tetap semangat dan aktif mengikuti perlombaan berikutnya. Dukungan kalian adalah motivasi terbesar kami untuk terus maju dan meraih prestasi! 🙏✨.
+---
+
+## 📧 Kontak
+
+Untuk pertanyaan atau umpan balik, jangan ragu untuk menghubungi kami:
+
+- **Email**: abdulkader0126@gmail.com
+- **Email**: ivantjmaulana@gmail.com
+- **Email**: erikadityairvansya@gmail.com
+- **GitHub**: [@Kader2637](https://github.com/Kader2637)
+- **GitHub**: [@Vanzy505](https://github.com/vanz505)
+- **GitHub**: [@Adityapengenprongoding](https://github.com/adityapengenprongoding)
+
 ---
 
 ## 📝 Lisensi
