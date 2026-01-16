@@ -28,7 +28,7 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            overflow: hidden; 
+            overflow: hidden;
             background-color: #f0f0f0;
             display: flex;
             justify-content: center;
@@ -45,7 +45,7 @@
         .form-grp {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; 
+            align-items: flex-start;
         }
 
         .form-grp label {
@@ -59,7 +59,7 @@
         .profile-image-wrapper {
             display: flex;
             flex-direction: column;
-            align-items: center; 
+            align-items: center;
             justify-content: center;
         }
 
@@ -69,7 +69,7 @@
 
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db; 
+            border-top: 4px solid #3498db;
             border-radius: 50%;
             width: 20px;
             height: 20px;
@@ -96,125 +96,96 @@
 @endsection
 
 @section('content')
-    <section class="breadcrumb__area breadcrumb__bg"
-        style="background-image: url('{{ asset('assets/img/bg/breadcrumb_bg.jpg') }}');">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb__content">
-                        <h3 class="title">Register Teacher</h3>
-                        <nav class="breadcrumb">
-                            <span property="itemListElement" typeof="ListItem">
-                                <a href="/">Home</a>
-                            </span>
-                            <span class="breadcrumb-separator">
-                                <i class="fas fa-angle-right"></i>
-                            </span>
-                            <span property="itemListElement" typeof="ListItem">Register Teacher</span>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="breadcrumb__shape-wrap">
-            <img src="{{ asset('assets/img/others/breadcrumb_shape01.svg') }}" alt="Shape" class="alltuchtopdown" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape02.svg') }}" alt="Shape" data-aos="fade-right"
-                data-aos-delay="300" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape03.svg') }}" alt="Shape" data-aos="fade-up"
-                data-aos-delay="400" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape04.svg') }}" alt="Shape" data-aos="fade-down-left"
-                data-aos-delay="400" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape05.svg') }}" alt="Shape" data-aos="fade-left"
-                data-aos-delay="400" />
-        </div>
-    </section>
+   
     <section class="singUp-area section-py-120">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-8">
-                    <div class="singUp-wrap">
-                        <h2 class="title">Register guru</h2>
-                        <p>Selamat datang, calon pengajar! Bergabunglah dengan New Learning Era dan bantu membentuk masa depan generasi penerus dengan cara mengajar yang lebih efektif dan menyenangkan. Daftarkan diri Anda sekarang untuk berbagi ilmu dan pengalaman!</p>
-                        <div class="account__divider">
-                            <span>or</span>
-                        </div>
-                        <form action="#" class="account__form" id="registrationForm" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-grp profile-image-wrapper">
-                                        <div class="profile-image-container" id="profileImageContainer" style="display: none;">
-                                            <img id="profileImage" src="{{ asset('assets/img/user.png') }}" alt="Foto Profil">
-                                        </div>
-                                        <label for="image">Foto Profil</label>
-                                        <input id="image" name="image" type="file" onchange="previewImage(event)" required class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-xl-6">
-                                    <div class="form-grp">
-                                        <label for="username">Username</label>
-                                        <input id="username" name="name" type="text" placeholder="Masukkan username" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-6">
-                                    <div class="form-grp">
-                                        <label for="email">Email</label>
-                                        <input id="email" name="email" type="email" placeholder="Masukkan Email" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-6">
-                                    <div class="form-grp">
-                                        <label for="no_telephone">No Telephone</label>
-                                        <input id="no_telephone" name="no_telephone" type="number" placeholder="Masukkan No" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-6">
-                                    <div class="">
-                                        <label for="gender">Jenis Kelamin</label>
-                                        <div class="gap-2">
-                                            <input type="radio" name="gender" value="male" required> Laki-Laki
-                                            <input type="radio" name="gender" value="female"> Perempuan
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-6">
-                                    <div class="form-grp">
-                                        <label for="school">Asal Yayasan/Sekolah</label>
-                                        <input id="school" name="school" type="text" placeholder="Masukkan Yayasan" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-6">
-                                    <div class="form-grp">
-                                        <label for="nip">Nip</label>
-                                        <input id="nip" type="number" name="nip" placeholder="Masukkan Nip" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-12">
-                                    <div class="form-grp">
-                                        <label for="address">Alamat</label>
-                                        <textarea name="address" id="address" class="form-control" required></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-6">
-                                    <div class="form-grp">
-                                        <label for="password">Password</label>
-                                        <input id="password" name="password" type="password" placeholder="Masukkan Password" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-6">
-                                    <div class="form-grp">
-                                        <label for="confirm_password">Konfirmasi Password</label>
-                                        <input id="confirm_password" name="password_confirmation" type="password" placeholder="Konfirmasi Password" required>
-                                    </div>
-                                </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="title">Register guru</h2>
+                            <p>Selamat datang, calon pengajar! Bergabunglah dengan New Learning Era dan bantu membentuk masa depan generasi penerus dengan cara mengajar yang lebih efektif dan menyenangkan. Daftarkan diri Anda sekarang untuk berbagi ilmu dan pengalaman!</p>
+                            <div class="account__divider">
+                                <span>or</span>
                             </div>
-                            <button type="submit" class="btn btn-two arrow-btn btn-spinner" id="submitButton">
-                                <span>Daftar</span>
-                                <div id="loadingSpinner" class="spinner"></div>
-                            </button>
-                        </form>
-                        <div class="account__switch">
-                            <p><a href="{{ route('register') }}">Kembali</a></p>
+                            <form action="#" class="account__form" id="registrationForm" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-grp profile-image-wrapper">
+                                            <div class="profile-image-container" id="profileImageContainer" style="display: none;">
+                                                <img id="profileImage" src="{{ asset('assets/img/user.png') }}" alt="Foto Profil">
+                                            </div>
+                                            <label for="image">Foto Profil</label>
+                                            <input id="image" name="image" type="file" onchange="previewImage(event)" required class="form-select">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-xl-6">
+                                        <div class="form-grp">
+                                            <label for="username">Username</label>
+                                            <input id="username" name="name" type="text" placeholder="Masukkan username" required class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-6">
+                                        <div class="form-grp">
+                                            <label for="email">Email</label>
+                                            <input id="email" name="email" type="email" placeholder="Masukkan Email" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-6">
+                                        <div class="form-grp">
+                                            <label for="no_telephone">No Telephone</label>
+                                            <input id="no_telephone" name="no_telephone" class="form-control" type="number" placeholder="Masukkan No" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-6">
+                                        <div class="">
+                                            <label for="gender">Jenis Kelamin</label>
+                                            <div class="gap-2">
+                                                <input type="radio" name="gender"  value="male" required> Laki-Laki
+                                                <input type="radio" name="gender" value="female"> Perempuan
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-6">
+                                        <div class="form-grp">
+                                            <label for="school">Asal Yayasan/Sekolah</label>
+                                            <input id="school" name="school" class="form-control" type="text" placeholder="Masukkan Yayasan" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-6">
+                                        <div class="form-grp">
+                                            <label for="nip">Nip</label>
+                                            <input id="nip" type="number" class="form-control" name="nip" placeholder="Masukkan Nip" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-12">
+                                        <div class="form-grp">
+                                            <label for="address">Alamat</label>
+                                            <textarea name="address" id="address" class="form-control" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-6">
+                                        <div class="form-grp">
+                                            <label for="password">Password</label>
+                                            <input id="password" name="password" type="password" class="form-control" placeholder="Masukkan Password" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-6">
+                                        <div class="form-grp">
+                                            <label for="confirm_password">Konfirmasi Password</label>
+                                            <input id="confirm_password" name="password_confirmation" class="form-control" type="password" placeholder="Konfirmasi Password" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class=" btn btn-primary mt-3 w-100 text-center" id="submitButton">
+                                    <span class="text-center">Daftar</span>
+                                    <div id="loadingSpinner" class="spinner"></div>
+                                </button>
+                            </form>
+                            <div class="account__switch">
+                                <p><a href="{{ route('register') }}">Kembali</a></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -240,9 +211,9 @@
             $('#registrationForm').on('submit', function(e) {
                 e.preventDefault();
 
-                $('#submitButton span').hide(); 
-                $('#loadingSpinner').show(); 
-                $('#submitButton').prop('disabled', true); 
+                $('#submitButton span').hide();
+                $('#loadingSpinner').show();
+                $('#submitButton').prop('disabled', true);
 
                 var formData = new FormData(this);
                 $.ajax({
@@ -262,8 +233,8 @@
                     },
                     complete: function() {
                         $('#loadingSpinner').hide();
-                        $('#submitButton span').show(); 
-                        $('#submitButton').prop('disabled', false); 
+                        $('#submitButton span').show();
+                        $('#submitButton').prop('disabled', false);
                     }
                 });
             });

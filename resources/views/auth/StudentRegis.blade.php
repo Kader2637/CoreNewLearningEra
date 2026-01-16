@@ -1,243 +1,293 @@
 @extends('layouts.landingpage.app')
 
 @section('style')
-    <style>
-        label {
-            width: 100%;
-        }
+<style>
+    body, html {
+        height: 100%;
+    }
 
-        .card-input-element {
-            display: none;
-        }
+    /* agar footer tetap di bawah */
+    .main-area {
+        min-height: calc(100vh - 200px);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
 
-        .card-input {
-            margin: 10px;
-            padding: 00px;
-        }
+    label {
+        width: 100%;
+        text-align: left;
+    }
 
-        .card-input:hover {
-            cursor: pointer;
-        }
+    /* Wizard */
+    .wizard-step { display: none; }
+    .wizard-step.active { display: block; animation: fade .3s ease; }
 
-        .card-input-element:checked + .card-input {
-            box-shadow: 0 0 2px 2px #cb56fa;
-        }
+    @keyframes fade {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
-        label {
-            width: 100%;
-            text-align: left;
-        }
+    .wizard-nav {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
 
-      
-        .profile-image-container {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%; 
-            overflow: hidden; 
-            background-color: #f0f0f0; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-        }
+    .step-indicator {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #d1d5db;
+        color: #374151;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        transition: .3s;
+    }
 
-        .profile-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-        }
+    .active-step {
+        background: #4b5563;
+        color: white;
+        box-shadow: 0 0 6px rgba(0,0,0,.3);
+    }
 
-        .form-grp {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
+    /* tombol */
+    .btn-wizard {
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-weight: 600;
+        border: none;
+    }
 
-        .form-grp label {
-            margin-bottom: 8px;
-        }
+    .btn-next { background: #4b5563; color: white; }
+    .btn-prev { background: #9ca3af; color: white; }
 
-        .form-grp input,
-        .form-grp textarea {
-            width: 100%;
-        }
+    /* breadcrumb tanpa biru */
+    .breadcrumb__area {
+        background: linear-gradient(135deg, #f5f5f5, #e5e5e5) !important;
+        color: #111;
+    }
 
-       
-        .profile-image-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-            justify-content: center;
-        }
+    .breadcrumb__area .breadcrumb a {
+        color: #111 !important;
+    }
 
-        .profile-image-wrapper input {
-            margin-top: 10px; 
-        }
-    </style>
+    /* profile preview */
+    .profile-image-container {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: #e5e7eb;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .profile-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
 @endsection
+
 
 @section('content')
-    <section class="breadcrumb__area breadcrumb__bg"
-        style="background-image: url('{{ asset('assets/img/bg/breadcrumb_bg.jpg') }}');">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb__content">
-                        <h3 class="title">Register Siswa</h3>
-                        <nav class="breadcrumb">
-                            <span property="itemListElement" typeof="ListItem">
-                                <a href="/">Home</a>
-                            </span>
-                            <span class="breadcrumb-separator">
-                                <i class="fas fa-angle-right"></i>
-                            </span>
-                            <span property="itemListElement" typeof="ListItem">Register Siswa</span>
-                        </nav>
-                    </div>
+
+{{-- BREADCRUMB BARU TANPA BIRU --}}
+<section class="py-5 breadcrumb__area">
+    <div class="container">
+        <h3 class="fw-bold mb-1">Register Siswa</h3>
+        <nav class="breadcrumb">
+            <a href="/">Home</a>
+            <span class="mx-1">/</span>
+            <span>Register Siswa</span>
+        </nav>
+    </div>
+</section>
+
+<section class="singUp-area section-py-120">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8">
+
+                <h2 class="text-center mb-2">Register Siswa</h2>
+                <p class="text-center mb-4">
+                    Isi data diri Anda untuk membuat akun siswa.
+                </p>
+
+                {{-- NAVIGASI WIZARD --}}
+                <div class="wizard-nav mb-4">
+                    <div id="stepIndicator1" class="step-indicator active-step">1</div>
+                    <div id="stepIndicator2" class="step-indicator">2</div>
+                    <div id="stepIndicator3" class="step-indicator">3</div>
                 </div>
-            </div>
-        </div>
-        <div class="breadcrumb__shape-wrap">
-            <img src="{{ asset('assets/img/others/breadcrumb_shape01.svg') }}" alt="Shape" class="alltuchtopdown" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape02.svg') }}" alt="Shape" data-aos="fade-right"
-                data-aos-delay="300" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape03.svg') }}" alt="Shape" data-aos="fade-up"
-                data-aos-delay="400" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape04.svg') }}" alt="Shape" data-aos="fade-down-left"
-                data-aos-delay="400" />
-            <img src="{{ asset('assets/img/others/breadcrumb_shape05.svg') }}" alt="Shape" data-aos="fade-left"
-                data-aos-delay="400" />
-        </div>
-    </section>
-    <section class="singUp-area section-py-120">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-6 col-lg-8">
-                    <div class="singUp-wrap">
-                        <h2 class="title">Register siswa</h2>
-                        <p>Selamat datang di platform pembelajaran kami! Bergabunglah dengan ribuan siswa lainnya dan mulailah perjalanan belajar Anda bersama New Learning Era. Daftar sekarang untuk mulai belajar dengan cara yang lebih menyenangkan dan efektif!</p>
-                        <div class="account__social">
 
-                        </div>
-                        <div class="account__divider">
+                {{-- FORM --}}
+                <form id="registrationForm" enctype="multipart/form-data">
 
+                    {{-- STEP 1 --}}
+                    <div id="step1" class="wizard-step active">
+                        <div class="form-grp mb-3">
+                            <label>Nama Lengkap</label>
+                            <input type="text" name="name" class="form-control step-input">
                         </div>
-                        <form id="registrationForm" class="account__form" enctype="multipart/form-data">
-                            <div class="col-12">
-                                <div class="form-grp profile-image-wrapper">
-                                    <div class="profile-image-container" id="profileImageContainer" style="display: none;">
-                                        <img id="profileImage" src="{{ asset('assets/img/user.png') }}" alt="Foto Profil">
-                                    </div>
-                                    <label for="image">Foto Profil</label>
-                                    <input id="image" name="image" type="file" onchange="previewImage(event)" required class="form-control">
-                                </div>
+
+                        <div class="form-grp">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control step-input">
+                        </div>
+
+                        <button type="button" class="btn-wizard btn-next mt-4"
+                                onclick="validateStep(1)">Lanjut</button>
+                    </div>
+
+                    {{-- STEP 2 --}}
+                    <div id="step2" class="wizard-step">
+                        <div class="form-grp mb-3">
+                            <label>No. Telepon</label>
+                            <input type="number" name="no_telephone" class="form-control step-input">
+                        </div>
+
+                        <div class="form-grp mb-3">
+                            <label>Jenis Kelamin</label>
+                            <div class="d-flex gap-3">
+                                <label><input type="radio" name="gender" value="male"> Laki-laki</label>
+                                <label><input type="radio" name="gender" value="female"> Perempuan</label>
                             </div>
-                            <div class="form-grp">
-                                <label for="nama">Nama Lengkap</label>
-                                <input id="email" name="name" type="text" placeholder="nama lengkap">
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn-wizard btn-prev" type="button" onclick="goToStep(1)">Kembali</button>
+                            <button class="btn-wizard btn-next" type="button" onclick="validateStep(2)">Lanjut</button>
+                        </div>
+                    </div>
+
+                    {{-- STEP 3 --}}
+                    <div id="step3" class="wizard-step">
+
+                        <label>Foto Profil</label>
+                        <div id="profileImageContainer" class="profile-image-container mb-2">
+                            <img id="profileImage" src="{{ asset('assets/img/user.png') }}">
+                        </div>
+                        <input type="file" id="image" name="image" class="form-control"
+                               onchange="previewImage(event)">
+
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control step-input">
                             </div>
-                            <div class="form-grp">
-                                <label for="jenis">Jenis Kelamin</label>
+                            <div class="col-6">
+                                <label>Konfirmasi Password</label>
+                                <input type="password" name="password_confirmation"
+                                       class="form-control step-input">
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio1"
-                                    value="male">
-                                <label class="form-check-label" for="inlineRadio1">Laki-Laki</label>
-                            </div>
-                            <div class="mb-4 form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio2"
-                                    value="female">
-                                <label class="form-check-label" for="inlineRadio2">Perempuan</label>
-                            </div>
-                            <div class="form-grp">
-                                <label for="no_telephone">No_telephone</label>
-                                <input id="no_telephone" name="no_telephone" type="number" placeholder="masukan_no">
-                            </div>
-                            <div class="form-grp">
-                                <label for="email">Email</label>
-                                <input id="email" name="email" type="text" placeholder="email">
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-xl-6">
-                                    <div class="form-grp">
-                                        <label for="password">Password</label>
-                                        <input id="password" name="password" type="password" placeholder="Masukkan Password"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-6">
-                                    <div class="form-grp">
-                                        <label for="confirm_password">Konfirmasi Password</label>
-                                        <input id="confirm_password" name="password_confirmation" type="password"
-                                            placeholder="Konfirmasi Password" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="account__check">
-                                <div class="account__check-remember">
-                                    <input type="checkbox" class="form-check-input" value="" id="terms-check">
-                                    <label for="terms-check" class="form-check-label">Ingat saya</label>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-two arrow-btn" id="submitButton">
-                                <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
-                                Daftar<img src="{{ asset('assets/img/icons/right_arrow.svg') }}" alt="img" class="injectable">
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn-wizard btn-prev" onclick="goToStep(2)">Kembali</button>
+
+                            <button type="submit" id="submitButton" class="btn btn-success btn-wizard">
+                                <span id="spinner" class="spinner-border spinner-border-sm"
+                                      style="display:none;"></span>
+                                Daftar
                             </button>
-                        </form>
-                        <div class="account__switch">
-                            <p><a href="{{ route('register') }}">Kembali</a></p>
                         </div>
                     </div>
-                </div>
+
+                </form>
+
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 @endsection
 
-@section('script')
-    <script>
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const output = document.getElementById('profileImage');
-                const container = document.getElementById('profileImageContainer');
 
-                container.style.display = 'flex';
-                output.src = reader.result;
+
+@section('script')
+<script>
+    function goToStep(step) {
+        $(".wizard-step").removeClass("active");
+        $("#step" + step).addClass("active");
+
+        $(".step-indicator").removeClass("active-step");
+        $("#stepIndicator" + step).addClass("active-step");
+    }
+
+    function validateStep(step) {
+
+        let valid = true;
+
+        // Step-specific required fields
+        let fields = {
+            1: ["name", "email"],
+            2: ["no_telephone", "gender"],
+            3: ["password", "password_confirmation"]
+        };
+
+        fields[step].forEach(f => {
+
+            if ($(`[name='${f}']`).attr("type") === "radio") {
+                if ($("input[name='gender']:checked").length === 0) {
+                    valid = false;
+                }
+            } else if ($(`[name='${f}']`).val().trim() === "") {
+                valid = false;
             }
-            reader.readAsDataURL(event.target.files[0]);
+
+        });
+
+        if (!valid) {
+            toastr.warning("Lengkapi semua kolom sebelum melanjutkan.");
+            return;
         }
 
-        $(document).ready(function() {
-            $('#registrationForm').on('submit', function(e) {
-                e.preventDefault();
+        goToStep(step + 1);
+    }
 
-                $('#submitButton').prop('disabled', true);
-                $('#spinner').show();
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function(){
+            $("#profileImageContainer").show();
+            $("#profileImage").attr("src", reader.result);
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
 
-                var formData = new FormData(this);
+    // submit
+    $("#registrationForm").submit(function(e){
+        e.preventDefault();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/Apiregister/student',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        toastr.success('Pendaftaran berhasil!', 'Sukses');
-                        setTimeout(function() {
-                            window.location.href = "/login";
-                        }, 2000);
-                    },
-                    error: function(xhr) {
-                        toastr.error('Terjadi kesalahan: ' + xhr.responseText, 'Kesalahan');
-                    },
-                    complete: function() {
-                        $('#submitButton').prop('disabled', false);
-                        $('#spinner').hide();
-                    }
-                });
-            });
+        $("#submitButton").prop("disabled", true);
+        $("#spinner").show();
+
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "/api/Apiregister/student",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(){
+                toastr.success("Pendaftaran berhasil!", "Sukses");
+                setTimeout(() => window.location.href="/login", 1200);
+            },
+            error: function(){
+                toastr.error("Terjadi kesalahan.", "Error");
+            },
+            complete: function(){
+                $("#submitButton").prop("disabled", false);
+                $("#spinner").hide();
+            }
         });
-    </script>
+    });
+</script>
 @endsection

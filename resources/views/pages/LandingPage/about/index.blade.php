@@ -209,16 +209,16 @@
 
                     <div class="row g-3 mb-3">
                         <div class="col-4">
-                            <div class="about-number">3.200+</div>
-                            <div class="about-number-label">Peserta terdaftar</div>
+                            <div class="about-number text-success">3.200+</div>
+                            <div class="about-number-label text-white">Peserta terdaftar</div>
                         </div>
                         <div class="col-4">
-                            <div class="about-number">65+</div>
-                            <div class="about-number-label">Kelas online</div>
+                            <div class="about-number text-success">65+</div>
+                            <div class="about-number-label text-white">Kelas online</div>
                         </div>
                         <div class="col-4">
-                            <div class="about-number">4.9/5</div>
-                            <div class="about-number-label">Rata-rata ulasan</div>
+                            <div class="about-number text-success">4.9/5</div>
+                            <div class="about-number-label text-white">Rata-rata ulasan</div>
                         </div>
                     </div>
 
