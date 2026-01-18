@@ -145,6 +145,27 @@
     .about-cta small {
         opacity: .9;
     }
+    .about-card {
+    border-radius: 14px;
+    transition: transform 0.3s ease;
+}
+
+.about-card:hover {
+    transform: translateY(-6px);
+}
+
+/* Dosen */
+.card-dosen {
+    background: #f1f8f4;
+    border: 1px solid #cfe9dc;
+}
+
+/* Mahasiswa */
+.card-mahasiswa {
+    background: #f4f7fb;
+    border: 1px solid #d6e2f1;
+}
+
 </style>
 @endsection
 
@@ -379,56 +400,89 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
             <div>
-                <p class="section-label mb-1">Tim & Mentor</p>
-                <h3 class="fw-bold mb-0">Kolaborasi pengajar dan praktisi</h3>
+                <p class="section-label mb-1">Tim Pelaksana</p>
+                <h3 class="fw-bold mb-0">Dosen Pembimbing dan Tim Mahasiswa</h3>
             </div>
             <span class="text-secondary small">
-                Data nama dan peran dapat disesuaikan dengan kebutuhan institusi atau tim Anda.
+                Susunan tim Program Kreativitas Mahasiswa Fakultas Sistem Informasi.
             </span>
         </div>
 
         <div class="row g-4">
+            <!-- Dosen Pembimbing -->
             <div class="col-md-4">
-                <div class="about-card shadow-soft p-4 text-center">
-                    <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
+                <div class="about-card card-dosen shadow-soft p-4 text-center h-100">
+                    <div class="rounded-circle bg-success-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
                          style="width:70px;height:70px;">
-                        <i class="bi bi-person-badge text-primary" style="font-size:1.7rem;"></i>
+                        <i class="bi bi-mortarboard-fill text-success" style="font-size:1.7rem;"></i>
                     </div>
-                    <h6 class="fw-semibold mb-1">Rahma Putri</h6>
-                    <small class="text-muted d-block mb-2">Product & Learning Experience</small>
+                    <h6 class="fw-semibold mb-1">Luthfi Indana, S.Pd., M.Pd</h6>
+                    <small class="text-muted d-block mb-2">Dosen Pembimbing</small>
                     <p class="text-secondary small mb-0">
-                        Bertanggung jawab menyusun alur pembelajaran dan memastikan materi dapat diikuti dengan nyaman
-                        oleh berbagai profil peserta.
+                        Bertugas memberikan bimbingan akademik, arahan metodologis, serta pengawasan terhadap
+                        pelaksanaan Program Kreativitas Mahasiswa agar sesuai dengan ketentuan dan capaian yang ditetapkan.
                     </p>
                 </div>
             </div>
 
+            <!-- Ketua Tim -->
             <div class="col-md-4">
-                <div class="about-card shadow-soft p-4 text-center">
+                <div class="about-card card-mahasiswa shadow-soft p-4 text-center h-100">
                     <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
                          style="width:70px;height:70px;">
-                        <i class="bi bi-laptop text-primary" style="font-size:1.7rem;"></i>
+                        <i class="bi bi-star-fill text-primary" style="font-size:1.7rem;"></i>
                     </div>
-                    <h6 class="fw-semibold mb-1">Andi Pratama</h6>
-                    <small class="text-muted d-block mb-2">Mentor Pemrograman</small>
+                    <h6 class="fw-semibold mb-1">Abdul Kader</h6>
+                    <small class="text-muted d-block mb-2">Ketua Tim</small>
                     <p class="text-secondary small mb-0">
-                        Berpengalaman di pengembangan aplikasi web dan berbagi praktik terbaik untuk membantu peserta
-                        memahami dasar hingga implementasi.
+                        Bertanggung jawab dalam mengoordinasikan seluruh kegiatan tim, menyusun perencanaan program,
+                        serta memastikan keterlaksanaan PKM sesuai dengan proposal yang telah disetujui.
                     </p>
                 </div>
             </div>
 
+            <!-- Anggota -->
             <div class="col-md-4">
-                <div class="about-card shadow-soft p-4 text-center">
+                <div class="about-card card-mahasiswa shadow-soft p-4 text-center h-100">
                     <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
                          style="width:70px;height:70px;">
-                        <i class="bi bi-brush text-primary" style="font-size:1.7rem;"></i>
+                        <i class="bi bi-people-fill text-primary" style="font-size:1.7rem;"></i>
                     </div>
-                    <h6 class="fw-semibold mb-1">Dina Salsabila</h6>
-                    <small class="text-muted d-block mb-2">Mentor Desain & Konten</small>
+                    <h6 class="fw-semibold mb-1">Ezequiel Alaghate Tchuda</h6>
+                    <small class="text-muted d-block mb-2">Anggota Tim</small>
                     <p class="text-secondary small mb-0">
-                        Memfokuskan materi pada desain antarmuka, visual branding, dan pembuatan konten yang informatif
-                        sekaligus menarik secara visual.
+                        Berperan dalam pengembangan sistem dan pelaksanaan aspek teknis program sesuai
+                        dengan kebutuhan dan tujuan kegiatan PKM.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="about-card card-mahasiswa shadow-soft p-4 text-center h-100">
+                    <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
+                         style="width:70px;height:70px;">
+                        <i class="bi bi-people-fill text-primary" style="font-size:1.7rem;"></i>
+                    </div>
+                    <h6 class="fw-semibold mb-1">Rio Andhika Permana Putra</h6>
+                    <small class="text-muted d-block mb-2">Anggota Tim</small>
+                    <p class="text-secondary small mb-0">
+                        Bertugas dalam pengolahan data, dokumentasi kegiatan, serta penyusunan laporan
+                        sebagai bagian dari luaran Program Kreativitas Mahasiswa.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="about-card card-mahasiswa shadow-soft p-4 text-center h-100">
+                    <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
+                         style="width:70px;height:70px;">
+                        <i class="bi bi-people-fill text-primary" style="font-size:1.7rem;"></i>
+                    </div>
+                    <h6 class="fw-semibold mb-1">Viktorinus Dimas Saputra</h6>
+                    <small class="text-muted d-block mb-2">Anggota Tim</small>
+                    <p class="text-secondary small mb-0">
+                        Mendukung analisis kebutuhan sistem, pengujian fungsional, serta evaluasi hasil
+                        implementasi program dalam rangka pencapaian target PKM.
                     </p>
                 </div>
             </div>
