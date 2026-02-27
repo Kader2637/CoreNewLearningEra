@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
@@ -90,25 +91,38 @@ class LoginController extends Controller
         ], 201);
     }
 
-    public function registerStudent(Request $request)
+   public function registerStudent(Request $request)
     {
-        $request->validate([
+    try {
+        // 1. Validasi Manual agar bisa kontrol respon error 100%
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'gender' => 'required|string',
             'no_telephone' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-
+        ], [
+            'email.unique' => 'Email ini sudah digunakan oleh pengembang lain.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+            'image.max' => 'Ukuran foto maksimal adalah 2MB.'
         ]);
 
-        if (User::where('email', $request->email)->exists()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Email sudah terdaftar.'
-            ], 400);
+                'message' => $validator->errors()->first(), // Ambil error pertama saja agar user tidak pusing
+                'errors' => $validator->errors()
+            ], 422);
         }
 
+        // 2. Simpan Gambar dengan path yang rapi
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('users/profiles', 'public');
+        }
+
+        // 3. Eksekusi Create User
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -116,80 +130,98 @@ class LoginController extends Controller
             'role' => 'student',
             'gender' => $request->gender,
             'no_telephone' => $request->no_telephone,
-            'status' => 'accept',
-            'image' => $request->file('image')->store('images')
-
+            'status' => 'accept', // Langsung aktif atau sesuaikan ke 'pending' jika butuh verifikasi admin
+            'image' => $imagePath
         ]);
 
         return response()->json([
             'status' => 'success',
+            'message' => 'Akun pengembang Anda berhasil dibuat!',
+            'redirect' => url('/login'), // Beritahu JS kemana harus pergi
             'data' => $user
         ], 201);
+
+    } catch (\Exception $e) {
+        // Jika ada error database atau server lainnya
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Terjadi kesalahan sistem: ' . $e->getMessage()
+        ], 500);
+    }
+}
+
+   public function login(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|email|max:225',
+        'password' => 'required|min:6|max:225',
+    ], [
+        'email.required' => 'Masukkan Email Anda!',
+        'password.required' => 'Masukkan Kata Sandi Anda!',
+        'password.min' => 'Password minimal 6 karakter!',
+    ]);
+
+    if ($validator->fails()) {
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first()
+            ], 422);
+        }
+        return redirect()->back()->withErrors($validator)->withInput();
     }
 
-    public function login(Request $request)
-    {
-        // Validasi input
-        $this->validate($request, [
-            'email' => 'required|exists:users,email|max:225',
-            'password' => 'required|min:6|max:225',
-        ], [
-            'email.max' => 'Masukan 225 karakter!',
-            'password.max' => 'Masukan 225 karakter!',
-            'email.required' => 'Masukkan Email Anda !!',
-            'email.exists' => 'Email Yang Anda Masukkan Belum Terdaftar !!',
-            'password.required' => 'Masukkan Kata Sandi Anda !!',
-            'password.min' => 'Password Minimal 6 Huruf !!',
-        ]);
+    $credentials = $request->only('email', 'password');
 
-        // Ambil kredensial dari input
-        $credentials = $request->only('email', 'password');
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
 
-        // Cek kredensial
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-
-            // Cek status pengguna
-            if ($user->status === 'pending') {
-                Auth::logout(); // Logout pengguna jika status pending
-                return redirect()->route('login')->with('warning', 'Harap tunggu konfirmasi dari admin.');
-            } elseif ($user->status === 'reject') {
-                Auth::logout(); // Logout pengguna jika status ditolak
-                return redirect()->route('login')->with('error', 'Anda diblokir dari sistem.');
-            } elseif ($user->status === 'accept') {
-                // Buat token untuk pengguna
-                $token = $user->createToken('MyApp')->plainTextToken;
-
-                // Siapkan respons
-                $response = [
-                    'status' => 'success',
-                    'user' => $user,
-                    'token' => $token, // Tambahkan token ke respons
-                ];
-
-                // Jika permintaan dari API, kembalikan JSON
-                if ($request->is('api/*')) {
-                    return response()->json($response);
-                }
-
-                // Jika bukan permintaan API, lakukan redirect sesuai role
-                switch ($user->role) {
-                    case 'admin':
-                        return redirect('/admin/dashboard');
-                    case 'student':
-                        return redirect('/student/dashboard');
-                    case 'teacher':
-                        return redirect('/teacher');
-                    default:
-                        return redirect('/login');
-                }
-            }
+        if ($user->status === 'pending') {
+            Auth::logout();
+            $msg = 'Harap tunggu konfirmasi dari admin.';
+            return $request->ajax() 
+                ? response()->json(['status' => 'warning', 'message' => $msg], 403)
+                : redirect()->route('login')->with('warning', $msg);
         }
 
-        // Jika autentikasi gagal
-        return redirect()->route('login')->with('error', 'Username atau password salah.');
+        if ($user->status === 'reject') {
+            Auth::logout();
+            $msg = 'Anda diblokir dari sistem.';
+            return $request->ajax() 
+                ? response()->json(['status' => 'error', 'message' => $msg], 403)
+                : redirect()->route('login')->with('error', $msg);
+        }
+
+        if ($user->status === 'accept') {
+            $redirectTo = match($user->role) {
+                'admin'   => '/admin/dashboard',
+                'student' => '/student/dashboard',
+                'teacher' => '/teacher',
+                default   => '/',
+            };
+
+            if ($request->ajax() || $request->is('api/*')) {
+                $token = $user->createToken('MyApp')->plainTextToken;
+                return response()->json([
+                    'status'   => 'success',
+                    'message'  => 'Login berhasil!',
+                    'user'     => $user,
+                    'token'    => $token,
+                    'redirect' => $redirectTo
+                ], 200);
+            }
+
+            return redirect()->intended($redirectTo);
+        }
     }
 
+    $failMsg = 'Email atau password yang Anda masukkan salah.';
+    if ($request->ajax()) {
+        return response()->json(['status' => 'error', 'message' => $failMsg], 401);
+    }
+
+    return redirect()->route('login')->with('error', $failMsg);
+}
     public function logout(Request $request)
     {
         Auth::logout();

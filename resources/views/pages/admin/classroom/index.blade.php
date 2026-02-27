@@ -1,132 +1,134 @@
 @extends('layouts.admin.app')
-@section('content')
-    <div class="page-title">
-        <div class="row">
-            <div class="col-xl-4 col-sm-7 box-col-3">
-                <h3>Kelas</h3>
-            </div>
-            <div class="col-5 d-none d-xl-block">
 
-            </div>
-            <div class="col-xl-3 col-sm-5 box-col-4">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="/admin/classroom">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="1.5"
-                                    d="m2.25 12l8.955-8.955a1.124 1.124 0 0 1 1.59 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item active">Kelas</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="mt-4 row" id="classroom-container"></div>
+@section('page_title', 'Classroom Exploration')
 
-        <div id="no-data" class="d-none">
-            <div class="d-flex justify-content-center">
-                <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
-            </div>
-            <h3 class="text-center">Data Masih Kosong</h3>
-        </div>
-
-        <div id="loading" class="">
-            <div class="d-flex justify-content-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z" />
-                    <rect width="2" height="7" x="11" y="6" fill="currentColor" rx="1">
-                        <animateTransform attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate"
-                            values="0 12 12;360 12 12" />
-                    </rect>
-                    <rect width="2" height="9" x="11" y="11" fill="currentColor" rx="1">
-                        <animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate"
-                            values="0 12 12;360 12 12" />
-                    </rect>
-                </svg>
-            </div>
-            <h4 class="mt-2 text-center">
-                Loading...
-            </h4>
-        </div>
-    </div>
+@section('style')
+<style>
+    .course-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .course-card:hover { transform: translateY(-10px); }
+    .image-container { aspect-ratio: 16/9; overflow: hidden; border-radius: 1.5rem; }
+    .image-container img { transition: transform 0.6s ease; }
+    .course-card:hover .image-container img { transform: scale(1.1); }
+    
+    /* Skeleton Loading Effect */
+    .skeleton { background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+    @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+</style>
 @endsection
+
+@section('content')
+<div class="mb-10 px-2">
+    <div class="flex items-center gap-3">
+        <div class="w-2 h-6 bg-indigo-600 rounded-full"></div>
+        <h3 class="text-xl font-black text-slate-900 tracking-tight uppercase italic">Global Classroom Database</h3>
+    </div>
+    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-2">Memantau seluruh aktivitas pengajaran di sistem</p>
+</div>
+
+<div class="container-fluid">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8" id="classroom-container">
+        <div class="col-span-full py-24 text-center" id="loading">
+            <div class="w-12 h-12 border-[3px] border-slate-100 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Syncing Classrooms...</p>
+        </div>
+    </div>
+
+    <div id="no-data" class="hidden py-24 flex flex-col items-center justify-center bg-white rounded-[3rem] border border-dashed border-slate-200 animate-fade-in">
+        <img src="{{ asset('no-data.png') }}" class="w-40 opacity-20 mb-6 grayscale" alt="">
+        <h4 class="text-lg font-black text-slate-900 tracking-tight">Data Belum Tersedia</h4>
+        <p class="text-slate-400 text-xs font-medium uppercase tracking-widest mt-1">Belum ada kelas yang dibuat oleh instruktur</p>
+    </div>
+</div>
+@endsection
+
 @section('script')
-    <script>
-        $(document).ready(function() {
-            $('#loading').removeClass('d-none');
+<script>
+    $(document).ready(function() {
+        const fetchClassrooms = () => {
+            $('#loading').removeClass('hidden');
+            
             $.ajax({
                 url: '/api/classroom/admin',
                 type: 'GET',
                 success: function(response) {
-                    $('#loading').addClass('d-none');
+                    $('#loading').addClass('hidden');
+                    const container = $('#classroom-container');
+                    container.empty();
+
                     if (response.data.length === 0) {
-                        $('#no-data').removeClass('d-none');
+                        $('#no-data').removeClass('hidden');
                     } else {
                         response.data.forEach(function(course) {
-                            const defaultImage =
-                                "{{ asset('user.png') }}";
+                            // Logika Gambar & Deskripsi
+                            const courseThumbnail = course.thumbnail ? `/storage/${course.thumbnail}` : '/user.png';
+                            const authorImage = course.profile ? `/storage/${course.profile}` : '/user.png';
+                            const desc = course.description.length > 90 ? course.description.substring(0, 90) + '...' : course.description;
 
-                            const courseThumbnail = course.thumbnail ?
-                                `/storage/${course.thumbnail}` : '/user.png';
-                            const authorImage = course.profile ? `/storage/${course.profile}` :
-                                '/user.png';
-                            const courseDescription = course.description.length > 80 ?
-                                course.description.substring(0, 80) + '...' : course
-                                .description;
+                            // Logika Kapasitas (Progress Bar)
+                            const percent = (course.total_user / course.limit) * 100;
+                            const barColor = percent > 90 ? 'bg-rose-500' : (percent > 60 ? 'bg-amber-500' : 'bg-indigo-600');
 
-                            $('#classroom-container').append(`
-                            <div class="col-xxl-3 col-xl-5 col-lg-6 col-12">
-                                <div class="shadow-sm card border-light">
-                                    <div class="card-body">
-                                        <div class="mb-3 d-flex justify-content-between align-items-center">
-                                            <h3 class="mb-0 f-w-600">${course.name}</h3>
-<div>
-        <span class="badge bg-primary me-1">${course.statusClass || 'Status Kelas'}</span>
-<span class="badge bg-secondary">
-    ${course.status === 'accept' ? 'Terima' :
-      course.status === 'reject' ? 'Ditolak' :
-      course.status === 'pending' ? 'Menunggu' :
-      'Status'}
-</span>
-    </div>                                        </div>
-                                        <div class="mb-3 d-flex align-items-center">
-                                            <img class="img-20 me-2 rounded-circle" src="${authorImage}"  title="">
-                                            <div class="flex-grow-1">
-                                                <p class="mb-0 font-weight-bold">${course.user_name}</p>
-                                            </div>
+                            // Logika Status Badges
+                            const statusColor = course.status === 'accept' ? 'bg-emerald-50 text-emerald-600' : (course.status === 'reject' ? 'bg-rose-50 text-rose-600' : 'bg-amber-50 text-amber-600');
+                            const statusText = course.status === 'accept' ? 'Active' : (course.status === 'reject' ? 'Blocked' : 'Pending');
+
+                            container.append(`
+                                <div class="course-card bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col group animate-fade-in">
+                                    <div class="image-container relative mb-6">
+                                        <img src="${courseThumbnail}" class="w-full h-full object-cover" onerror="this.src='/user.png'">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                        
+                                        <div class="absolute top-4 left-4">
+                                            <span class="px-3 py-1.5 bg-white/90 backdrop-blur-md rounded-xl text-indigo-600 font-black text-[9px] uppercase tracking-widest shadow-sm border border-white">
+                                                ${course.statusClass || 'Public'}
+                                            </span>
                                         </div>
-                                        <img src="${courseThumbnail}" class="mb-3 img-fluid w-100" alt="${course.name}" style="max-height:150px;object-fit:cover">
-                                        <p class="text-muted">${courseDescription}</p>
-                                        <div class="row details">
-                                            <div class="col-6">
-                                                <span class="font-weight-bold">Total User:</span>
-                                            </div>
-                                            <div class="col-6 font-secondary">${course.total_user}</div>
-                                            <div class="col-6">
-                                                <span class="font-weight-bold">Limit:</span>
-                                            </div>
-                                            <div class="col-6 font-secondary">${course.limit}</div>
-                                        </div>
-                                        <div class="mt-3">
-                                            <a href="/admin/classroom/detail/${course.id}" class="btn btn-primary w-100">Detail</a>
+
+                                        <div class="absolute bottom-4 right-4">
+                                            <span class="px-3 py-1.5 ${statusColor} rounded-xl font-black text-[9px] uppercase tracking-widest shadow-sm">
+                                                ${statusText}
+                                            </span>
                                         </div>
                                     </div>
+
+                                    <div class="flex-grow flex flex-col">
+                                        <h3 class="text-lg font-black text-slate-900 leading-tight mb-2 truncate group-hover:text-indigo-600 transition-colors">${course.name}</h3>
+                                        
+                                        <div class="flex items-center gap-2 mb-4">
+                                            <img src="${authorImage}" class="w-6 h-6 rounded-lg object-cover border border-slate-100">
+                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tight truncate">${course.user_name}</p>
+                                        </div>
+
+                                        <p class="text-slate-500 text-xs font-medium leading-relaxed mb-6 h-12 overflow-hidden">${desc}</p>
+
+                                        <div class="bg-slate-50 p-4 rounded-2xl mb-6">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Enrolled Capacity</span>
+                                                <span class="text-[10px] font-black text-slate-900">${course.total_user} / ${course.limit}</span>
+                                            </div>
+                                            <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                                                <div class="${barColor} h-full rounded-full transition-all duration-1000" style="width: ${percent}%"></div>
+                                            </div>
+                                        </div>
+
+                                        <a href="/admin/classroom/detail/${course.id}" class="mt-auto block w-full py-4 bg-slate-900 text-white text-center font-black uppercase text-[10px] tracking-[0.2em] rounded-2xl hover:bg-indigo-600 shadow-xl shadow-indigo-100 transition-all active:scale-95">
+                                            Audit Classroom
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        `);
+                            `);
                         });
+                        feather.replace();
                     }
                 },
                 error: function(xhr) {
-                    $('#loading').addClass('d-none');
-                    console.error('Terjadi kesalahan: ' + xhr.responseText);
+                    $('#loading').addClass('hidden');
+                    toastr.error('System Failure: Gagal menyinkronkan data kelas.');
                 }
             });
-        });
-    </script>
+        };
+
+        fetchClassrooms();
+    });
+</script>
 @endsection

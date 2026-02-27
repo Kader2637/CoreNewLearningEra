@@ -1,135 +1,139 @@
 @extends('layouts.admin.app')
-@section('content')
-    <div class="page-title">
-        <div class="row">
-            <div class="col-xl-4 col-sm-7 box-col-3">
-                <h3>Teacher</h3>
-            </div>
-            <div class="col-5 d-none d-xl-block">
 
-            </div>
-            <div class="col-xl-3 col-sm-5 box-col-4">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="/admin/teacher">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="1.5"
-                                    d="m2.25 12l8.955-8.955a1.124 1.124 0 0 1 1.59 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item active">Teacher</li>
-                </ol>
-            </div>
+@section('page_title', 'Mentor Management')
+
+@section('style')
+<style>
+    .teacher-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .teacher-card:hover { transform: translateY(-8px); border-color: #4f46e5; box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.08); }
+    .profile-frame { position: relative; width: 100px; height: 100px; margin: 0 auto 1.5rem; }
+    .profile-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 2.5rem; border: 4px solid #f8fafc; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+    .status-badge { position: absolute; bottom: 0; right: 0; width: 24px; height: 24px; background: #10b981; border: 4px solid #fff; border-radius: 50%; }
+    
+    @keyframes zoomIn {
+        from { opacity: 0; transform: scale(0.9) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-zoom-in { animation: zoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+</style>
+@endsection
+
+@section('content')
+<div class="mb-10 px-2 flex flex-col md:flex-row md:items-end justify-between gap-6 animate-fade-in">
+    <div>
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-2 h-6 bg-indigo-600 rounded-full"></div>
+            <h4 class="text-xl font-black text-slate-900 tracking-tight uppercase italic">Instructor Database</h4>
+        </div>
+        <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest leading-none">Manajemen akses dan verifikasi seluruh pengajar sistem</p>
+    </div>
+    
+    <div class="flex items-center gap-3">
+        <div class="px-6 py-3 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
+            <div class="w-2 h-2 bg-indigo-600 rounded-full animate-pulse"></div>
+            <span class="text-[10px] font-black uppercase text-slate-500 tracking-widest">Database Sync Active</span>
         </div>
     </div>
-    <div id="teacher-container" class="row">
-    </div>
-
-<div class="text-center" id="loading-message" style="display: none;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/><rect width="2" height="7" x="11" y="6" fill="currentColor" rx="1"><animateTransform attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></rect><rect width="2" height="9" x="11" y="11" fill="currentColor" rx="1"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></rect></svg>
-    <h3>Loading...</h3>
 </div>
+
+<div id="teacher-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-20">
+    <div class="col-span-full py-24 text-center" id="loading-state">
+        <div class="w-12 h-12 border-[3px] border-slate-100 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Retrieving Mentor Records...</p>
+    </div>
+</div>
+
+<div id="no-data-message" class="hidden py-24 flex flex-col items-center justify-center bg-white rounded-[3rem] border border-dashed border-slate-200 animate-fade-in">
+    <img src="{{ asset('no-data.png') }}" class="w-40 opacity-20 mb-6 grayscale" alt="">
+    <h4 class="text-lg font-black text-slate-900 tracking-tight">Database Kosong</h4>
+    <p class="text-slate-400 text-xs font-medium uppercase tracking-widest mt-1">Tidak ada instruktur yang terdaftar dalam sistem</p>
+</div>
+
 @include('components.modal-delete')
 @endsection
+
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-
-        const loadingMessage = $('#loading-message');
-        loadingMessage.show();
-
-        function fetchData() {
+        // 1. Fungsi Ambil Data
+        const fetchTeachers = () => {
+            $('#loading-state').removeClass('hidden');
             $.ajax({
                 url: '/api/teacher',
                 type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    loadingMessage.hide();
-                    if (response.status === 'success') {
-                        const container = $('#teacher-container');
-                        container.empty();
-                        if (Array.isArray(response.data) && response.data.length === 0) {
-                            $('#no-data-message').show();
-                        } else {
-                            $('#no-data-message').hide();
-                            response.data.forEach(teacher => {
-                                const teacherCard = `
-                                    <div class="col-xl-4 col-sm-6 col-xxl-3 col-ed-4 box-col-4">
-                                        <div class="card social-profile">
-                                            <div class="card-body">
-                                                <div class="social-img-wrap">
-                                                    <div class="social-img">
-                                                        <img src="{{ asset('storage/${teacher.image}') }}" width="75px" style="object-fit: cover" alt="profile" />
-                                                    </div>
-                                                </div>
-                                                <div class="social-details">
-                                                    <h5 class="mb-1">
-                                                        <a href="#">${teacher.name}</a>
-                                                    </h5>
-                                                    <span class="f-light">${teacher.email}</span>
-                                                    <div class="mt-4">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <a href="/admin/teacher/detail/${teacher.id}" class="btn btn-info w-100">
-                                                                    Detail
-                                                                </a>
-                                                            </div>
-                                                            <div class="col">
-                                                                <button class="btn btn-danger w-100 delete-button" data-id="${teacher.id}" data-bs-toggle="modal" data-bs-target="#modal-delete">
-                                                                    Hapus
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                success: function(res) {
+                    $('#loading-state').addClass('hidden');
+                    const container = $('#teacher-container');
+                    container.empty();
+
+                    if (res.status === 'success' && res.data.length > 0) {
+                        $('#no-data-message').addClass('hidden');
+                        res.data.forEach(t => {
+                            const img = t.image ? `/storage/${t.image}` : '/user.png';
+                            container.append(`
+                                <div class="teacher-card bg-white p-8 rounded-[3rem] border border-slate-100 shadow-sm text-center flex flex-col items-center animate-fade-in group">
+                                    <div class="profile-frame">
+                                        <img src="${img}" alt="${t.name}" onerror="this.src='/user.png'">
+                                        <div class="status-badge shadow-sm"></div>
                                     </div>
-                                `;
-                                container.append(teacherCard);
-                            });
-                        }
+                                    
+                                    <h5 class="text-lg font-black text-slate-900 leading-tight mb-1 truncate w-full px-4 group-hover:text-indigo-600 transition-colors">${t.name}</h5>
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-8 truncate w-full px-4">${t.email}</p>
+                                    
+                                    <div class="w-full flex gap-3 mt-auto">
+                                        <a href="/admin/teacher/detail/${t.id}" class="flex-[2] py-4 bg-slate-900 text-white rounded-2xl font-black uppercase text-[9px] tracking-widest hover:bg-indigo-600 shadow-lg shadow-slate-200 transition-all active:scale-95 flex items-center justify-center gap-2">
+                                            <i data-feather="eye" style="width:12px"></i> Detail
+                                        </a>
+                                        <button onclick="openDeleteModal(${t.id})" class="flex-1 py-4 bg-white border-2 border-red-50 text-red-500 rounded-2xl font-black uppercase text-[9px] tracking-widest hover:bg-red-500 hover:text-white hover:border-red-500 transition-all active:scale-95 flex items-center justify-center">
+                                            <i data-feather="trash-2" style="width:12px"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `);
+                        });
+                        feather.replace();
                     } else {
-                        console.error('Error fetching data');
+                        $('#no-data-message').removeClass('hidden');
                     }
-                },
-                error: function(xhr, status, error) {
-                    loadingMessage.hide();
-                    console.error('AJAX Error: ', status, error);
                 }
             });
-        }
+        };
 
-        fetchData();
-
-        $('#modal-delete').on('show.bs.modal', function(event) {
-            const button = $(event.relatedTarget);
-            const userId = button.data('id');
-            const form = $('#form-delete');
+        // 2. Fungsi Kontrol Modal (Manual Tailwind)
+        window.openDeleteModal = function(userId) {
             $('#deleteClassId').val(userId);
+            $('#modal-delete').removeClass('hidden').addClass('flex');
+        };
 
-            form.off('submit').on('submit', function(e) {
-                e.preventDefault();
-                $.ajax({
-                    url: `/api/user/delete/${userId}`,
-                    type: 'DELETE',
-                    data: form.serialize(),
-                    success: function(response) {
-                        toastr.success('Pengguna berhasil dihapus!');
-                        fetchData();
-                        $('#modal-delete').modal('hide');
-                    },
-                    error: function(xhr, status, error) {
-                        toastr.error('Terjadi kesalahan saat menghapus pengguna.');
-                        console.error('Error deleting user: ', status, error);
-                    }
-                });
+        window.closeModal = function(type) {
+            if(type === 'delete') {
+                $('#modal-delete').removeClass('flex').addClass('hidden');
+            }
+        };
+
+        // 3. Logika Submit Hapus
+        $('#form-delete').on('submit', function(e) {
+            e.preventDefault();
+            const id = $('#deleteClassId').val();
+            
+            $.ajax({
+                url: `/api/user/delete/${id}`,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function() {
+                    toastr.success('Record Mentor Berhasil Dimusnahkan');
+                    closeModal('delete');
+                    fetchTeachers();
+                },
+                error: function() {
+                    toastr.error('Otorisasi Gagal!');
+                }
             });
         });
+
+        fetchTeachers();
     });
 </script>
 @endsection

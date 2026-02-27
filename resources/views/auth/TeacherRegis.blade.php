@@ -1,243 +1,329 @@
 @extends('layouts.landingpage.app')
 
+@section('title', 'Daftar Instruktur – New Learning Era')
+
 @section('style')
-    <style>
-        label {
-            width: 100%;
-            text-align: left;
-        }
+<style>
+    body {
+        background-color: #ffffff;
+        overflow-x: hidden;
+    }
 
-        .card-input-element {
-            display: none;
-        }
+    /* Subtle Grid Background - Konsisten dengan halaman lain */
+    .bg-grid-pattern {
+        background-image: linear-gradient(to right, #f1f5f9 1px, transparent 1px),
+                          linear-gradient(to bottom, #f1f5f9 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
 
-        .card-input {
-            margin: 10px;
-            padding: 00px;
-        }
+    /* Wizard Step Display */
+    .wizard-step { display: none; }
+    .wizard-step.active { 
+        display: block; 
+        animation: slideUp 0.4s ease-out; 
+    }
 
-        .card-input:hover {
-            cursor: pointer;
-        }
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 
-        .card-input-element:checked + .card-input {
-            box-shadow: 0 0 2px 2px #cb56fa;
-        }
+    /* Custom Input Focus */
+    .clean-input:focus {
+        outline: none;
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        background-color: #ffffff;
+    }
 
-        .profile-image-container {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            overflow: hidden;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-        }
+    /* Radio Button Styling */
+    .gender-option:checked + label {
+        border-color: #4f46e5;
+        background-color: #f5f3ff;
+        color: #4f46e5;
+    }
 
-        .profile-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .form-grp {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .form-grp label {
-            margin-bottom: 8px;
-        }
-
-        .form-grp input, .form-grp textarea {
-            width: 100%;
-        }
-
-        .profile-image-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-image-wrapper input {
-            margin-top: 10px;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: none;
-            margin-left: 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .btn-spinner {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .btn-spinner span {
-            margin-right: 10px;
-        }
-    </style>
+    /* Stepper Line */
+    .step-line {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        height: 2px;
+        background: #e2e8f0;
+        z-index: 0;
+    }
+</style>
 @endsection
 
 @section('content')
-   
-    <section class="singUp-area section-py-120">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-6 col-lg-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="title">Register guru</h2>
-                            <p>Selamat datang, calon pengajar! Bergabunglah dengan New Learning Era dan bantu membentuk masa depan generasi penerus dengan cara mengajar yang lebih efektif dan menyenangkan. Daftarkan diri Anda sekarang untuk berbagi ilmu dan pengalaman!</p>
-                            <div class="account__divider">
-                                <span>or</span>
-                            </div>
-                            <form action="#" class="account__form" id="registrationForm" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-grp profile-image-wrapper">
-                                            <div class="profile-image-container" id="profileImageContainer" style="display: none;">
-                                                <img id="profileImage" src="{{ asset('assets/img/user.png') }}" alt="Foto Profil">
-                                            </div>
-                                            <label for="image">Foto Profil</label>
-                                            <input id="image" name="image" type="file" onchange="previewImage(event)" required class="form-select">
-                                        </div>
-                                    </div>
 
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-grp">
-                                            <label for="username">Username</label>
-                                            <input id="username" name="name" type="text" placeholder="Masukkan username" required class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-grp">
-                                            <label for="email">Email</label>
-                                            <input id="email" name="email" type="email" placeholder="Masukkan Email" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-grp">
-                                            <label for="no_telephone">No Telephone</label>
-                                            <input id="no_telephone" name="no_telephone" class="form-control" type="number" placeholder="Masukkan No" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-xl-6">
-                                        <div class="">
-                                            <label for="gender">Jenis Kelamin</label>
-                                            <div class="gap-2">
-                                                <input type="radio" name="gender"  value="male" required> Laki-Laki
-                                                <input type="radio" name="gender" value="female"> Perempuan
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-grp">
-                                            <label for="school">Asal Yayasan/Sekolah</label>
-                                            <input id="school" name="school" class="form-control" type="text" placeholder="Masukkan Yayasan" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-grp">
-                                            <label for="nip">Nip</label>
-                                            <input id="nip" type="number" class="form-control" name="nip" placeholder="Masukkan Nip" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-xl-12">
-                                        <div class="form-grp">
-                                            <label for="address">Alamat</label>
-                                            <textarea name="address" id="address" class="form-control" required></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-grp">
-                                            <label for="password">Password</label>
-                                            <input id="password" name="password" type="password" class="form-control" placeholder="Masukkan Password" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-grp">
-                                            <label for="confirm_password">Konfirmasi Password</label>
-                                            <input id="confirm_password" name="password_confirmation" class="form-control" type="password" placeholder="Konfirmasi Password" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" class=" btn btn-primary mt-3 w-100 text-center" id="submitButton">
-                                    <span class="text-center">Daftar</span>
-                                    <div id="loadingSpinner" class="spinner"></div>
-                                </button>
-                            </form>
-                            <div class="account__switch">
-                                <p><a href="{{ route('register') }}">Kembali</a></p>
-                            </div>
-                        </div>
+{{-- ==================== HERO BREADCRUMB ==================== --}}
+<section class="relative pt-32 pb-12 md:pt-40 md:pb-16 bg-white bg-grid-pattern border-b border-slate-200">
+    <div class="absolute inset-0 bg-gradient-to-b from-white/40 via-white/80 to-white pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">Pendaftaran Instruktur</h3>
+        <nav class="flex items-center gap-2 text-sm font-bold text-slate-500 uppercase tracking-widest">
+            <a href="/" class="hover:text-indigo-600 transition-colors">Home</a>
+            <span class="text-slate-300">/</span>
+            <span class="text-indigo-600">Register Teacher</span>
+        </nav>
+    </div>
+</section>
+
+{{-- ==================== REGISTRATION FORM (WIZARD) ==================== --}}
+<section class="py-20 bg-slate-50/50">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto">
+            
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Bagikan Ilmu Anda</h2>
+                <p class="text-slate-500 font-medium leading-relaxed max-w-lg mx-auto">Bergabunglah sebagai mentor dan bantu bentuk masa depan generasi baru dengan cara mengajar yang inovatif.</p>
+            </div>
+
+            <div class="relative mb-16 px-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-line w-full"></div>
+                <div id="progress-bar" class="absolute top-[20px] left-0 h-[2px] bg-indigo-600 transition-all duration-500 z-0" style="width: 0%;"></div>
+
+                <div class="relative z-10 flex justify-between">
+                    <div class="flex flex-col items-center">
+                        <div id="stepIndicator1" class="w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 bg-indigo-600 text-white shadow-lg shadow-indigo-200">1</div>
+                        <span class="text-[10px] font-black uppercase tracking-tighter mt-2 text-indigo-600">Personal</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div id="stepIndicator2" class="w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 bg-white border-2 border-slate-200 text-slate-400">2</div>
+                        <span class="text-[10px] font-black uppercase tracking-tighter mt-2 text-slate-400">Profesi</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div id="stepIndicator3" class="w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 bg-white border-2 border-slate-200 text-slate-400">3</div>
+                        <span class="text-[10px] font-black uppercase tracking-tighter mt-2 text-slate-400">Keamanan</span>
                     </div>
                 </div>
             </div>
+
+            <div class="bg-white border border-slate-200 rounded-[2rem] shadow-xl overflow-hidden p-8 md:p-12" data-aos="fade-up" data-aos-delay="200">
+                <form id="registrationForm" enctype="multipart/form-data">
+                    @csrf
+
+                    {{-- STEP 1: PERSONAL INFO --}}
+                    <div id="step1" class="wizard-step active">
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Username</label>
+                                    <input type="text" name="name" class="clean-input w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold placeholder-slate-400 transition-all" placeholder="Contoh: budisudono">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Email Instansi/Pribadi</label>
+                                    <input type="email" name="email" class="clean-input w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold placeholder-slate-400 transition-all" placeholder="nama@email.com">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">No. Telepon</label>
+                                    <input type="number" name="no_telephone" class="clean-input w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold placeholder-slate-400 transition-all" placeholder="08xxxxxxxxxx">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Jenis Kelamin</label>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <input type="radio" name="gender" value="male" id="male" class="gender-option hidden">
+                                        <label for="male" class="flex items-center justify-center py-3.5 border-2 border-slate-100 rounded-xl cursor-pointer font-bold text-slate-500 hover:bg-slate-50 transition-all">Laki-laki</label>
+                                        
+                                        <input type="radio" name="gender" value="female" id="female" class="gender-option hidden">
+                                        <label for="female" class="flex items-center justify-center py-3.5 border-2 border-slate-100 rounded-xl cursor-pointer font-bold text-slate-500 hover:bg-slate-50 transition-all">Perempuan</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-10">
+                            <button type="button" onclick="validateStep(1)" class="w-full py-4 bg-slate-900 text-white font-extrabold rounded-xl shadow-lg hover:bg-indigo-600 transition-all duration-300 flex justify-center items-center gap-3">
+                                Selanjutnya: Data Profesi
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- STEP 2: PROFESSIONAL INFO --}}
+                    <div id="step2" class="wizard-step">
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Asal Yayasan / Sekolah</label>
+                                    <input type="text" name="school" class="clean-input w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold placeholder-slate-400 transition-all" placeholder="Nama instansi pengajar">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">NIP / ID Pegawai</label>
+                                    <input type="number" name="nip" class="clean-input w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold placeholder-slate-400 transition-all" placeholder="Masukkan nomor identitas">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Alamat Lengkap</label>
+                                <textarea name="address" rows="3" class="clean-input w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold placeholder-slate-400 transition-all" placeholder="Alamat domisili saat ini"></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-10 flex gap-4">
+                            <button type="button" onclick="goToStep(1)" class="w-1/3 py-4 bg-white border border-slate-200 text-slate-600 font-bold rounded-xl hover:bg-slate-50 transition-all">Kembali</button>
+                            <button type="button" onclick="validateStep(2)" class="w-2/3 py-4 bg-slate-900 text-white font-extrabold rounded-xl shadow-lg hover:bg-indigo-600 transition-all duration-300 flex justify-center items-center gap-3">
+                                Langkah Terakhir
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- STEP 3: PHOTO & PASSWORD --}}
+                    <div id="step3" class="wizard-step">
+                        <div class="space-y-8">
+                            <div class="flex flex-col items-center">
+                                <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-4 w-full text-center">Foto Profil Profesional</label>
+                                <div class="relative group">
+                                    <div id="profileImageContainer" class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl bg-slate-100 flex items-center justify-center relative z-10">
+                                        <img id="profileImage" src="{{ asset('assets/img/user.png') }}" class="w-full h-full object-cover">
+                                    </div>
+                                    <label for="image" class="absolute bottom-0 right-0 w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center cursor-pointer shadow-lg hover:bg-indigo-700 transition-colors z-20 border-2 border-white">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    </label>
+                                    <input type="file" id="image" name="image" class="hidden" onchange="previewImage(event)">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Password</label>
+                                    <input type="password" name="password" class="clean-input w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold transition-all" placeholder="Min. 8 Karakter">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Konfirmasi Password</label>
+                                    <input type="password" name="password_confirmation" class="clean-input w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-bold transition-all" placeholder="Ulangi password">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-10 flex gap-4">
+                            <button type="button" onclick="goToStep(2)" class="w-1/3 py-4 bg-white border border-slate-200 text-slate-600 font-bold rounded-xl hover:bg-slate-50 transition-all">Kembali</button>
+                            <button type="submit" id="submitButton" class="w-2/3 py-4 bg-emerald-600 text-white font-extrabold rounded-xl shadow-lg hover:bg-emerald-700 transition-all duration-300 flex justify-center items-center gap-3">
+                                <div id="loadingSpinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                Selesaikan Pendaftaran
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="mt-8 text-center" data-aos="fade-up" data-aos-delay="300">
+                <p class="text-slate-500 font-medium">Sudah menjadi bagian dari kami? <a href="/login" class="text-indigo-600 font-black uppercase text-xs tracking-widest ml-1 hover:text-indigo-800 transition-colors">Masuk</a></p>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
+
 @endsection
 
 @section('script')
-    <script>
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const output = document.getElementById('profileImage');
-                const container = document.getElementById('profileImageContainer');
-                container.style.display = 'flex';
-                output.src = reader.result;
-            }
-            reader.readAsDataURL(event.target.files[0]);
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+    toastr.options = { "progressBar": true, "closeButton": true, "positionClass": "toast-top-right" };
+
+    function goToStep(step) {
+        $(".wizard-step").removeClass("active");
+        $("#step" + step).addClass("active");
+
+        $(".step-indicator").removeClass("bg-indigo-600 text-white shadow-lg shadow-indigo-200 border-indigo-600")
+                           .addClass("bg-white border-2 border-slate-200 text-slate-400");
+        
+        for(let i=1; i<=step; i++) {
+            $("#stepIndicator" + i).removeClass("border-slate-200 text-slate-400 bg-white")
+                                   .addClass("bg-indigo-600 text-white shadow-lg shadow-indigo-200");
         }
 
-        $(document).ready(function() {
-            $('#registrationForm').on('submit', function(e) {
-                e.preventDefault();
+        let progress = ((step - 1) / 2) * 100;
+        $("#progress-bar").css("width", progress + "%");
+    }
 
-                $('#submitButton span').hide();
-                $('#loadingSpinner').show();
-                $('#submitButton').prop('disabled', true);
+    function validateStep(step) {
+        let valid = true;
+        let fields = {
+            1: ["name", "email", "no_telephone", "gender"],
+            2: ["school", "nip", "address"]
+        };
 
-                var formData = new FormData(this);
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/Apiregister/teacher',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        toastr.success('Pendaftaran berhasil! Silahkan menunggu konfirmasi dari admin terlebih dahulu!', 'Sukses');
-                        setTimeout(function() {
-                            window.location.href = "/login";
-                        }, 2000);
-                    },
-                    error: function(xhr, status, error) {
-                        toastr.error('Pendaftaran gagal! Coba lagi!', 'Gagal');
-                    },
-                    complete: function() {
-                        $('#loadingSpinner').hide();
-                        $('#submitButton span').show();
-                        $('#submitButton').prop('disabled', false);
-                    }
-                });
-            });
+        fields[step].forEach(f => {
+            let field = $(`[name='${f}']`);
+            if (field.attr("type") === "radio") {
+                if ($(`input[name='${f}']:checked`).length === 0) valid = false;
+            } else {
+                if (field.val().trim() === "") valid = false;
+            }
         });
-    </script>
+
+        if (!valid) {
+            toastr.warning("Lengkapi semua kolom sebelum melanjutkan.");
+            return;
+        }
+
+        goToStep(step + 1);
+    }
+
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function(){
+            $("#profileImage").attr("src", reader.result);
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    $("#registrationForm").on('submit', function(e) {
+        e.preventDefault();
+        
+        let pass = $("[name='password']").val();
+        let conf = $("[name='password_confirmation']").val();
+        
+        if (pass.length < 8) {
+            toastr.error("Password minimal 8 karakter.");
+            return;
+        }
+        if (pass !== conf) {
+            toastr.error("Konfirmasi password tidak cocok!");
+            return;
+        }
+
+        const btn = $("#submitButton");
+        const spinner = $("#loadingSpinner");
+
+        btn.prop("disabled", true).addClass('opacity-50');
+        spinner.removeClass('hidden');
+
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "/api/Apiregister/teacher",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: { 'Accept': 'application/json' },
+            success: function(res) {
+                toastr.success('Pendaftaran berhasil! Silahkan menunggu konfirmasi admin.', 'Selamat!');
+                setTimeout(() => window.location.href = "/login", 2000);
+            },
+            error: function(xhr) {
+                let errorMsg = "Terjadi kesalahan sistem.";
+                if (xhr.responseJSON) {
+                    if (xhr.responseJSON.errors) {
+                        errorMsg = Object.values(xhr.responseJSON.errors)[0][0];
+                    } else if (xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                }
+                toastr.error(errorMsg, "Registrasi Gagal");
+            },
+            complete: function() {
+                btn.prop("disabled", false).removeClass('opacity-50');
+                spinner.addClass('hidden');
+            }
+        });
+    });
+</script>
 @endsection

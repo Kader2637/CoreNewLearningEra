@@ -1,35 +1,17 @@
-<div class="header">
-            <div class="header-content">
-                <nav class="navbar navbar-expand">
-                    <div class="collapse navbar-collapse justify-content-between">
-                        <div class="header-left">
-                            <div class="dashboard_bar">
+<header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 px-8 flex items-center justify-between shrink-0">
+    <div class="flex items-center gap-4">
+        <h1 class="text-xl font-black tracking-tight text-slate-900 uppercase">
+            Panel <span class="text-indigo-600">Instruktur</span>
+        </h1>
+    </div>
 
-                            </div>
-                        </div>
-                        <ul class="navbar-nav header-right">
-
-                            <li class="nav-item dropdown header-profile">
-                                <a class="nav-link" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                    <img src="{{ asset('storage/') }}/{{ auth()->user()->image }}" style="object-fit: cover" width="20" alt=""/>
-									<div class="header-info">
-										<span class="text-black">{{ auth()->user()->name }}</span>
-										<p class="fs-12 mb-0">{{ auth()->user()->role }}</p>
-									</div>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display:none;">
-                                        @csrf
-                                    </form>
-                                    <a href="#"  class="dropdown-item ai-icon" id="logoutButton"
-                                        onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
-                                        <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                                        <span>Log Out</span>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
+    <div class="flex items-center gap-6">
+        <div class="text-right hidden sm:block">
+            <p class="text-sm font-black text-slate-900 leading-none">{{ auth()->user()->name }}</p>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Instructor Account</p>
         </div>
+        <div class="w-12 h-12 rounded-2xl border-2 border-slate-100 p-0.5 overflow-hidden shadow-sm">
+            <img src="{{ asset('storage/'.auth()->user()->image) }}" class="w-full h-full object-cover rounded-[0.85rem]" alt="Profile">
+        </div>
+    </div>
+</header>

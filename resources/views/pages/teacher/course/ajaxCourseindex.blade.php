@@ -1,543 +1,414 @@
+@extends('layouts.teacher.app')
+
+@section('page_title', 'Detail Kurikulum')
+
+@section('style')
+<style>
+    .nav-tab-active { border-bottom: 3px solid #4f46e5; color: #4f46e5; font-weight: 800; }
+    .chat-container { height: calc(100vh - 450px); min-height: 550px; }
+    .animate-zoom-in { transform: scale(0.95); opacity: 0; transition: all 0.2s ease-out; }
+    .modal-open .animate-zoom-in { transform: scale(1); opacity: 1; }
+    .custom-input { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1.25rem; padding: 0.85rem 1.25rem; font-weight: 600; transition: all 0.2s; width: 100%; color: #0f172a; }
+    .custom-input:focus { outline: none; border-color: #4f46e5; background: white; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+</style>
+@endsection
+
+@section('content')
+<div class="mb-10 bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm" data-aos="fade-up">
+    <div class="relative h-48 md:h-64 overflow-hidden">
+        <img id="class-thumbnail" class="w-full h-full object-cover" alt="Cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+        <div class="absolute bottom-6 left-8 right-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <span class="px-3 py-1 bg-indigo-600 text-white font-black text-[9px] uppercase tracking-widest rounded-lg mb-3 inline-block shadow-lg">Instructor Mode</span>
+                <h2 id="class-name-header" class="text-3xl font-black text-white tracking-tight leading-none uppercase"></h2>
+            </div>
+            <a href="{{ route('classroom.teacher') }}" class="px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 text-white font-black uppercase text-[10px] tracking-widest rounded-xl hover:bg-white hover:text-slate-900 transition-all shadow-xl">Kembali</a>
+        </div>
+    </div>
+    <div class="p-8 bg-slate-50/50">
+        <p id="class-description" class="text-slate-500 font-medium leading-relaxed max-w-4xl italic"></p>
+    </div>
+</div>
+
+<div class="mb-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-200 overflow-x-auto">
+    <div class="flex gap-8">
+        <button onclick="switchTab('course')" id="tab-course" class="pb-4 text-sm font-bold text-slate-400 nav-tab-active transition-all whitespace-nowrap">Daftar Materi</button>
+        <button onclick="switchTab('student')" id="tab-student" class="pb-4 text-sm font-bold text-slate-400 transition-all whitespace-nowrap">Siswa Aktif</button>
+        <button onclick="switchTab('approval')" id="tab-approval" class="pb-4 text-sm font-bold text-slate-400 transition-all whitespace-nowrap flex items-center gap-2">Approval <span id="pending-count" class="px-2 py-0.5 bg-red-500 text-white text-[10px] rounded-full hidden">0</span></button>
+        <button onclick="switchTab('discussion')" id="tab-discussion" class="pb-4 text-sm font-bold text-slate-400 transition-all whitespace-nowrap">Diskusi Room</button>
+    </div>
+    <div class="pb-4">
+        <button onclick="openModal('addMaterial')" class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white font-black uppercase text-[10px] tracking-widest rounded-xl hover:bg-indigo-700 shadow-lg shadow-indigo-500/20 transition-all active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+            Tambah Materi
+        </button>
+    </div>
+</div>
+
+<div id="content-course" class="tab-pane block animate-fade-in">
+    <div id="materialCards" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></div>
+</div>
+
+<div id="content-student" class="tab-pane hidden animate-fade-in">
+    <div id="student-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+</div>
+
+<div id="content-approval" class="tab-pane hidden animate-fade-in">
+    <div id="student-pending" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+</div>
+
+<div id="content-discussion" class="tab-pane hidden animate-fade-in">
+    <div class="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden flex flex-col shadow-xl">
+        <div id="kotak-pesan" class="chat-container overflow-y-auto p-8 md:p-12 space-y-6 bg-slate-50/30 shadow-inner"></div>
+        <form id="form-pesan" class="p-6 bg-white border-t border-slate-100 flex items-center gap-4">
+            <input type="text" name="message" id="input-pesan" class="flex-1 px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl focus:outline-none focus:border-indigo-600 font-medium transition-all" placeholder="Tulis pesan diskusi ke kelas...">
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            <input type="hidden" name="classroom_id" value="{{ $id }}">
+            <button type="submit" class="w-16 h-16 bg-indigo-600 text-white rounded-3xl flex items-center justify-center hover:bg-indigo-700 shadow-lg active:scale-90 transition-all">
+                <svg class="w-6 h-6 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            </button>
+        </form>
+    </div>
+</div>
+
+<div id="modal-addMaterial" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('addMaterial')"></div>
+    <div class="relative bg-white w-full max-w-xl rounded-[3rem] shadow-2xl overflow-hidden animate-zoom-in">
+        <div class="p-10 md:p-12">
+            <h3 class="text-2xl font-black text-slate-900 mb-8">Tambah Materi Baru</h3>
+            <form id="materialForm" class="space-y-6">
+                <input type="hidden" name="classroom_id" value="{{ $id }}">
+                <div><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Nama Materi</label><input type="text" name="name" class="custom-input" required></div>
+                <div><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Deskripsi</label><textarea name="description" class="custom-input" rows="2" required></textarea></div>
+                <div>
+                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Tipe Materi</label>
+                    <select id="materialType" name="type" class="custom-input appearance-none" required>
+                        <option value="">Pilih Tipe</option>
+                        <option value="document">📄 Dokumen (PDF)</option>
+                        <option value="link">🎥 Link Youtube / Video</option>
+                        <option value="text_course">📝 Modul Teks</option>
+                    </select>
+                </div>
+                <div id="additionalInput" class="animate-fade-in"></div>
+                <div class="flex gap-3 pt-6">
+                    <button type="button" onclick="closeModal('addMaterial')" class="flex-1 py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl">Batal</button>
+                    <button type="submit" class="flex-1 py-4 bg-slate-900 text-white font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-indigo-600">Simpan Materi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modal-editMaterial" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('editMaterial')"></div>
+    <div class="relative bg-white w-full max-w-xl rounded-[3rem] shadow-2xl overflow-hidden animate-zoom-in">
+        <div class="p-10 md:p-12">
+            <h3 class="text-2xl font-black text-slate-900 mb-8">Update Materi</h3>
+            <form id="editMaterialForm" class="space-y-6">
+                @method('PUT')
+                <input type="hidden" name="classroom_id" value="{{ $id }}">
+                <input type="hidden" id="editMaterialId" name="id">
+                <div><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Judul Materi</label><input type="text" id="editMaterialName" name="name" class="custom-input" required></div>
+                <div><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Deskripsi</label><textarea id="editMaterialDescription" name="description" class="custom-input" rows="2" required></textarea></div>
+                <div>
+                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Tipe Materi</label>
+                    <select id="editMaterialType" name="type" class="custom-input appearance-none" required>
+                        <option value="document">Dokumen</option>
+                        <option value="link">Link</option>
+                        <option value="text_course">Text Course</option>
+                    </select>
+                </div>
+                <div id="editAdditionalInput" class="animate-fade-in"></div>
+                <div class="flex gap-3 pt-6">
+                    <button type="button" onclick="closeModal('editMaterial')" class="flex-1 py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl">Batal</button>
+                    <button type="submit" class="flex-1 py-4 bg-indigo-600 text-white font-black uppercase text-[10px] tracking-widest rounded-2xl">Perbarui</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modal-delete" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('delete')"></div>
+    <div class="relative bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden animate-zoom-in p-10 text-center">
+        <div class="w-20 h-20 bg-red-50 text-red-500 rounded-3xl flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+        </div>
+        <h3 class="text-xl font-black text-slate-900 mb-2 tracking-tight">Hapus Materi?</h3>
+        <p class="text-slate-500 font-medium mb-10 text-sm">Data materi akan dihapus permanen. Siswa tidak akan bisa lagi mengakses konten ini.</p>
+        <form id="form-delete-materi-manual">
+            <input type="hidden" id="deleteIdMateri">
+            <div class="flex gap-3">
+                <button type="button" onclick="closeModal('delete')" class="flex-1 py-4 bg-slate-100 text-slate-600 font-black uppercase text-[10px] rounded-2xl">Batal</button>
+                <button type="submit" class="flex-1 py-4 bg-red-500 text-white font-black uppercase text-[10px] rounded-2xl shadow-lg shadow-red-200 hover:bg-red-600">Hapus!</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modal-kick" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('kick')"></div>
+    <div class="relative bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden animate-zoom-in p-10 text-center">
+        <h3 class="text-xl font-black text-slate-900 mb-2">Keluarkan Siswa?</h3>
+        <p class="text-slate-500 font-medium mb-10 text-sm italic leading-relaxed">Setelah dikeluarkan, siswa harus meminta akses kembali untuk masuk ke kelas ini.</p>
+        <form id="form-kick-student-manual">
+            <input type="hidden" id="kickIdStudent">
+            <div class="flex gap-3">
+                <button type="button" onclick="closeModal('kick')" class="flex-1 py-4 bg-slate-100 text-slate-600 font-black text-[10px] rounded-2xl uppercase">Batal</button>
+                <button type="submit" class="flex-1 py-4 bg-slate-900 text-white font-black text-[10px] rounded-2xl uppercase hover:bg-red-500 transition-all">Keluarkan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modal-approval" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('approval')"></div>
+    <div class="relative bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl animate-zoom-in p-10 text-center">
+        <h3 id="approval-title" class="text-xl font-black text-slate-900 mb-10 uppercase tracking-tighter"></h3>
+        <form id="form-approval-manual">
+            <input type="hidden" id="approvalIdStudent">
+            <input type="hidden" id="approvalType">
+            <div class="flex gap-3">
+                <button type="button" onclick="closeModal('approval')" class="flex-1 py-4 bg-slate-100 text-slate-600 font-black text-[10px] rounded-2xl uppercase">Batal</button>
+                <button id="approval-submit-btn" type="submit" class="flex-1 py-4 text-white font-black text-[10px] rounded-2xl uppercase shadow-lg"></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@endsection
+
+@section('script')
 <script>
     const classId = '{{ $id }}';
+    const userId = {{ auth()->user()->id }};
 
-    function showAlert(message, type) {
-        Swal.fire({
-            icon: type,
-            title: message,
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-        });
+    // FUNGSI MODAL GLOBAL
+    function openModal(type) {
+        $(`#modal-${type}`).removeClass('hidden').addClass('flex');
+        setTimeout(() => $(`#modal-${type}`).addClass('modal-open'), 10);
+    }
+    function closeModal(type) {
+        $(`#modal-${type}`).removeClass('modal-open');
+        setTimeout(() => $(`#modal-${type}`).removeClass('flex').addClass('hidden'), 200);
     }
 
+    // FUNGSI TABS
+    function switchTab(tab) {
+        $('.tab-pane').addClass('hidden');
+        $(`#content-${tab}`).removeClass('hidden');
+        $('[id^="tab-"]').removeClass('nav-tab-active text-indigo-600').addClass('text-slate-400');
+        $(`#tab-${tab}`).addClass('nav-tab-active text-indigo-600').removeClass('text-slate-400');
+    }
+
+    // LOAD DATA KELAS
     const fetchClassData = () => {
         $.ajax({
-            url: `/api/teacher/classroom/show/${classId}`,
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                if (response.status === "success") {
-                    const classData = response.data;
-                    $('#class-name1').text(classData.name);
-                    $('#class-name').text(classData.name);
-                    $('#class-description').text(classData.description);
-                    const thumbnailUrl = `{{ asset('storage') }}/${classData.thumbnail}`;
-                    $('#class-thumbnail').attr('src', thumbnailUrl);
+            url: `/api/teacher/classroom/show/${classId}`, method: 'GET',
+            success: function(res) {
+                if (res.status === "success") {
+                    $('#class-name-header, #class-name-title').text(res.data.name);
+                    $('#class-description').text(res.data.description);
+                    $('#class-thumbnail').attr('src', `/storage/${res.data.thumbnail}`);
+                    fetchMaterials(); ambilDataSiswa(); ambilDataPending();
                 }
-            },
-            error: function(xhr, status, error) {
-                $('#class-name').text('Error loading class data');
             }
         });
     };
 
-    const ambilDataSiswa = () => {
-        $.ajax({
-            url: `/api/teacher/data/classroom/${classId}`,
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                console.log(response);
-                if (response.status) {
-                    const daftarSiswa = response.data;
-                    const kontainerSiswa = $('#student-list');
-                    kontainerSiswa.empty();
-                    if (daftarSiswa.length > 0) {
-                        daftarSiswa.forEach(siswa => {
-                            kontainerSiswa.append(`
-                        <div class="col-xl-4 col-xxl-6 col-sm-6">
-                            <div class="card contact-bx">
-                                <div class="card-body">
-                                    <div class="media">
-                                        <div class="image-bx me-3 me-lg-2 me-xl-3">
-                                            <img src="{{ asset('storage') }}/${siswa.profile}" alt="" class="rounded-circle" width="70" height="70" style="object-fit:cover">
-                                            <span class="active"></span>
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="mb-0 fs-20 font-w600">
-                                                <a href="javascript:void(0)" class="text-black">${siswa.name}</a>
-                                            </h6>
-                                            <p class="fs-14">${siswa.email}</p>
-                                            <div class="gap-2 mt-2 d-flex justify-content-end">
-                                                <button type="button" class="btn btn-danger btn-sm" title="Keluarkan" data-id="${siswa.id_relation}" onclick="openKickModal(${siswa.id_relation})">
-Keluarkan
-</button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `);
-                        });
-                    } else {
-                        kontainerSiswa.append(`
-                    <div class="d-flex justify-content-center">
-                        <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
-                    </div>
-                    <h3 class="text-center">Data Masih Kosong</h3>
-                `);
-                    }
-                } else {
-                    $('#student-list').append('<p>Error memuat data siswa</p>');
-                }
-            },
-            error: function(xhr, status, error) {
-                $('#student-list').append('<p>Error memuat data siswa</p>');
-            }
-        });
-    };
-
-    const ambilDataSiswaPending = () => {
-        $.ajax({
-            url: `/api/pending/teacher/${classId}`,
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                console.log(response);
-                const kontainerSiswaPending = $('#student-pending');
-                kontainerSiswaPending.empty();
-
-                if (response.status && response.data.length > 0) {
-                    response.data.forEach(siswa => {
-                        kontainerSiswaPending.append(`
-                <div class="col-xl-4 col-xxl-6 col-sm-6" id="teacher-${siswa.id}">
-                    <div class="card contact-bx">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="image-bx me-3 me-lg-2 me-xl-3">
-                                    <img src="{{ asset('storage') }}/${siswa.profile}" alt="" class="rounded-circle" width="70" height="70" style="object-fit:cover">
-                                    <span class="active"></span>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="mb-0 fs-20 font-w600">
-                                        <a href="javascript:void(0)" class="text-black">${siswa.name}</a>
-                                    </h6>
-                                    <p class="fs-14">${siswa.email}</p>
-                                    <div class="gap-2 mt-2 d-flex justify-content-end">
-                                        <button type="button" class="btn btn-danger btn-danger-reject btn-sm" title="Tolak" data-id="${siswa.id_relation}">
-                                            Tolak
-                                        </button>
-                                        <button type="button" class="btn btn-info btn-info-accept btn-sm" title="Terima" data-id="${siswa.id_relation}">
-                                            Terima
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                `);
-                    });
-
-                    $('.btn-info-accept').on('click', function() {
-                        const siswaId = $(this).data('id');
-                        $('#acceptStudentId').val(siswaId);
-                        $('#modal-accept-student').modal('show');
-                    });
-
-                    $('.btn-danger-reject').on('click', function() {
-                        const siswaId = $(this).data('id');
-                        $('#rejectStudentId').val(siswaId);
-                        $('#modal-reject-student').modal('show');
-                    });
-                } else {
-                    kontainerSiswaPending.append(`
-            <div class="d-flex justify-content-center">
-                <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
-            </div>
-            <h3 class="text-center">Data Masih Kosong</h3>
-            `);
-                }
-            },
-            error: function(xhr, status, error) {
-                $('#student-pending').append('<p>Error memuat data siswa</p>');
-            }
-        });
-    };
-
-    $('#form-accept').on('submit', function(e) {
-        e.preventDefault();
-        const siswaId = $('#acceptStudentId').val();
-        const $button = $('#btn-accept');
-        const $text = $button.find('.btn-text');
-        const $loading = $button.find('.btn-loading');
-
-        $button.prop('disabled', true);
-        $text.hide();
-        $loading.show();
-
-        $.ajax({
-            url: `/api/accept/teacher/${siswaId}`,
-            method: 'POST',
-            data: {
-                _token: $('input[name="_token"]').val(),
-            },
-            success: function(response) {
-                if (response.status === 'success') {
-                    showAlert(response.message, 'success');
-                    $('#modal-accept-student').modal('hide');
-                    ambilDataSiswaPending();
-                    ambilDataSiswa();
-                } else {
-                    showAlert(response.message, 'error');
-                }
-            },
-            error: function(xhr, status, error) {
-                let errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
-                try {
-                    const errorResponse = JSON.parse(xhr.responseText);
-                    if (errorResponse.message) {
-                        errorMessage = errorResponse.message;
-                    }
-                } catch (e) {}
-                showAlert(errorMessage, 'error');
-            },
-            complete: function() {
-                $button.prop('disabled', false);
-                $text.show();
-                $loading.hide();
-            }
-        });
-    });
-
-
-
-    $('#form-reject').on('submit', function(e) {
-        e.preventDefault();
-        const siswaId = $('#rejectStudentId').val();
-        const $button = $('#btn-reject');
-        const $text = $button.find('.btn-text');
-        const $loading = $button.find('.btn-loading');
-
-        $button.prop('disabled', true);
-        $text.hide();
-        $loading.show();
-
-        $.ajax({
-            url: `/api/reject/teacher/${siswaId}`,
-            method: 'POST',
-            data: {
-                _token: $('input[name="_token"]').val(),
-            },
-            success: function(response) {
-                if (response.status) {
-                    showAlert("Siswa berhasil ditolak.", 'success');
-                    $('#modal-reject-student').modal('hide');
-                    ambilDataSiswaPending();
-                } else {
-                    showAlert("Gagal menolak siswa.", 'error');
-                }
-            },
-            error: function(xhr, status, error) {
-                showAlert("Terjadi kesalahan.", 'error');
-            },
-            complete: function() {
-                $button.prop('disabled', false);
-                $text.show();
-                $loading.hide();
-            }
-        });
-    });
-
-
-
-    const openKickModal = (studentId) => {
-        $('#deleteClassId').val(studentId);
-        $('#modal-kick-student').modal('show');
-    };
-
-    $('#form-kick').submit(function(e) {
-        e.preventDefault();
-        const studentId = $('#deleteClassId').val();
-
-        $.ajax({
-            url: `/api/kick/student/${studentId}`,
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                showAlert("Siswa berhasil di Keluarkan", 'success');
-                $('#modal-kick-student').modal('hide');
-                ambilDataSiswa();
-            },
-            error: function(xhr, status, error) {
-                console.error('Error mengeluarkan siswa:', error);
-                showAlert("Gagal mengeluarkan siswa", 'error');
-            }
-        });
-    });
-
-
+    // LOAD DAFTAR MATERI
     const fetchMaterials = () => {
         $.ajax({
-            url: `/api/teacher/course/data/${classId}`,
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                const materialCards = $('#materialCards');
-                materialCards.empty();
-
-                if (response.status === true && response.data.length > 0) {
-                    const materials = response.data;
-
-                    materials.forEach(material => {
-                        const truncatedDescription = material.description.length > 100 ?
-                            material.description.substring(0, 97) + '...' :
-                            material.description;
-
-                        const card = `
-                        <div class="mb-3 col-lg-4" id="material-${material.id}">
-                            <div class="card d-flex flex-column" style="height: 100%;">
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">${material.name}</h5>
-                                    <p class="card-text flex-grow-1">${truncatedDescription}</p>
-                                    <div class="gap-2 mt-2 d-flex justify-content-end">
-                                        <button type="button" class="btn btn-warning btn-sm edit-material-btn"
-                                            title="Edit"
-                                            data-id="${material.id}"
-                                            data-name="${material.name}"
-                                            data-description="${material.description}"
-                                            data-type="${material.type}"
-                                            data-document="${material.document || ''}"
-                                            data-link="${material.link || ''}"
-                                            data-text-course="${material.text_course || ''}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="white" d="m19.71 8.04l-2.34 2.33l-3.75-3.75l2.34-2.33c.39-.39 1.04-.39 1.41 0l2.34 2.34c.39.37.39 1.02 0 1.41M3 17.25L13.06 7.18l3.75 3.75L6.75 21H3zM16.62 5.04l-1.54 1.54l2.34 2.34l1.54-1.54zM15.36 11L13 8.64l-9 9.02V20h2.34z"/></svg>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" title="Hapus" onclick="openDeleteModal(${material.id})">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="white" d="M18 19a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V7H4V4h4.5l1-1h4l1 1H19v3h-1zM6 7v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V7zm12-1V5h-4l-1-1h-3L9 5H5v1zM8 9h1v10H8zm6 0h1v10h-1z"/></svg>
-                                        </button>
-                                        <a href="/teacher/course/detail/${material.id}" class="btn btn-info btn-sm" title="Detail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M9 7V5H4v5h2v1H3V4h7v3zm4 14v-3h1v2h5v-5h-2v-1h3v7zM8 9h7v7H8zm1 1v5h5v-5z"/></svg>
-                                        </a>
-                                    </div>
+            url: `/api/teacher/course/data/${classId}`, method: 'GET',
+            success: function(res) {
+                const list = $('#materialCards'); list.empty();
+                if (res.status && res.data.length > 0) {
+                    res.data.forEach(m => {
+                        const icon = m.type === 'link' ? '📹' : m.type === 'document' ? '📄' : '📝';
+                        list.append(`
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group animate-fade-in">
+                            <div class="flex items-start justify-between mb-6">
+                                <div class="w-14 h-14 bg-slate-50 text-3xl flex items-center justify-center rounded-2xl group-hover:bg-indigo-50 transition-colors">${icon}</div>
+                                <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="prepareEditMaterial('${m.id}', '${m.name}', '${m.description.replace(/'/g, "\\'")}', '${m.type}', '${m.link}', '${m.text_course}')" class="p-2 text-slate-400 hover:text-indigo-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
+                                    <button onclick="prepareDeleteMateri('${m.id}')" class="p-2 text-slate-400 hover:text-red-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                                 </div>
                             </div>
-                        </div>
-                    `;
-                        materialCards.append(card);
+                            <h5 class="text-slate-900 font-black text-xl mb-2 truncate">${m.name}</h5>
+                            <p class="text-slate-400 text-sm font-medium line-clamp-2 mb-8 h-10 leading-relaxed">${m.description}</p>
+                            <a href="/teacher/course/detail/${m.id}" class="block w-full py-4 bg-slate-900 text-white text-center font-black uppercase text-[10px] tracking-[0.2em] rounded-2xl hover:bg-indigo-600 shadow-lg shadow-indigo-100 transition-all">Kelola Unit & Tugas</a>
+                        </div>`);
                     });
                 } else {
-                    materialCards.append(`
-                    <div class="d-flex justify-content-center">
-                        <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
-                    </div>
-                    <h3 class="text-center">Data Masih Kosong</h3>
-                `);
+                    list.html(`<div class="col-span-full py-24 text-center bg-white rounded-[3rem] border border-dashed border-slate-200 animate-fade-in"><img src="{{ asset('no-data.png') }}" class="w-32 mx-auto opacity-30 mb-4"><h4 class="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Belum ada materi pengajaran</h4></div>`);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error:", error);
             }
         });
     };
 
+    // LOGIKA DINAMIS INPUT MATERI (ADD)
+    $('#materialType').on('change', function() {
+        const area = $('#additionalInput'); area.empty();
+        const type = $(this).val();
+        if (type === 'document') area.append(`<div class="animate-fade-in"><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Upload PDF</label><input type="file" name="document" class="custom-input" accept=".pdf" required></div>`);
+        else if (type === 'link') area.append(`<div class="animate-fade-in"><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">URL Video</label><input type="url" name="link" class="custom-input" placeholder="https://youtube.com/..." required></div>`);
+        else if (type === 'text_course') area.append(`<div class="animate-fade-in"><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Konten Artikel</label><textarea name="text_course" rows="6" class="custom-input" required></textarea></div>`);
+    });
 
-    function openDeleteModal(id) {
-        $('#deleteClassId').val(id);
-        $('#modal-delete').modal('show');
+    // LOGIKA DINAMIS INPUT MATERI (EDIT)
+    function prepareEditMaterial(id, name, desc, type, link, text) {
+        $('#editMaterialId').val(id); $('#editMaterialName').val(name); $('#editMaterialDescription').val(desc); $('#editMaterialType').val(type);
+        const area = $('#editAdditionalInput'); area.empty();
+        if (type === 'link') area.append(`<div class="animate-fade-in"><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">URL Video</label><input type="url" name="link" class="custom-input" value="${link}" required></div>`);
+        else if (type === 'document') area.append(`<div class="animate-fade-in"><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Ganti PDF (Opsional)</label><input type="file" name="document" class="custom-input" accept=".pdf"></div>`);
+        else if (type === 'text_course') area.append(`<div class="animate-fade-in"><label class="text-[10px] font-black uppercase text-slate-400 mb-2 block ml-1">Konten Artikel</label><textarea name="text_course" rows="6" class="custom-input" required>${text}</textarea></div>`);
+        openModal('editMaterial');
     }
 
-    $('#form-delete').on('submit', function(e) {
-        e.preventDefault();
-        const id = $('#deleteClassId').val();
-        $.ajax({
-            url: `/api/teacher/course/delete/${id}`,
-            method: 'DELETE',
-            success: function(response) {
-                if (response.message === 'success') {
-                    $(`#material-${id}`).remove();
-                    showAlert("Materi berhasil dihapus", 'success');
-                    $('#modal-delete').modal('hide');
-                } else {
-                    showAlert("Gagal menghapus materi", 'error');
-                }
-            },
-            error: function() {
-                showAlert("Terjadi kesalahan saat menghapus materi", 'error');
-            }
-        });
-    });
+    // KICK & APPROVAL HELPERS
+    function prepareDeleteMateri(id) { $('#deleteIdMateri').val(id); openModal('delete'); }
+    function prepareKick(id) { $('#kickIdStudent').val(id); openModal('kick'); }
+    function prepareApproval(id, type) {
+        $('#approvalIdStudent').val(id); $('#approvalType').val(type);
+        $('#approval-title').text(type === 'accept' ? 'Terima Siswa?' : 'Tolak Siswa?');
+        $('#approval-submit-btn').text(type === 'accept' ? 'Ya, Terima' : 'Ya, Tolak').removeClass('bg-green-500 bg-red-500').addClass(type === 'accept' ? 'bg-green-500 shadow-green-100' : 'bg-red-500 shadow-red-100');
+        openModal('approval');
+    }
 
-    $('#materialCards').on('click', '.edit-material-btn', function() {
-        const id = $(this).data('id');
-        const name = $(this).data('name');
-        const description = $(this).data('description');
-        const type = $(this).data('type');
-        const document = $(this).data('document');
-        const link = $(this).data('link');
-        const textCourse = $(this).data('text-course');
-
-        $('#editMaterialId').val(id);
-        $('#editMaterialName').val(name);
-        $('#editMaterialDescription').val(description);
-        $('#editMaterialType').val(type);
-
-        const additionalInput = $('#editAdditionalInput');
-        additionalInput.empty();
-
-        if (type === 'link') {
-            additionalInput.append(`
-                <div class="mb-3">
-                    <label for="editMaterialLink" class="form-label">Link</label>
-                    <input type="url" class="form-control" id="editMaterialLink" name="link" value="${link}" >
-                </div>
-            `);
-        } else if (type === 'document') {
-            additionalInput.append(`
-                <div class="mb-3">
-                    <label for="editMaterialFile" class="form-label">Upload Dokumen</label>
-                    <div class="input-group">
-                        <input type="file" class="form-control" id="editMaterialFile" name="document" accept=".pdf,.doc,.docx" >
-                    </div>
-                </div>
-            `);
-        } else if (type === 'text_course') {
-            additionalInput.append(`
-                <div class="mb-3">
-                    <label for="editMaterialText" class="form-label">Text Course</label>
-                    <textarea class="form-control" id="editMaterialText" name="text_course" rows="5" >${textCourse}</textarea>
-                </div>
-            `);
-        }
-
-        $('#editMaterialModal').modal('show');
-    });
-
-    $('#editMaterialForm').on('submit', function(event) {
-        event.preventDefault();
-
-        const materialId = $('#editMaterialId').val();
-        const formData = new FormData(this);
-
-        $.ajax({
-            url: `/api/teacher/course/update/${materialId}`,
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                if (response.success) {
-                    showAlert('Materi berhasil diperbarui', 'success');
-                    $('#editMaterialModal').modal('hide');
-                    fetchMaterials();
-                } else {
-                    showAlert(response.message || "Gagal menambahkan materi", 'error');
-                }
-            },
-            error: function(xhr) {
-                showAlert(xhr.responseJSON?.message ||
-                    "Terjadi kesalahan saat memperbarui materi. Silakan coba lagi.", 'error');
-            }
-        });
-    });
-
-
-    $('#editMaterialType').on('change', function() {
-        const selectedType = $(this).val();
-        const additionalInput = $('#editAdditionalInput');
-        additionalInput.empty();
-
-        if (selectedType === 'link') {
-            additionalInput.append(`
-                <div class="mb-3">
-                    <label for="editMaterialLink" class="form-label">Link</label>
-                    <input type="url" class="form-control" id="editMaterialLink" name="link" required>
-                </div>
-            `);
-        } else if (selectedType === 'document') {
-            additionalInput.append(`
-                <div class="mb-3">
-                    <label for="editMaterialFile" class="form-label">Upload Dokumen</label>
-                    <div class="input-group">
-                        <input type="file" class="form-control" id="editMaterialFile" name="document" accept=".pdf,.doc,.docx" required>
-                        <button type="button" class="btn btn-outline-secondary" onclick="window.open('#', '_blank')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M12 2a5.5 5.5 0 0 0-5.5 5.5a5.48 5.48 0 0 0 1.05 3.22l3.1 4.65a.75.75 0 0 0 1.3 0l3.1-4.65A5.48 5.48 0 0 0 17.5 7.5A5.5 5.5 0 0 0 12 2zm0 1.5a4 4 0 0 1 4 4a3.98 3.98 0 0 1-.77 2.33L12 14.1l-3.23-4.27A3.98 3.98 0 0 1 8 7.5a4 4 0 0 1 4-4zM11 11h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            `);
-        } else if (selectedType === 'text_course') {
-            additionalInput.append(`
-                <div class="mb-3">
-                    <label for="editMaterialText" class="form-label">Text Course</label>
-                    <textarea class="form-control" id="editMaterialText" name="text_course" rows="5" required></textarea>
-                </div>
-            `);
-        }
-    });
-
+    // AJAX SUBMISSIONS
     $('#materialForm').on('submit', function(e) {
         e.preventDefault();
-        const formData = new FormData(this);
-
         $.ajax({
-            url: '/api/teacher/course/create',
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                if (response.success === true) {
-                    showAlert(response.message, 'success');
-                    $('#addMaterialModal').modal('hide');
-                    $('#materialForm')[0].reset();
-                    fetchMaterials();
-                } else {
-                    showAlert(response.message || "Gagal menambahkan materi", 'error');
-                }
-            },
-            error: function(xhr) {
-                console.error("Error in submission:", xhr);
-                const errors = xhr.responseJSON.errors;
-                if (errors) {
-                    let errorMessage = 'Kesalahan validasi:\n';
-                    for (const key in errors) {
-                        errorMessage += errors[key].join(', ') + '\n';
-                    }
-                    showAlert(errorMessage, 'error');
-                } else {
-                    showAlert('Terjadi kesalahan', 'error');
+            url: '/api/teacher/course/create', method: 'POST', data: new FormData(this), processData: false, contentType: false,
+            success: function() { toastr.success('Berhasil ditambah!'); closeModal('addMaterial'); fetchMaterials(); }
+        });
+    });
+
+    $('#editMaterialForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: `/api/teacher/course/update/${$('#editMaterialId').val()}`, method: 'POST', data: new FormData(this), processData: false, contentType: false,
+            success: function() { toastr.success('Materi diperbarui!'); closeModal('editMaterial'); fetchMaterials(); }
+        });
+    });
+
+    $('#form-delete-materi-manual').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: `/api/teacher/course/delete/${$('#deleteIdMateri').val()}`, method: 'DELETE',
+            success: function() { toastr.success('Materi dihapus!'); closeModal('delete'); fetchMaterials(); }
+        });
+    });
+
+    $('#form-kick-student-manual').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: `/api/kick/student/${$('#kickIdStudent').val()}`, method: 'DELETE',
+            success: function() { toastr.success('Siswa dikeluarkan'); closeModal('kick'); ambilDataSiswa(); }
+        });
+    });
+
+    $('#form-approval-manual').on('submit', function(e) {
+        e.preventDefault();
+        const sid = $('#approvalIdStudent').val();
+        const type = $('#approvalType').val();
+        const url = type === 'accept' ? `/api/accept/teacher/${sid}` : `/api/reject/teacher/${sid}`;
+        $.ajax({
+            url: url, method: 'POST', data: { _token: '{{ csrf_token() }}' },
+            success: function() { toastr.success('Berhasil diproses!'); closeModal('approval'); ambilDataPending(); ambilDataSiswa(); }
+        });
+    });
+
+    // SISWA & PENDING FETCHERS
+    const ambilDataSiswa = () => {
+        $.ajax({
+            url: `/api/teacher/data/classroom/${classId}`, method: 'GET',
+            success: function(res) {
+                const list = $('#student-list'); list.empty();
+                if (res.data.length > 0) {
+                    res.data.forEach(s => {
+                        list.append(`<div class="bg-white p-6 rounded-[2rem] border border-slate-100 flex flex-col items-center text-center shadow-sm animate-fade-in group">
+                            <img src="${s.profile ? '/storage/'+s.profile : '/user.png'}" class="w-20 h-20 rounded-3xl object-cover mb-4 border-4 border-slate-50 shadow-sm">
+                            <h6 class="text-slate-900 font-black mb-1 truncate w-full">${s.name}</h6>
+                            <p class="text-[9px] text-slate-400 font-black uppercase mb-6 tracking-widest">${s.email}</p>
+                            <button onclick="prepareKick('${s.id_relation}')" class="text-red-500 font-black text-[9px] uppercase tracking-widest hover:underline">Kick Out</button>
+                        </div>`);
+                    });
+                } else { list.html(`<div class="col-span-full py-20 text-center text-slate-400 font-bold uppercase text-[10px]">Belum ada siswa aktif</div>`); }
+            }
+        });
+    };
+
+    const ambilDataPending = () => {
+        $.ajax({
+            url: `/api/pending/teacher/${classId}`, method: 'GET',
+            success: function(res) {
+                const list = $('#student-pending'); list.empty();
+                if (res.status && res.data.length > 0) {
+                    $('#pending-count').text(res.data.length).removeClass('hidden');
+                    res.data.forEach(s => {
+                        list.append(`<div class="bg-white p-6 rounded-[2rem] border border-slate-100 flex flex-col items-center text-center shadow-sm animate-fade-in">
+                            <img src="${s.profile ? '/storage/'+s.profile : '/user.png'}" class="w-20 h-20 rounded-3xl object-cover mb-4 border shadow-sm">
+                            <h6 class="text-slate-900 font-black mb-6 truncate w-full">${s.name}</h6>
+                            <div class="flex gap-2 w-full">
+                                <button onclick="prepareApproval('${s.id_relation}', 'accept')" class="flex-1 py-3 bg-green-500 text-white rounded-xl font-black text-[9px] uppercase shadow-lg shadow-green-100">Accept</button>
+                                <button onclick="prepareApproval('${s.id_relation}', 'reject')" class="flex-1 py-3 bg-red-50 text-red-500 rounded-xl font-black text-[9px] uppercase hover:bg-red-500 hover:text-white transition-all">Reject</button>
+                            </div>
+                        </div>`);
+                    });
+                } else { 
+                    $('#pending-count').addClass('hidden'); 
+                    list.html(`<div class="col-span-full py-24 text-center bg-white rounded-[3rem] border border-dashed border-slate-200 animate-fade-in"><h4 class="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Antrean Approval Bersih</h4></div>`);
                 }
             }
         });
+    };
+
+    // LOGIKA DISKUSI (REAL-TIME POLLING)
+    function ambilPesan() {
+        const box = $('#kotak-pesan');
+        const shouldScroll = box.scrollTop() + box.innerHeight() >= box[0].scrollHeight;
+        $.ajax({
+            url: `/api/forum/discussion/${classId}?last_message_id=${lastMessageId}`, type: 'GET',
+            success: function(res) {
+                if (res.status === "success" && res.data.length > 0) {
+                    res.data.forEach(msg => {
+                        if ($(`[data-message-id="${msg.id}"]`).length) return;
+                        const isMe = msg.user_id == userId;
+                        box.append(`
+                        <div class="flex ${isMe ? 'flex-row-reverse' : 'flex-row'} items-end gap-3 animate-fade-in" data-message-id="${msg.id}">
+                            <img src="${msg.user_image ? '/storage/'+msg.user_image : '/user.png'}" class="w-10 h-10 rounded-full object-cover mb-1 shadow-sm">
+                            <div class="max-w-[70%]">
+                                <div class="px-6 py-4 rounded-3xl ${isMe ? 'bg-indigo-600 text-white rounded-br-none shadow-indigo-100' : 'bg-white text-slate-900 rounded-bl-none shadow-sm border border-slate-100'}">
+                                    <p class="text-[9px] font-black uppercase tracking-widest mb-1 opacity-60">${isMe ? 'Anda' : msg.user_name}</p>
+                                    <p class="text-sm font-medium leading-relaxed">${msg.message}</p>
+                                </div>
+                                <p class="text-[8px] font-black text-slate-400 mt-1.5 mx-2 uppercase">${new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                            </div>
+                        </div>`);
+                        lastMessageId = msg.id;
+                    });
+                    if (shouldScroll) box.scrollTop(box[0].scrollHeight);
+                }
+            }
+        });
+    }
+
+    $('#form-pesan').submit(function(e) {
+        e.preventDefault();
+        if(!$('#input-pesan').val()) return;
+        $.ajax({
+            url: `/api/forum/discussion`, type: 'POST', data: $(this).serialize(),
+            success: function() { $('#input-pesan').val(''); ambilPesan(); }
+        });
     });
+
     $(document).ready(function() {
         fetchClassData();
-        fetchMaterials();
-        ambilDataSiswa();
-        ambilDataSiswaPending();
-
-        document.getElementById('materialType').addEventListener('change', function() {
-            const additionalInput = document.getElementById('additionalInput');
-            additionalInput.innerHTML = '';
-            const type = this.value;
-            if (type === 'document') {
-                additionalInput.innerHTML = `
-                <div class="mb-3">
-                    <label for="materialDocument" class="form-label">Upload Dokumen (PDF)</label>
-                    <input type="file" class="form-control" id="materialDocument" name="document" accept=".pdf" required>
-                </div>`;
-            } else if (type === 'link') {
-                additionalInput.innerHTML = `
-                <div class="mb-3">
-                    <label for="materialLink" class="form-label">URL Link</label>
-                    <input type="url" class="form-control" id="materialLink" name="link" required>
-                </div>`;
-            } else if (type === 'text_course') {
-                additionalInput.innerHTML = `
-                <div class="mb-3">
-                    <label for="materialText" class="form-label">Text Course</label>
-                    <textarea class="form-control" id="materialText" name="text_course" rows="3" required></textarea>
-                </div>`;
-            }
-        });
+        setInterval(ambilPesan, 3000);
     });
+
+    let lastMessageId = 0;
 </script>
+@endsection

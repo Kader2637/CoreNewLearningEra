@@ -1,49 +1,35 @@
-@if (!request()->is('student/materi/detail'))
-<div class="dashboard__sidebar-wrap">
-    <div class="mb-20 dashboard__sidebar-title">
-        <h6 class="title">Welcome, {{ auth()->user()->name }}</h6>
+<aside class="w-72 bg-white border-r border-slate-200 flex flex-col hidden lg:flex h-full shrink-0">
+    <div class="p-8 flex justify-center shrink-0">
+        <a href="/">
+            <img src="{{ asset('logo.png') }}" alt="Logo" class="h-12 w-auto">
+        </a>
     </div>
-    <nav class="dashboard__sidebar-menu">
-        <ul class="list-wrap">
-            <li class="">
-                <a href="/student/dashboard">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M3.5 3.5h7v7h-7zm10 0h7v7h-7zm-10 10h7v7h-7zm13 0h1v3h3v1h-3v3h-1v-3h-3v-1h3z"/></svg>
-                    <i class=""></i>
-                    Dashboard
-                </a>
-            </li>
-            <li class="">
-                <a href="/student/classroom">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2M6 4h5v8l-2.5-1.5L6 12z"/></svg>
-                    <i class=""></i>
-                    Kelas
-                </a>
-            </li>
-            <li class="">
-                <a href="{{ route('join.classroom') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M17 15.635q-.961 0-1.634-.673q-.674-.673-.674-1.635t.674-1.635T17 11.02t1.635.673q.673.674.673 1.635t-.674 1.635t-1.634.673m-5.308 5.903v-3.101q.858-.504 1.775-.837t1.887-.494L17 19.25l1.627-2.144q.989.13 1.906.488t1.775.837v3.107zM8.923 20H4V4h16v5.308q-.64-.514-1.394-.786T17 8.25q-.134 0-.25.01t-.25.028v-.557h-9v1h7.423q-.923.4-1.602 1.111q-.679.712-1.05 1.658H7.5v1h4.52q-.097.621-.052 1.246t.245 1.235q-.172.077-.336.144t-.318.144H7.5v1h1.423z"/></svg>
-                    <i class=""></i>
-                    Bergabung
-                </a>
-            </li>
-        </ul>
+
+    <nav class="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
+        <p class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Menu Utama</p>
+        
+        <a href="/student/dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 {{ request()->is('student/dashboard') ? 'sidebar-active' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+            Dashboard
+        </a>
+
+        <a href="/student/classroom" class="flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 {{ request()->is('student/classroom*') ? 'sidebar-active' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            Katalog Kelas
+        </a>
+
+        <a href="{{ route('join.classroom') }}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 {{ request()->routeIs('join.classroom') ? 'sidebar-active' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Bergabung Kelas
+        </a>
+
+        <div class="pt-10 shrink-0">
+            <p class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Sistem</p>
+            <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="hidden">@csrf</form>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();" class="flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold text-sm text-red-500 hover:bg-red-50 transition-all duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                Keluar
+            </a>
+        </div>
     </nav>
-    <div class="mb-20 dashboard__sidebar-title mt-30">
-        <h6 class="title">User</h6>
-    </div>
-    <nav class="dashboard__sidebar-menu">
-        <ul class="list-wrap">
-            <li>
-                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display:none;">
-                    @csrf
-                </form>
-                <a href="#" id="logoutButton"
-                    onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
-                    <i class="skillgro-logout"></i>
-                    <span>Log Out</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
-@endif
+</aside>

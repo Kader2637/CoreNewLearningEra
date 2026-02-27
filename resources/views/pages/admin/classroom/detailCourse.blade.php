@@ -1,489 +1,189 @@
 @extends('layouts.admin.app')
+
+@section('page_title', 'Material Audit')
+
 @section('style')
-    <style>
-        .nav {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .nav-link {
-            padding: 10px 20px;
-            border: 1px solid #007bff;
-            border-radius: 5px;
-            background-color: transparent;
-            color: #007bff;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .nav-link.active {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .nav-link:hover {
-            background-color: rgba(0, 123, 255, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-            }
-
-            .nav-link {
-                width: 100%;
-                margin-bottom: 5px;
-            }
-        }
-    </style>
+<style>
+    .tab-btn { position: relative; transition: all 0.3s ease; }
+    .tab-btn.active { color: #4f46e5; }
+    .tab-btn.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #4f46e5; }
+    
+    /* PDF Viewer Style */
+    #pdf-canvas { max-width: 100%; height: auto; border-radius: 2rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); border: 1px solid #f1f5f9; }
+    .pdf-nav-btn { width: 55px; height: 55px; background: white; border: 1px solid #e2e8f0; border-radius: 50%; display: flex; items-center: center; justify-content: center; transition: all 0.2s; shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    .pdf-nav-btn:hover { background: #4f46e5; color: white; border-color: #4f46e5; transform: scale(1.1); }
+    
+    .content-card { background: white; border-radius: 3rem; border: 1px solid #f1f5f9; padding: 2.5rem; }
+</style>
 @endsection
+
 @section('content')
-    <div class="page-title mb-2">
-        <div class="row">
-            <div class="col-xl-4 col-sm-7 box-col-3">
-                <h4>Detail Materi dan Tugas <span id="class-name1"></span></h4>
+<div class="mb-10 px-2 flex flex-col md:flex-row md:items-end justify-between gap-6 animate-fade-in">
+    <div>
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-2 h-6 bg-indigo-600 rounded-full"></div>
+            <h4 class="text-xl font-black text-slate-900 tracking-tight uppercase italic">Audit: <span id="class-name1" class="text-indigo-600"></span></h4>
+        </div>
+        <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest leading-none">Inspeksi materi pembelajaran dan ketersediaan tugas</p>
+    </div>
+    <a id="back-button" href="#" class="px-8 py-3 bg-slate-900 text-white font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-indigo-600 transition-all shadow-lg active:scale-95 flex items-center gap-2">
+        <i data-feather="arrow-left" class="w-4 h-4"></i> Kembali ke Kelas
+    </a>
+</div>
+
+<div class="flex border-b border-slate-200 mb-10 overflow-x-auto no-scrollbar">
+    <button onclick="showContent('materi')" id="materi-tab" class="tab-btn active px-8 py-5 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 whitespace-nowrap">View Material</button>
+    <button onclick="showContent('tugas')" id="tugas-tab" class="tab-btn px-8 py-5 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 whitespace-nowrap">Task Ledger</button>
+</div>
+
+<div id="v-pills-tabContent" class="mb-32">
+    <div id="materi-content" class="content-pane space-y-8 animate-fade-in">
+        <div id="link" class="hidden rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100 bg-white p-4"></div>
+        
+        <div id="document" class="hidden relative">
+            <div class="flex justify-center mb-10">
+                <canvas id="pdf-canvas"></canvas>
             </div>
-            <div class="col-5 d-none d-xl-block"></div>
-            <div class="col-xl-3 col-sm-5 box-col-4">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="/admin/classroom">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="1.5"
-                                    d="m2.25 12l8.955-8.955a1.124 1.124 0 0 1 1.59 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item active">Detail Materi</li>
-                </ol>
+            <div class="fixed bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 z-[50] bg-white/80 backdrop-blur-xl p-3 rounded-full shadow-2xl border border-slate-100">
+                <button id="prev" class="pdf-nav-btn"><i data-feather="chevron-left"></i></button>
+                <div class="px-6 py-2 font-black text-slate-900 text-xs">
+                    PAGE <span id="page-num" class="text-indigo-600">1</span> / <span id="page-count">0</span>
+                </div>
+                <button id="next" class="pdf-nav-btn"><i data-feather="chevron-right"></i></button>
             </div>
         </div>
-    </div>
-    <div class="text-end mb-4">
-        <a id="back-button" class="btn btn-primary" href="#" style="margin-top: 20px;">Kembali</a>
-    </div>
-    <div class="col">
-        <ul class="nav" id="tabContent" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="materi-tab" onclick="showContent('materi')">Materi</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tugas-tab" onclick="showContent('tugas')">Tugas</button>
-            </li>
-        </ul>
 
-        <div class="mt-3" id="v-pills-tabContent">
-            <div class="tab-pane active" id="materi" role="tabpanel" aria-labelledby="materi-tab">
-                <div id="link" style="display: none;"></div>
-                <div id="document" style="display: none; position: relative; width: 100%; overflow: hidden;">
-                    <div class="mb-5 container-fluid d-flex justify-content-center">
-                        <canvas id="pdf-canvas" style="width: 1100px; height: auto;"></canvas>
-                    </div>
-                    <div id="pdf-controls"
-                        style="position: fixed; top: 50%; right: 20px; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center;">
-                        <button id="prev"
-                            style="width: 80px; height: 80px; margin-bottom: 10px; background-color: rgba(128, 128, 128, 0.5); color: white; border: none; border-radius: 50%; cursor: pointer; display: none;">
-                            <img src="https://img.icons8.com/material-outlined/40/ffffff/chevron-left.png" alt="Previous" />
-                        </button>
-                        <button id="next"
-                            style="width: 80px; height: 80px; background-color: rgba(128, 128, 0.5); color: white; border: none; border-radius: 50%; cursor: pointer; display: none;">
-                            <img src="https://img.icons8.com/material-outlined/40/ffffff/chevron-right.png"
-                                alt="Next" />
-                        </button>
-                    </div>
-                </div>
-                <div id="text"></div>
-            </div>
+        <div id="text" class="hidden content-card shadow-sm prose prose-indigo max-w-none"></div>
+    </div>
 
-            <div class="tab-pane" id="tugas" role="tabpanel" aria-labelledby="tugas-tab" style="display: none;">
-                <div class="d-flex justify-content-between mb-4">
-                    <h4>Data Tugas</h4>
-                    <button class="btn btn-info btn-sm" id="createTask" data-bs-toggle="modal"
-                        data-bs-target="#addTaskModal">Tambah Tugas</button>
-                </div>
-                <div id="tasks-list" class="">
-                    <p id="loading-message">Loading tasks...</p>
-                    <div id="tasks-container" class="row"></div>
-                </div>
-            </div>
+    <div id="tugas-content" class="content-pane hidden space-y-8 animate-fade-in">
+        <div class="flex items-center gap-3 px-4">
+            <h4 class="text-sm font-black text-slate-900 uppercase tracking-[0.3em]">Assignment Overview</h4>
         </div>
-    </div>
 
-    <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addTaskModalLabel">Tambah Tugas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="addTaskForm">
-                        <input type="hidden" name="course_id" value="{{ $id }}">
-                        <div class="row">
-                            <div class="mb-3 col-6">
-                                <label>Judul tugas</label>
-                                <input type="text" class="form-control" id="task-title" name="name"
-                                    placeholder="Judul Tugas" required
-                                    style="border: 1px solid #ddd; border-radius: 4px;">
-                            </div>
-                            <div class="mb-3 col-6">
-                                <label>Deadline</label>
-                                <input type="datetime-local" class="form-control" id="task-deadline" name="deadline"
-                                    required style="border: 1px solid #ddd;  border-radius: 4px;">
-                            </div>
-                        </div>
-                        <div class="mb-3 col-12">
-                            <label for="">Type Pengumpulan</label>
-                            <select name="type" id="task-type" class="form-select" required>
-                                <option value="" disabled selected>Pilih type pengumpulan tugas</option>
-                                <option value="file">File (Dokumen)</option>
-                                <option value="link">Link</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 col-12">
-                            <label for="" class="mb-1">Deskripsi</label>
-                            <textarea name="description" id="task-description" class="form-control"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" form="addTaskForm">Tambah</button>
-                </div>
-            </div>
+        <div id="loading-message" class="py-24 text-center bg-white rounded-[3rem] border border-dashed border-slate-200">
+            <div class="w-10 h-10 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">Fetching Task Information...</p>
         </div>
-    </div>
 
-    <div class="modal fade" id="updateTaskModal" tabindex="-1" aria-labelledby="updateTaskModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateTaskModalLabel">Update Tugas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="updateTaskForm">
-                        @method('PUT')
-                        <input type="hidden" name="course_id" value="{{ $id }}">
-                        <input type="hidden" id="update-task-id" name="task_id">
-                        <div class="row">
-                            <div class="col-6 mb-3">
-                                <label>Judul tugas</label>
-                                <input type="text" class="form-control" id="update-task-title" name="name"
-                                    placeholder="Judul Tugas" required
-                                    style="border: 1px solid #ddd; border-radius: 4px;">
-                            </div>
-                            <div class="col-6 mb-3">
-                                <label>Deadline</label>
-                                <input type="datetime-local" class="form-control" id="update-task-deadline"
-                                    name="deadline" required style="border: 1px solid #ddd; border-radius: 4px;">
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <label for="">Type Pengumpulan</label>
-                            <select name="type" id="update-task-type" class="form-select" required>
-                                <option value="" disabled selected>Pilih type pengumpulan tugas</option>
-                                <option value="file">File (Dokumen)</option>
-                                <option value="link">Link</option>
-                            </select>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <label for="" class="mb-1">Deskripsi</label>
-                            <textarea name="description" id="update-task-description" class="form-control"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" form="updateTaskForm">Update</button>
-                </div>
+        <div id="tasks-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             </div>
-        </div>
     </div>
-
-    @include('components.modal-delete')
+</div>
 @endsection
+
 @section('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        function showContent(content) {
-            document.querySelectorAll('.tab-pane').forEach(pane => {
-                pane.style.display = 'none';
-            });
-
-            document.getElementById(content).style.display = 'block';
-
-            document.querySelectorAll('.nav-link').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.getElementById(content + '-tab').classList.add('active');
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<script>
+    // Tab Switching Logic
+    function showContent(id) {
+        $('.content-pane').addClass('hidden');
+        $(`#${id}-content`).removeClass('hidden');
+        $('.tab-btn').removeClass('active');
+        $(`#${id}-tab`).addClass('active');
+        
+        // Hide PDF controls if not in material tab
+        if(id !== 'materi') {
+            $('.fixed.bottom-10').fadeOut();
+        } else if($('#document').is(':visible')) {
+            $('.fixed.bottom-10').fadeIn();
         }
+    }
 
-        showContent('materi');
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const courseId = {{ $id }};
-            const loadingMessage = document.getElementById('loading-message');
-            const tasksContainer = $('#tasks-container');
+    $(document).ready(function() {
+        const courseId = {{ $id }};
+        
+        // 1. Fetch Materials
+        fetch(`/api/teacher/course/show/${courseId}`)
+            .then(r => r.json())
+            .then(res => {
+                if (res.success) {
+                    const c = res.data;
+                    $('#class-name1').text(c.name);
+                    $('#back-button').attr('href', `/admin/classroom/detail/${c.classroom_id}`);
 
-            function fetchTasks() {
-                loadingMessage.style.display = 'block';
-                tasksContainer.empty();
-                $.ajax({
-                    url: `/api/task/course/${courseId}`,
-                    method: 'GET',
-                    success: function(data) {
-                        loadingMessage.style.display = 'none';
-                        if (data.status === 'success' && data.data.length > 0) {
-                            $('#createTask').hide();
-                            $.each(data.data, function(index, task) {
-                                const taskDescription = task.description ? task.description
-                                    .substring(0, 1000) + (task.description.length > 1000 ?
-                                        '...' : '') : 'No description available';
-                                const taskCard = `
-                                    <div class="mb-3 col-12" id="task-${task.id}">
-                                        <div class="card shadow-sm border-light rounded-3">
-                                            <div class="card-body p-3">
-                                                <div class="d-flex justify-content-between">
-                                                    <h5 class="card-title text-uppercase font-weight-bold text-primary">${task.name}</h5>
-                                                    <p>
-                                                        Deadline : ${task.deadline_format}
-                                                    </p>
-                                                </div>
-                                                <p class="card-text text-muted" style="font-size: 0.9em;">${taskDescription}</p>
-                                                <div class="d-flex justify-content-end gap-2 mt-1">
-                                                    <button class="btn btn-danger btn-sm delete-task-btn" title="Hapus" data-id="${task.id}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                                            <path fill="white" d="M18 19a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V7H4V4h4.5l1-1h4l1 1H19v3h-1zM6 7v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V7zm12-1V5h-4l-1-1h-3L9 5H5v1zM8 9h1v10H8zm6 0h1v10h-1z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <a href="/admin/detailTask/${task.id}" class="btn btn-info btn-sm" title="Detail">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                                            <path fill="currentColor" d="M9 7V5H4v5h2v1H3V4h7v3zm4 14v-3h1v2h5v-5h-2v-1h3v7zM8 9h7v7H8zm1 1v5h5v-5z"/>
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            </div>
+                    if (c.type === 'link' && c.link) {
+                        $('#link').removeClass('hidden');
+                        if (c.link.includes('youtube.com') || c.link.includes('youtu.be')) {
+                            const vidId = new URL(c.link).searchParams.get('v') || c.link.split('/').pop();
+                            $('#link').html(`<div class="aspect-video"><iframe class="w-full h-full rounded-[2.5rem]" src="https://www.youtube.com/embed/${vidId}" frameborder="0" allowfullscreen></iframe></div>`);
+                        } else {
+                            $('#link').html(`<iframe src="${c.link}" class="w-full h-[700px] rounded-[2.5rem]" frameborder="0"></iframe>`);
+                        }
+                    } else if (c.type === 'document' && c.document) {
+                        $('#document').removeClass('hidden');
+                        const pdfUrl = `/storage/${c.document}`;
+                        let pdfDoc = null, pageNum = 1;
+                        
+                        pdfjsLib.getDocument(pdfUrl).promise.then(doc => {
+                            pdfDoc = doc;
+                            $('#page-count').text(doc.numPages);
+                            renderPage(pageNum);
+                        });
+
+                        function renderPage(num) {
+                            pdfDoc.getPage(num).then(page => {
+                                const viewport = page.getViewport({ scale: 1.5 });
+                                const canvas = document.getElementById('pdf-canvas'), context = canvas.getContext('2d');
+                                canvas.height = viewport.height; canvas.width = viewport.width;
+                                page.render({ canvasContext: context, viewport: viewport });
+                                $('#page-num').text(num);
+                            });
+                        }
+
+                        $('#prev').click(() => { if (pageNum <= 1) return; pageNum--; renderPage(pageNum); });
+                        $('#next').click(() => { if (pageNum >= pdfDoc.numPages) return; pageNum++; renderPage(pageNum); });
+                    } else if (c.type === 'text_course') {
+                        $('#text').removeClass('hidden').html(`<h2 class="text-3xl font-black mb-6 text-slate-900 leading-tight">${c.name}</h2><div class="text-slate-600 leading-relaxed text-lg">${c.text_course}</div>`);
+                    }
+                }
+            });
+
+        // 2. Fetch Tasks (READ ONLY)
+        function fetchTasks() {
+            $('#loading-message').removeClass('hidden');
+            $('#tasks-container').empty();
+            
+            $.ajax({
+                url: `/api/task/course/${courseId}`,
+                method: 'GET',
+                success: function(res) {
+                    $('#loading-message').addClass('hidden');
+                    if (res.data && res.data.length > 0) {
+                        res.data.forEach(t => {
+                            $('#tasks-container').append(`
+                                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col group transition-all hover:border-indigo-600">
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div class="bg-indigo-50 text-indigo-600 p-3 rounded-2xl shadow-inner"><i data-feather="clipboard" class="w-5 h-5"></i></div>
+                                        <div class="text-right">
+                                            <p class="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">Deadline Horizon</p>
+                                            <span class="text-[9px] font-black text-indigo-600 uppercase tracking-tighter bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100">${t.deadline_format}</span>
                                         </div>
                                     </div>
-                                `;
-                                tasksContainer.append(taskCard);
-                            });
-                        } else {
-                            $('#createTask').show();
-                            tasksContainer.append('<p>No tasks available.</p>');
-                        }
-                    },
-                    error: function() {
-                        loadingMessage.style.display = 'none';
-                        tasksContainer.append('<p>Error loading tasks.</p>');
-                    }
-                });
-            }
-
-            function openDeleteModal(taskId) {
-                $('#deleteClassId').val(taskId);
-                $('#modal-delete').modal('show');
-            }
-
-            $('#form-delete').on('submit', function(event) {
-                event.preventDefault();
-                const taskId = $('#deleteClassId').val();
-
-                $.ajax({
-                    url: `/api/task/course/delete/${taskId}`,
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                    },
-                    success: function(data) {
-                        if (data.status === 'success') {
-                            $('#modal-delete').modal('hide');
-                            fetchTasks();
-                            showAlert('Data berhasil dihapus!', 'success');
-                        } else {
-                            showAlert('Gagal menghapus data.', 'danger');
-                        }
-                    },
-                    error: function() {
-                        showAlert('Error saat menghapus data.', 'danger');
-                    }
-                });
-            });
-
-            $(document).on('click', '.edit-task-btn', function() {
-                const id = $(this).data('id');
-                const name = $(this).data('name');
-                const description = $(this).data('description');
-                const deadline = $(this).data('deadline');
-                const type = $(this).data('type');
-
-                $('#update-task-id').val(id);
-                $('#update-task-title').val(name);
-                $('#update-task-deadline').val(deadline);
-                $('#update-task-type').val(type);
-                $('#update-task-description').val(description);
-
-                $('#updateTaskModal').modal('show');
-
-                $('#updateTaskForm').off('submit').on('submit', function(event) {
-                    event.preventDefault();
-                    const formData = new FormData(this);
-
-                    fetch(`/api/task/course/update/${id}`, {
-                            method: 'POST',
-                            body: formData,
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === 'success') {
-                                $('#updateTaskModal').modal('hide');
-                                fetchTasks();
-                                showAlert('Tugas berhasil diperbarui!', 'success');
-                            } else {
-                                showAlert('Gagal memperbarui tugas.', 'danger');
-                            }
-                        })
-                        .catch(error => {
-                            showAlert('Error saat memperbarui tugas.', 'danger');
+                                    <h5 class="text-sm font-black text-slate-900 uppercase tracking-tight mb-2 group-hover:text-indigo-600 transition-colors">${t.name}</h5>
+                                    <p class="text-slate-500 text-xs font-medium leading-relaxed mb-8 h-12 overflow-hidden">${t.description || 'No instruction briefing provided for this task.'}</p>
+                                    <div class="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
+                                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest italic">Monitoring Mode Active</span>
+                                        <a href="/admin/detailTask/${t.id}" class="w-10 h-10 bg-slate-900 text-white rounded-xl flex items-center justify-center hover:bg-indigo-600 transition-all shadow-lg shadow-slate-200">
+                                            <i data-feather="arrow-right" class="w-4 h-4"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            `);
                         });
-                });
-            });
-
-            $(document).on('click', '.delete-task-btn', function() {
-                const taskId = $(this).data('id');
-                openDeleteModal(taskId);
-            });
-
-            $('#addTaskForm').on('submit', function(event) {
-                event.preventDefault();
-                loadingMessage.style.display = 'block';
-                const formData = new FormData(this);
-                $.ajax({
-                    url: '/api/task/course/post',
-                    method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        loadingMessage.style.display = 'none';
-                        if (response.status === 'success') {
-                            showAlert('Tugas berhasil ditambahkan!', 'success');
-                            $('#addTaskModal').modal('hide');
-                            fetchTasks();
-                        } else {
-                            showAlert(response.message || 'Gagal menambahkan tugas', 'error');
-                        }
-                    },
-                    error: function(xhr) {
-                        loadingMessage.style.display = 'none';
-                        showAlert(xhr.responseJSON?.message || 'Terjadi kesalahan', 'error');
-                    }
-                });
-
-                return false;
-            });
-
-            fetchTasks();
-
-            fetch(`/api/teacher/course/show/${courseId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const course = data.data;
-                        const classNameElement = document.getElementById('class-name1');
-                        classNameElement.textContent = course.name;
-
-                        const linkDiv = document.getElementById('link');
-                        const documentDiv = document.getElementById('document');
-                        const textDiv = document.getElementById('text');
-                        const backButton = document.getElementById('back-button');
-                        backButton.href = `/admin/classroom/detail/${course.classroom_id}`;
-
-                        if (course.type === 'link' && course.link) {
-                            if (course.link.includes('youtube.com') || course.link.includes('youtu.be')) {
-                                const videoId = new URL(course.link).searchParams.get('v') || course.link.split(
-                                    '/').pop();
-                                linkDiv.innerHTML =
-                                    `<iframe width="100%" height="600" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
-                                linkDiv.style.display = 'block';
-                            } else {
-                                linkDiv.innerHTML =
-                                    `<iframe src="${course.link}" style="width: 100%; height: 800px;" frameborder="0"></iframe>`;
-                                linkDiv.style.display = 'block';
-                            }
-                        } else if (course.type === 'document' && course.document) {
-                            documentDiv.style.display = 'block';
-                            const pdfUrl = `/storage/${course.document}`;
-                            let pdfDoc = null;
-                            let pageNum = 1;
-
-                            pdfjsLib.getDocument(pdfUrl).promise.then(doc => {
-                                pdfDoc = doc;
-                                renderPage(pageNum);
-                                document.getElementById('prev').style.display = 'block';
-                                document.getElementById('next').style.display = 'block';
-                            });
-
-                            function renderPage(num) {
-                                pdfDoc.getPage(num).then(page => {
-                                    const viewport = page.getViewport({
-                                        scale: 1
-                                    });
-                                    const canvas = document.getElementById('pdf-canvas');
-                                    const context = canvas.getContext('2d');
-                                    canvas.height = viewport.height;
-                                    canvas.width = viewport.width;
-
-                                    const renderContext = {
-                                        canvasContext: context,
-                                        viewport: viewport
-                                    };
-                                    page.render(renderContext);
-                                });
-                            }
-
-                            document.getElementById('prev').addEventListener('click', () => {
-                                if (pageNum <= 1) return;
-                                pageNum--;
-                                renderPage(pageNum);
-                            });
-                            document.getElementById('next').addEventListener('click', () => {
-                                if (pageNum >= pdfDoc.numPages) return;
-                                pageNum++;
-                                renderPage(pageNum);
-                            });
-                        } else if (course.type === 'text_course' && course.text_course) {
-                            textDiv.innerHTML = `
-                                <h3 style="font-size: 1.5em; margin-bottom: 0.5em;">${course.name}</h3>
-                                <p style="font-size: 1.2em; color: #555;">${course.description}</p>
-                                <div style="font-size: 1em; margin-top: 1em;">${course.text_course}</div>
-                            `;
-                        }
+                        feather.replace();
                     } else {
-                        console.error('Error:', data.message);
-                        document.getElementById('text').innerText = data.message;
+                        $('#tasks-container').html('<div class="col-span-full py-20 text-center text-slate-300 font-bold uppercase text-[10px] tracking-[0.4em]">Zero task entries detected in system</div>');
                     }
-                })
-                .catch(error => console.error('Error fetching data:', error));
-        });
-
-        function showAlert(message, type) {
-            Swal.fire({
-                icon: type,
-                title: message,
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
+                },
+                error: function() {
+                    $('#loading-message').addClass('hidden');
+                    toastr.error('Gagal mengambil data tugas.');
+                }
             });
         }
-    </script>
+
+        fetchTasks();
+    });
+</script>
 @endsection

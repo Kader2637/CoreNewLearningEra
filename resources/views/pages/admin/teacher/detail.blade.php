@@ -1,310 +1,189 @@
 @extends('layouts.admin.app')
 
-@section('content')
-    <div class="page-title">
-        <div class="row">
-            <div class="col-xl-4 col-sm-7 box-col-3">
-                <h3>Detail Teacher</h3>
-            </div>
-            <div class="col-5 d-none d-xl-block">
-            </div>
-            @if ($user->status == 'pending')
-                <div class="col-xl-3 d-flex justify-content-end col-sm-5 box-col-4">
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-danger w-100 reject-button-user" data-id="{{ $user->id }}">
-                            Tolak
-                        </button>
-                        <button class="btn btn-info w-100 accept-button-user" data-id="{{ $user->id }}">
-                            Terima
-                        </button>
-                    </div>
-                </div>
-            @elseif ($user->status == 'accept')
-                <div class="col-xl-3 d-flex justify-content-end col-sm-5 box-col-4">
-                    <a href="/admin/teacher" class="btn btn-secondary">Kembali</a>
-                </div>
-            @else
-                <div class="col-xl-3 d-flex justify-content-end col-sm-5 box-col-4">
-                    <a href="/admin/teacher" class="btn btn-secondary">Kembali</a>
-                </div>
-            @endif
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card text-center bg-info">
-                <div class="profile-img-style">
-                    <div class="text-end px-3 mt-2">
-                        @if ($user->status == 'accept')
-                            Status User : Diterima
-                        @elseif ($user->status == 'pending')
-                            Status User : Menunggu
-                        @else
-                            Status User : Ditolak
-                        @endif
-                    </div>
-                    <img class="img-thumbnail rounded-circle mb-0" src="{{ asset('storage/' . $user->image) }}"
-                        style="width: 100px; height: 100px; object-fit: cover; margin: 20px auto;" alt="Teacher">
-                    <div class="card-body bg-info text-white">
-                        <h5 class="mt-0 user-name text-white">{{ $user->name }}</h5>
-                        <h6 class="text-white">{{ $user->role }}</h6>
-                        <div class="row mt-3">
-                            <div class="col-sm-6 col-lg-4 order-sm-1 order-xl-0">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="ttl-info text-start">
-                                            <h6 class="text-white">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                                                    viewBox="0 0 24 24">
-                                                    <path fill="currentColor"
-                                                        d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5l-8-5zm0 12H4V8l8 5l8-5z" />
-                                                </svg>
-                                                Email
-                                            </h6><span>{{ $user->email }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="ttl-info text-start">
-                                            <h6 class="text-white">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                                                    viewBox="0 0 24 24">
-                                                    <path fill="currentColor"
-                                                        d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4" />
-                                                </svg> Jenis kelamin
-                                            </h6><span>{{ $user->gender }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-lg-4 order-sm-0 order-xl-1">
-                                <div class="user-designation">
-                                    <div class="title"><a target="_blank" href="#"></a></div>
-                                    <div class="desc"></div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-4 order-sm-2 order-xl-2">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="ttl-info text-start">
-                                            <h6 class="text-white">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                                                    viewBox="0 0 24 24">
-                                                    <path fill="currentColor"
-                                                        d="M16 3h1v5h-1zm-1 2h-2V4h2V3h-3v3h2v1h-2v1h3zm3-2v5h1V6h2V3zm2 2h-1V4h1zm0 10.5c-1.25 0-2.45-.2-3.57-.57a.98.98 0 0 0-1.01.24l-2.2 2.2a15.05 15.05 0 0 1-6.59-6.59l2.2-2.21c.27-.26.35-.65.24-1A11.4 11.4 0 0 1 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1c0 9.39 7.61 17 17 17c.55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1M5.03 5h1.5c.07.88.22 1.75.46 2.59L5.79 8.8c-.41-1.21-.67-2.48-.76-3.8M19 18.97c-1.32-.09-2.59-.35-3.8-.75l1.2-1.2c.85.24 1.71.39 2.59.45v1.5z" />
-                                                </svg> No Telephone
-                                            </h6><span>{{ $user->no_telephone }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="ttl-info text-start">
-                                            <h6 class="text-white">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                                                    viewBox="0 0 24 24">
-                                                    <path fill="currentColor"
-                                                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7M7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9" />
-                                                    <circle cx="12" cy="9" r="2.5" fill="currentColor" />
-                                                </svg>
-                                                Alamat
-                                            </h6><span>
-                                                {{ $user->address }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <h5 class="text-dark">
-        Kelas Saya
-    </h5>
-    <div class="row mt-3" id="data-teacher">
-    </div>
-    <div id="no-data-message">
+@section('page_title', 'Audit Profil Instruktur')
 
-    </div>
-    <div id="loading" class="">
-        <div class="d-flex justify-content-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                    d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z" />
-                <rect width="2" height="7" x="11" y="6" fill="currentColor" rx="1">
-                    <animateTransform attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate"
-                        values="0 12 12;360 12 12" />
-                </rect>
-                <rect width="2" height="9" x="11" y="11" fill="currentColor" rx="1">
-                    <animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate"
-                        values="0 12 12;360 12 12" />
-                </rect>
-            </svg>
-        </div>
-        <h4 class="mt-2 text-center">
-            Loading...
-        </h4>
-    </div>
+@section('style')
+<style>
+    .bio-card { background: white; border-radius: 3rem; border: 1px solid #f1f5f9; position: relative; overflow: hidden; }
+    .profile-large-frame { width: 140px; height: 140px; border-radius: 3.5rem; border: 6px solid #fff; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); object-fit: cover; flex-shrink: 0; }
+    .info-pill { background: #f8fafc; padding: 1.25rem; border-radius: 2rem; border: 1px solid #f1f5f9; display: flex; align-items: center; gap: 1rem; min-width: 0; }
+    .course-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .course-card:hover { transform: translateY(-10px); }
+    .status-banner { padding: 0.5rem 1.25rem; border-radius: 1rem; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .animate-zoom-in { animation: zoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+</style>
 @endsection
-@section('script')
-    <script>
-        const fetchClassData = () => {
-            const authId = '{{ $user->id }}';
-            $('#loading').show();
 
+@section('content')
+<div class="mb-10 px-2 flex flex-col md:flex-row md:items-end justify-between gap-6 animate-fade-in text-left">
+    <div class="overflow-hidden">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-2 h-6 bg-indigo-600 rounded-full shrink-0"></div>
+            <h4 class="text-xl font-black text-slate-900 tracking-tight uppercase italic truncate">Audit Profil: {{ $user->name }}</h4>
+        </div>
+        <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest leading-none">Verifikasi identitas dan performa instruktur dalam sistem</p>
+    </div>
+    
+    <div class="flex items-center gap-3 shrink-0">
+        @if ($user->status == 'pending')
+            <button class="px-6 md:px-8 py-4 bg-white border-2 border-rose-100 text-rose-500 font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-rose-500 hover:text-white transition-all active:scale-95 reject-button-user" data-id="{{ $user->id }}">Tolak</button>
+            <button class="px-6 md:px-8 py-4 bg-indigo-600 text-white font-black uppercase text-[10px] tracking-widest rounded-2xl shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95 accept-button-user" data-id="{{ $user->id }}">Terima</button>
+        @else
+            <a href="/admin/teacher" class="px-8 py-4 bg-slate-900 text-white font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-indigo-600 transition-all flex items-center gap-2 shrink-0">
+                <i data-feather="arrow-left" class="w-4 h-4"></i> Kembali
+            </a>
+        @endif
+    </div>
+</div>
+
+<div class="bio-card p-8 md:p-16 mb-16 shadow-sm">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-50 rounded-full blur-[100px] -mr-32 -mt-32"></div>
+    
+    <div class="relative z-10 flex flex-col lg:flex-row items-center lg:items-start gap-12 text-left min-w-0">
+        <div class="shrink-0 text-center">
+            <img src="{{ asset('storage/' . $user->image) }}" class="profile-large-frame shadow-2xl mb-6 mx-auto" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=random&color=fff'">
+            <div class="flex justify-center">
+                @if ($user->status == 'accept')
+                    <span class="status-banner bg-emerald-50 text-emerald-600 border border-emerald-100">Mentor Terverifikasi</span>
+                @elseif ($user->status == 'pending')
+                    <span class="status-banner bg-amber-50 text-amber-600 border border-amber-100">Menunggu Tinjauan</span>
+                @else
+                    <span class="status-banner bg-rose-50 text-rose-600 border border-rose-100">Akses Dibatasi</span>
+                @endif
+            </div>
+        </div>
+
+        <div class="flex-1 w-full min-w-0">
+            <div class="mb-10">
+                <h2 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-none mb-3 break-words">{{ $user->name }}</h2>
+                <p class="text-indigo-600 font-bold uppercase text-[11px] tracking-[0.3em] truncate">{{ $user->role }} • Anggota Akademik Sistem</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="info-pill">
+                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 shrink-0"><i data-feather="mail" class="w-4 h-4"></i></div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-[8px] font-black text-slate-300 uppercase tracking-widest">Alamat Email</p>
+                        <p class="text-sm font-bold text-slate-700 leading-tight truncate">{{ $user->email }}</p>
+                    </div>
+                </div>
+                <div class="info-pill">
+                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 shrink-0"><i data-feather="user" class="w-4 h-4"></i></div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-[8px] font-black text-slate-300 uppercase tracking-widest">Jenis Kelamin</p>
+                        <p class="text-sm font-bold text-slate-700 leading-tight truncate">{{ $user->gender }}</p>
+                    </div>
+                </div>
+                <div class="info-pill">
+                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 shrink-0"><i data-feather="phone" class="w-4 h-4"></i></div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-[8px] font-black text-slate-300 uppercase tracking-widest">No. Telepon</p>
+                        <p class="text-sm font-bold text-slate-700 leading-tight truncate">{{ $user->no_telephone }}</p>
+                    </div>
+                </div>
+                <div class="info-pill">
+                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 shrink-0"><i data-feather="map-pin" class="w-4 h-4"></i></div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-[8px] font-black text-slate-300 uppercase tracking-widest">Lokasi Domisili</p>
+                        <p class="text-sm font-bold text-slate-700 leading-tight truncate">{{ $user->address }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-6 flex items-center gap-3 px-4">
+    <div class="w-2 h-2 bg-indigo-600 rounded-full animate-pulse"></div>
+    <h4 class="text-sm font-black text-slate-900 uppercase tracking-[0.3em]">Armada Kelas Instruktur</h4>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-20 text-left" id="data-teacher">
+    <div class="col-span-full py-20 text-center" id="loading">
+        <div class="w-10 h-10 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sinkronisasi Data...</p>
+    </div>
+</div>
+@endsection
+
+@section('script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
+        const authId = '{{ $user->id }}';
+
+        const fetchClassData = () => {
             $.ajax({
                 url: `/api/classroom/teacher/data/${authId}`,
                 method: 'GET',
-                dataType: 'json',
                 success: function(response) {
-                    let rows = '';
+                    $('#loading').hide();
+                    let container = $('#data-teacher');
+                    container.empty();
+
                     if (response.data.length > 0) {
-                        response.data.forEach((kelas, index) => {
-                            const thumbnailUrl = `{{ asset('storage') }}/${kelas.thumbnail}`;
-
-                            let statusText;
-                            switch (kelas.status) {
-                                case 'pending':
-                                    statusText = 'Menunggu';
-                                    break;
-                                case 'reject':
-                                    statusText = 'Ditolak';
-                                    break;
-                                case 'accept':
-                                    statusText = 'Disetujui';
-                                    break;
-                                default:
-                                    statusText = 'Tidak Diketahui';
-                            }
-
-                            const shortDescription = kelas.description.length > 188 ?
-                                kelas.description.substring(0, 188) + '...' :
-                                kelas.description;
-
-                            rows += `
-                    <div class="col-xxl-4 col-lg-4 box-col-33 col-md-6">
-                        <div class="project-box">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="f-w-600">${kelas.name}</h3>
-                                <p>Kode Kelas : ${kelas.codeClass}</p>
-                            </div>
-                            <p>${shortDescription}</p>
-                            <div class="row details">
-                                <div class="col-6"><span>Limit siswa</span></div>
-                                <div class="col-6 font-secondary">${kelas.limit}</div>
-                                <div class="col-6"><span>Total siswa</span></div>
-                                <div class="col-6 font-secondary">${kelas.total_user}</div>
-                                <div class="col-6"><span>Status kelas</span></div>
-                                <div class="col-6 font-secondary">${kelas.statusClass}</div>
-                                <div class="col-6"><span>Status</span></div>
-                                <div class="col-6 font-secondary">${statusText}</div>
-                            </div>
-                            <div class="mt-3">
-                                <a href="/admin/classroom/detail/${kelas.id}" class="btn btn-info me-2 w-100" data-id="${kelas.id}">Detail</a>
-                        </div>
-                    </div>
-                </div>
-                    `;
+                        response.data.forEach((kelas) => {
+                            let statusBadge = kelas.status === 'accept' ? 'bg-emerald-50 text-emerald-600' : (kelas.status === 'reject' ? 'bg-rose-50 text-rose-600' : 'bg-amber-50 text-amber-600');
+                            
+                            container.append(`
+                                <div class="course-card bg-white p-8 rounded-[3rem] border border-slate-100 shadow-sm flex flex-col group animate-fade-in min-w-0 overflow-hidden">
+                                    <div class="flex justify-between items-start mb-8 shrink-0">
+                                        <div class="bg-indigo-50 text-indigo-600 p-4 rounded-2xl shadow-inner"><i data-feather="layers" class="w-6 h-6"></i></div>
+                                        <span class="px-3 py-1.5 ${statusBadge} rounded-xl font-black text-[8px] uppercase tracking-widest border border-current opacity-70">${kelas.status}</span>
+                                    </div>
+                                    <h3 class="text-xl font-black text-slate-900 leading-tight mb-2 group-hover:text-indigo-600 transition-colors uppercase tracking-tighter truncate">${kelas.name}</h3>
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">Kode: ${kelas.codeClass}</p>
+                                    <div class="grid grid-cols-2 gap-4 mt-auto pt-6 border-t border-slate-50">
+                                        <div class="min-w-0"><p class="text-[8px] font-black text-slate-300 uppercase tracking-widest">Siswa</p><p class="text-xs font-bold text-slate-700 truncate">${kelas.total_user} / ${kelas.limit}</p></div>
+                                        <div class="text-right min-w-0"><p class="text-[8px] font-black text-slate-300 uppercase tracking-widest">Visibilitas</p><p class="text-xs font-bold text-slate-700 uppercase truncate">${kelas.statusClass}</p></div>
+                                    </div>
+                                    <a href="/admin/classroom/detail/${kelas.id}" class="mt-8 block w-full py-4 bg-slate-900 text-white text-center font-black uppercase text-[9px] tracking-[0.2em] rounded-2xl hover:bg-indigo-600 shadow-lg shadow-indigo-100 transition-all active:scale-95 shrink-0">Inspeksi Kelas</a>
+                                </div>
+                            `);
                         });
-                        $('#data-teacher').html(rows);
-                        $('#no-data-message').hide();
+                        feather.replace();
                     } else {
-                        $('#no-data-message').html(`
-                    <div class="d-flex justify-content-center">
-                        <img src="{{ asset('no-data.png') }}" width="200px" alt=""> <br>
-                    </div>
-                    <h3 class="text-center">Data Masih Kosong</h3>
-                `);
+                        container.html('<div class="col-span-full py-20 text-center bg-white rounded-[3rem] border border-dashed border-slate-200 text-slate-300 font-bold uppercase text-[10px]">Belum memiliki data kelas</div>');
                     }
-                    $('#loading').hide();
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    $('#loading').hide();
                 }
             });
         };
 
-        function showAlert(message, type) {
+        const handleUserStatus = (userId, type) => {
+            const isAccept = type === 'accept';
             Swal.fire({
-                icon: type,
-                title: message,
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-            });
-        }
-        $('.accept-button-user').off('click').on('click', function() {
-            const userId = $(this).data('id');
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah Anda yakin ingin menerima pengguna ini?',
+                title: isAccept ? 'Terima Pengajar?' : 'Tolak Pengajar?',
+                text: isAccept ? "Pengajar akan diberikan akses penuh ke fitur sistem." : "Akses pengajar akan dibatasi dan ditolak.",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Ya, terima!',
-                cancelButtonText: 'Tidak, batalkan'
+                confirmButtonColor: isAccept ? '#4f46e5' : '#ef4444',
+                cancelButtonColor: '#f1f5f9',
+                confirmButtonText: isAccept ? 'Ya, Terima' : 'Ya, Tolak',
+                cancelButtonText: 'Batal',
+                customClass: {
+                    popup: 'rounded-[2.5rem]',
+                    confirmButton: 'rounded-xl font-black uppercase text-[10px] tracking-widest py-4 px-8 mx-2',
+                    cancelButton: 'rounded-xl font-black uppercase text-[10px] tracking-widest py-4 px-8 mx-2 text-slate-500'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    acceptUser(userId);
+                    $.ajax({
+                        url: isAccept ? `/api/accept/${userId}` : `/api/reject/${userId}`,
+                        method: 'POST',
+                        success: function() {
+                            Swal.fire({ title: 'Berhasil!', text: 'Status telah diperbarui.', icon: 'success', customClass: { popup: 'rounded-[2.5rem]' } })
+                            .then(() => location.reload());
+                        }
+                    });
                 }
             });
-        });
+        };
 
-        $('.reject-button-user').off('click').on('click', function() {
-            const userId = $(this).data('id');
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah Anda yakin ingin menolak pengguna ini?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, tolak!',
-                cancelButtonText: 'Tidak, batalkan'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    rejectUser(userId);
-                }
-            });
-        });
+        $('.accept-button-user').click(function() { handleUserStatus($(this).data('id'), 'accept'); });
+        $('.reject-button-user').click(function() { handleUserStatus($(this).data('id'), 'reject'); });
 
-        function acceptUser(userId) {
-            $('#loader').show();
-
-            $.ajax({
-                url: `/api/accept/${userId}`,
-                method: 'POST',
-                dataType: 'json',
-                success: function(response) {
-                    showAlert('User berhasil diterima', 'success');
-                    location.reload();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    showAlert('Kesalahan saat menerima pengguna.', 'danger');
-                }
-            });
-        }
-
-        function rejectUser(userId) {
-            $('#loader').show();
-
-            $.ajax({
-                url: `/api/reject/${userId}`,
-                method: 'POST',
-                dataType: 'json',
-                success: function(response) {
-                    showAlert('User berhasil ditolak', 'success');
-                    location.reload();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    showAlert('Kesalahan saat menolak pengguna.', 'danger');
-                }
-            });
-        }
-
-        $(document).ready(function() {
-
-
-            fetchClassData();
-        });
-    </script>
+        fetchClassData();
+    });
+</script>
 @endsection

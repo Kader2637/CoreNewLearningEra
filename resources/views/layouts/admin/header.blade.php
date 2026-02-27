@@ -1,51 +1,22 @@
-<div class="page-header">
-    <div class="header-wrapper row m-0">
-        <div class="header-logo-wrapper col-auto p-0">
-            <div class="logo-wrapper"><a href="index.html"> <img class="img-fluid for-light"
-                        src="assetsAdmin/assets/images/logo/logo.png" alt=""><img class="img-fluid for-dark"
-                        src="assetsAdmin/assets/images/logo/logo_dark.png" alt=""></a></div>
-            <div class="toggle-sidebar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                    <path fill="currentColor"
-                        d="M2 8.5A4.5 4.5 0 0 1 6.5 4h19A4.5 4.5 0 0 1 30 8.5v15a4.5 4.5 0 0 1-4.5 4.5h-19A4.5 4.5 0 0 1 2 23.5zM25.5 27a3.5 3.5 0 0 0 3.5-3.5v-15A3.5 3.5 0 0 0 25.5 5H12v22z" />
-                </svg>
-            </div>
+<header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-[900] px-4 md:px-8 flex items-center justify-between shadow-sm transition-all duration-300">
+    <div class="flex items-center gap-3 md:gap-4 overflow-hidden">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2.5 text-slate-500 bg-slate-50 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl transition-all active:scale-90">
+            <i data-feather="menu" class="w-5 h-5"></i>
+        </button>
+        
+        <h1 class="text-[10px] md:text-xs font-black text-slate-900 tracking-[0.1em] md:tracking-[0.2em] uppercase italic truncate max-w-[150px] md:max-w-none">
+            @yield('page_title', 'Control Center')
+        </h1>
+    </div>
+
+    <div class="flex items-center gap-2 md:gap-4 shrink-0">
+        <div class="text-right hidden sm:block border-r border-slate-100 pr-4">
+            <p class="text-[9px] md:text-[10px] font-black text-slate-900 leading-none uppercase">Admin Account</p>
+            <p class="text-[8px] md:text-[9px] font-bold text-indigo-500 uppercase mt-1 tracking-tighter">Superuser</p>
         </div>
-        <form class="col-sm-4 form-inline search-full d-none d-xl-block" action="#" method="get">
-            <div class="form-group">
-                <div class="Typeahead Typeahead--twitterUsers">
-                    <div class="u-posRelative">
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div class="nav-right col-xl-8 col-lg-12 col-auto pull-right right-header p-0">
-            <ul class="nav-menus">
-
-                <li class="profile-nav onhover-dropdown pe-0 py-0">
-                    <div class="d-flex align-items-center profile-media"><img class="b-r-25"
-                            src="assetsAdmin/assets/images/dashboard/profile.png" alt="">
-                        <div class="flex-grow-1 user"><span>New Learning</span>
-                            <p class="mb-0 font-nunito">Admin
-
-                            </p>
-                        </div>
-                    </div>
-                    <ul class="profile-dropdown onhover-show-div">
-
-                        <li>
-                            <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display:none;">
-                                @csrf
-                            </form>
-                            <a href="#" id="logoutButton"
-                                onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
-                                <i data-feather="log-in"></i>
-                                <span>Log Out</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+        
+        <div class="w-10 h-10 md:w-11 md:h-11 bg-slate-100 rounded-xl md:rounded-2xl flex items-center justify-center border-2 border-white shadow-sm overflow-hidden shrink-0">
+            <img src="{{ asset('favicon.png') }}" class="w-full h-full object-cover" onerror="this.src='{{ asset('favicon.png') }}'">
         </div>
     </div>
-</div>
+</header>

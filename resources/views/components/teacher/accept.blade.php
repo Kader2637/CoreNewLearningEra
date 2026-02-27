@@ -1,68 +1,23 @@
-<div class="modal fade" id="modal-accept-student" tabindex="-1" aria-labelledby="modalAcceptLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <form id="form-accept" method="POST">
-            @csrf
-            <input type="hidden" id="acceptStudentId">
-            <div class="modal-content">
-                <div class="modal-header d-flex align-items-center">
-                    <h4 class="modal-title" id="modalAcceptLabel">
-                        Terima Siswa
-                    </h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5>Apakah Anda yakin ingin menerima siswa ini ke dalam kelas?</h5>
-                </div>
-                <div class="modal-footer">
-                    <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-danger btn-sm text-white font-medium waves-effect"
-                            data-bs-dismiss="modal">
-                            Batal
-                        </button>
-                        <button id="btn-accept" style="background-color: #1B3061" type="submit"
-                            class="btn text-white btn-create btn-sm">
-                            <span class="btn-text">Terima</span>
-                            <span class="btn-loading" style="display: none;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                                    viewBox="0 0 24 24">
-                                    <rect width="10" height="10" x="1" y="1" fill="currentColor" rx="1">
-                                        <animate id="svgSpinnersBlocksShuffle30" fill="freeze" attributeName="x"
-                                            begin="0;svgSpinnersBlocksShuffle3b.end" dur="0.2s" values="1;13" />
-                                        <animate id="svgSpinnersBlocksShuffle31" fill="freeze" attributeName="y"
-                                            begin="svgSpinnersBlocksShuffle38.end" dur="0.2s" values="1;13" />
-                                        <animate id="svgSpinnersBlocksShuffle32" fill="freeze" attributeName="x"
-                                            begin="svgSpinnersBlocksShuffle39.end" dur="0.2s" values="13;1" />
-                                        <animate id="svgSpinnersBlocksShuffle33" fill="freeze" attributeName="y"
-                                            begin="svgSpinnersBlocksShuffle3a.end" dur="0.2s" values="13;1" />
-                                    </rect>
-                                    <rect width="10" height="10" x="1" y="13" fill="currentColor" rx="1">
-                                        <animate id="svgSpinnersBlocksShuffle34" fill="freeze" attributeName="y"
-                                            begin="svgSpinnersBlocksShuffle30.end" dur="0.2s" values="13;1" />
-                                        <animate id="svgSpinnersBlocksShuffle35" fill="freeze" attributeName="x"
-                                            begin="svgSpinnersBlocksShuffle31.end" dur="0.2s" values="1;13" />
-                                        <animate id="svgSpinnersBlocksShuffle36" fill="freeze" attributeName="y"
-                                            begin="svgSpinnersBlocksShuffle32.end" dur="0.2s" values="1;13" />
-                                        <animate id="svgSpinnersBlocksShuffle37" fill="freeze" attributeName="x"
-                                            begin="svgSpinnersBlocksShuffle33.end" dur="0.2s" values="13;1" />
-                                    </rect>
-                                    <rect width="10" height="10" x="13" y="13" fill="currentColor"
-                                        rx="1">
-                                        <animate id="svgSpinnersBlocksShuffle38" fill="freeze" attributeName="x"
-                                            begin="svgSpinnersBlocksShuffle34.end" dur="0.2s" values="13;1" />
-                                        <animate id="svgSpinnersBlocksShuffle39" fill="freeze" attributeName="y"
-                                            begin="svgSpinnersBlocksShuffle35.end" dur="0.2s" values="13;1" />
-                                        <animate id="svgSpinnersBlocksShuffle3a" fill="freeze" attributeName="x"
-                                            begin="svgSpinnersBlocksShuffle36.end" dur="0.2s" values="1;13" />
-                                        <animate id="svgSpinnersBlocksShuffle3b" fill="freeze" attributeName="y"
-                                            begin="svgSpinnersBlocksShuffle37.end" dur="0.2s" values="1;13" />
-                                    </rect>
-                                </svg> Loading...
-                            </span>
-                        </button>
-
-                    </div>
-                </div>
+<div id="modal-accept-student" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('accept-student')"></div>
+    <div class="relative bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl animate-zoom-in">
+        <div class="p-10 text-center">
+            <div class="w-20 h-20 bg-green-50 text-green-500 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
-        </form>
+            <h3 class="text-xl font-black text-slate-900 mb-2">Terima Siswa?</h3>
+            <p class="text-slate-500 font-medium mb-10">Siswa akan mendapatkan akses penuh ke seluruh materi kelas.</p>
+            <form id="form-accept">
+                @csrf
+                <input type="hidden" id="acceptStudentId">
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('accept-student')" class="flex-1 py-4 bg-slate-100 text-slate-600 font-black uppercase text-[10px] tracking-widest rounded-2xl">Batal</button>
+                    <button id="btn-accept" type="submit" class="flex-1 py-4 bg-indigo-600 text-white font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-indigo-700 shadow-lg flex items-center justify-center gap-2">
+                        <span class="btn-text">Terima Siswa</span>
+                        <div class="btn-loading hidden w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

@@ -1,382 +1,250 @@
 @extends('layouts.student.app')
 
-@section('content')
-    <div class="mb-3 d-flex justify-content-between">
-        <h4>Detail Materi <span id="class-name1"></span></h4>
+@section('page_title', 'Materi Modul')
 
+@section('style')
+<style>
+    .nav-tab-active { border-bottom: 3px solid #4f46e5; color: #4f46e5; font-weight: 800; }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 2.5rem; background: #000; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3); }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    #pdf-canvas { max-width: 100%; height: auto; border-radius: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+    .glass-control { background: rgba(15, 23, 42, 0.8); backdrop-blur: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }
+</style>
+@endsection
+
+@section('content')
+<div class="mb-8 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+        <a href="" id="class-link" class="w-12 h-12 bg-white border border-slate-200 rounded-2xl flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:border-indigo-100 transition-all shadow-sm">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+        </a>
+        <div>
+            <p class="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em] leading-none mb-1.5">Learning Unit</p>
+            <h4 class="text-2xl font-black text-slate-900 tracking-tight" id="class-name1">Memuat Materi...</h4>
+        </div>
+    </div>
+</div>
+
+<div class="mb-10 flex border-b border-slate-200 gap-10">
+    <button onclick="switchTab('materi')" id="btn-materi" class="pb-4 text-sm font-bold text-slate-400 nav-tab-active transition-all">Isi Materi</button>
+    <button onclick="switchTab('tugas')" id="btn-tugas" class="pb-4 text-sm font-bold text-slate-400 transition-all">Penugasan</button>
+</div>
+
+<div id="content-materi" class="tab-content block animate-fade-in">
+    <div id="link" class="hidden mb-12"></div>
+    
+    <div id="document" class="hidden relative w-full mb-12 group min-h-[600px]">
+        <div class="flex justify-center bg-slate-100 p-6 md:p-12 rounded-[3rem] border border-slate-200 overflow-x-auto shadow-inner">
+            <canvas id="pdf-canvas"></canvas>
+        </div>
+        
+        <div id="pdf-controls" class="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-50 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0">
+            <button id="prev" class="w-14 h-14 glass-control text-white rounded-2xl flex items-center justify-center shadow-2xl hover:bg-indigo-600 transition-all active:scale-90">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            
+            <div class="py-5 px-3 bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-100 flex flex-col items-center gap-1 min-w-[60px]">
+                <span id="current_page" class="text-sm font-black text-indigo-600">1</span>
+                <div class="w-4 h-[1px] bg-slate-200"></div>
+                <span id="total_pages" class="text-[10px] font-bold text-slate-400">0</span>
+            </div>
+
+            <button id="next" class="w-14 h-14 glass-control text-white rounded-2xl flex items-center justify-center shadow-2xl hover:bg-indigo-600 transition-all active:scale-90">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
     </div>
 
-    <ul class="nav nav-tabs" id="contentTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="materi-tab" data-bs-toggle="tab" data-bs-target="#materi" type="button"
-                role="tab" aria-controls="materi" aria-selected="true">Materi</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tugas-tab" data-bs-toggle="tab" data-bs-target="#tugas" type="button"
-                role="tab" aria-controls="tugas" aria-selected="false">Tugas</button>
-        </li>
-    </ul>
+    <div id="text" class="bg-white p-10 md:p-16 rounded-[3rem] border border-slate-100 shadow-sm prose prose-indigo max-w-none prose-img:rounded-3xl prose-headings:font-black"></div>
+</div>
 
-    <div class="mt-3 tab-content" id="contentTabsContent">
-        <div class="tab-pane fade show active" id="materi" role="tabpanel" aria-labelledby="materi-tab">
-            <div id="link" style="display: none;"></div>
-            <div id="document" style="display: none; position: relative; width: 100%; overflow: hidden;">
-                <div class="mb-5 container-fluid d-flex justify-content-center">
-                    <canvas id="pdf-canvas" style="width: 1100px; height: auto;"></canvas>
+<div id="content-tugas" class="tab-content hidden animate-fade-in">
+    <form id="submit-task-form">
+        @csrf
+        <input type="hidden" name="task_course_id" id="task_course_id">
+        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" id="user_id">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div class="lg:col-span-2 space-y-8">
+                <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-2xl font-black text-slate-900 tracking-tight" id="taskTitle"></h3>
+                        <div class="px-5 py-2.5 bg-red-50 text-red-600 rounded-2xl flex items-center gap-2.5 border border-red-100">
+                            <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                            <span class="text-[10px] font-black uppercase tracking-[0.1em]" id="deadlineDate"></span>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 font-medium leading-relaxed text-lg" id="taskDescription"></p>
                 </div>
-                <div id="pdf-controls"
-                    style="position: fixed; top: 50%; right: 20px; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center;">
-                    <button id="prev"
-                        style="width: 80px; height: 80px; margin-bottom: 10px; background-color: rgba(128, 128, 128, 0.5); color: white; border: none; border-radius: 50%; cursor: pointer; display: none;">
-                        <img src="https://img.icons8.com/material-outlined/40/ffffff/chevron-left.png" alt="Previous" />
-                    </button>
-                    <button id="next"
-                        style="width: 80px; height: 80px; background-color: rgba(128, 128, 128, 0.5); color: white; border: none; border-radius: 50%; cursor: pointer; display: none;">
-                        <img src="https://img.icons8.com/material-outlined/40/ffffff/chevron-right.png" alt="Next" />
-                    </button>
+                <div id="taskSubmissionContainer"></div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-slate-900 p-10 rounded-[3rem] text-white relative overflow-hidden shadow-2xl shadow-slate-200">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/20 blur-[60px]"></div>
+                    <div class="relative z-10">
+                        <h4 class="text-xl font-black mb-3 uppercase tracking-tighter">Submission</h4>
+                        <p class="text-slate-400 text-sm font-medium mb-8 leading-relaxed">Pastikan file atau tautan yang Anda kirimkan sudah diperiksa kembali.</p>
+                        <div id="form-action-area"></div>
+                    </div>
                 </div>
             </div>
-            <div id="text"></div>
         </div>
-
-        <div class="tab-pane fade" id="tugas" role="tabpanel" aria-labelledby="tugas-tab">
-            <form id="submit-task-form" method="POST" enctype="multipart/form-data">
-                @csrf
-                <input type="hidden" name="task_course_id" id="task_course_id">
-                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" id="user_id">
-                <div class="container mt-5">
-                    <div class="card" id="taskCard">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="m-3 card-title" id="taskTitle">Judul Tugas</h5>
-                            <div class="p-1 rounded d-flex align-items-center bg-danger" id="taskDeadline">
-                                <span class="p-2 text-white badge">Deadline:</span>
-                                <span class="p-2 text-white badge" id="deadlineDate"></span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text" id="taskDescription"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="container mt-5">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="m-3 card-title">Pengumpulan Tugas</h5>
-                            <div class="p-1 rounded d-flex align-items-center bg-success">
-                                <span class="p-2 text-white badge">Tambahkan Tugas</span>
-                            </div>
-                        </div>
-                        <div class="card-body" id="assignmentContainer">
-                            <div class="mb-3" id="taskSubmissionContainer"></div>
-                            <div class="d-flex justify-content-end">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <a href="" id="class-link" class="m-3 ml-3 flex-grow-1"></a>
-                </div>
-            </form>
-        </div>
-    </div>
+    </form>
+</div>
 @endsection
+
 @section('script')
-    <script>
-        $(document).ready(function() {
-            var taskId = "{{ $id }}";
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<script>
+    const courseId = {{ $id }};
+    
+    function switchTab(tab) {
+        $('.tab-content').addClass('hidden');
+        $(`#content-${tab}`).removeClass('hidden');
+        $('[id^="btn-"]').removeClass('nav-tab-active text-indigo-600').addClass('text-slate-400');
+        $(`#btn-${tab}`).addClass('nav-tab-active text-indigo-600').removeClass('text-slate-400');
+    }
 
-            function showAlert(message, type) {
-                Swal.fire({
-                    icon: type,
-                    title: message,
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                });
-            }
+    function fetchTaskData() {
+        $.ajax({
+            url: '/api/task/course/' + courseId,
+            method: 'GET',
+            success: function(res) {
+                if (res.status === "success" && res.data.length > 0) {
+                    const task = res.data[0];
+                    $('#task_course_id').val(task.id);
+                    $('#taskTitle').text(task.name);
+                    $('#deadlineDate').text(task.deadline_format);
+                    $('#taskDescription').text(task.description);
 
-            function fetchTaskData() {
-                $.ajax({
-                    url: '/api/task/course/' + taskId,
-                    method: 'GET',
-                    success: function(response) {
-                        if (response.status === "success" && response.data.length > 0) {
-                            var task = response.data[0];
-                            var type = task.type;
+                    $.ajax({
+                        url: '/api/Apiassigment/' + task.id,
+                        method: 'GET',
+                        success: function(assRes) {
+                            const container = $('#taskSubmissionContainer');
+                            const actionArea = $('#form-action-area');
+                            container.empty(); actionArea.empty();
 
-                            $('#task_course_id').val(task.id);
-                            $('#taskTitle').text(task.name);
-                            $('#deadlineDate').text(task.deadline_format);
-                            $('#taskDescription').text(task.description);
+                            if (assRes.status === "success" && assRes.data.length > 0) {
+                                const ass = assRes.data[0];
+                                const gradeHtml = ass.grade != null ? `
+                                    <div class="mt-6 p-6 bg-indigo-50 rounded-[2rem] border border-indigo-100 flex items-center justify-between">
+                                        <span class="text-xs font-black text-indigo-700 uppercase tracking-widest">Grade Result</span>
+                                        <span class="text-3xl font-black text-indigo-700">${ass.grade}</span>
+                                    </div>` : '';
 
-                            $.ajax({
-                                url: '/api/Apiassigment/' + task.id,
-                                method: 'GET',
-                                success: function(assignmentResponse) {
-                                    if (assignmentResponse.status === "success" &&
-                                        assignmentResponse.data.length > 0) {
-                                        var assignments = assignmentResponse.data;
-                                        var assignmentCards = '';
-
-                                        var deadline = new Date(task.deadline);
-
-                                        $.each(assignments, function(index, assignment) {
-                                            if (assignment.grade !== null) {
-                                                var createdAt = new Date(assignment
-                                                    .created_at);
-                                                var formattedTime = createdAt
-                                                    .toLocaleTimeString('id-ID', {
-                                                        hour: '2-digit',
-                                                        minute: '2-digit'
-                                                    });
-
-                                                var now = new Date();
-                                                var isDeadlinePassed = now >=
-                                                    deadline;
-                                                var deadlineMessage =
-                                                    isDeadlinePassed ?
-                                                    `<span class="text-danger">Tugas sudah ditutup</span>` :
-                                                    '';
-
-                                                var icon = task.type === 'file' ?
-                                                    '<i class="fa fa-file" style="font-size: 24px; color: #1e3c72;"></i>' :
-                                                    '<i class="fa fa-link" style="font-size: 24px; color: #1e3c72;"></i>';
-
-                                                var actionButton = assignment
-                                                    .grade == null && !
-                                                    isDeadlinePassed ?
-                                                    `<span class="delete-assignment btn btn-danger btn-sm" data-id="${assignment.id}" style="cursor: pointer;">Hapus</span>` :
-                                                    `<span class="text-success">Nilai  : ${assignment.grade}</span>`;
-
-                                                var detailButton = task.type ===
-                                                    'file' ?
-                                                    `<a href="{{ asset('storage/${assignment.file}') }}" class="btn btn-primary btn-sm" target="_blank">Unduh</a>` :
-                                                    `<a href="${assignment.link}" class="btn btn-primary btn-sm" target="_blank">Detail</a>`;
-
-                                                assignmentCards += `
-                                        <div class="mb-3 card assignment-card" data-assignment-id="${assignment.id}" style="display: flex; align-items: center; justify-content: space-between; padding: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                                            <div class="d-flex align-items-center">
-                                                ${icon}
-                                                <div style="margin-left: 15px;">
-                                                    <h5>Sudah Mengumpulkan</h5>
-                                                    <p>${formattedTime} ${deadlineMessage}</p>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex align-items-center" style="gap: 10px;">
-                                                ${actionButton}
-                                                ${!isDeadlinePassed ? detailButton : ''}
+                                container.append(`
+                                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center justify-between group">
+                                        <div class="flex items-center gap-6">
+                                            <div class="w-16 h-16 bg-slate-50 text-3xl flex items-center justify-center rounded-2xl group-hover:bg-indigo-50 transition-all">${task.type === 'file' ? '📂' : '🔗'}</div>
+                                            <div>
+                                                <p class="text-[10px] font-black text-indigo-600 uppercase tracking-widest mb-1">Status: Terkirim</p>
+                                                <h5 class="text-slate-900 font-extrabold text-lg">Pekerjaan Anda telah diunggah</h5>
                                             </div>
                                         </div>
-                                    `;
-                                            }
-                                        });
-
-                                        $('#taskSubmissionContainer').empty().html(
-                                            assignmentCards);
-                                        if (assignmentCards.length === 0) {
-                                            $('#taskSubmissionContainer').append(
-                                                '<p class="text-muted">Tidak ada tugas yang tersedia.</p>'
-                                                );
-                                        }
-                                        $('#submitTaskButton').remove();
-                                    } else {
-                                        if (type === "file") {
-                                            $('#taskSubmissionContainer').append(`
-                                    <div class="mb-3">
-                                        <label for="formFile" class="form-label">Upload Tugas</label>
-                                        <input class="form-control" name="file" type="file" id="formFile">
-                                        <small class="form-text text-muted">* File harus berformat ZIP.</small>
+                                        <div class="flex gap-3">
+                                            ${ass.grade == null ? `<button type="button" class="delete-assignment w-12 h-12 bg-red-50 text-red-500 rounded-xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm" data-id="${ass.id}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>` : ''}
+                                            <a href="${task.type === 'file' ? '/storage/'+ass.file : ass.link}" target="_blank" class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all shadow-sm"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a>
+                                        </div>
                                     </div>
+                                    ${gradeHtml}
                                 `);
-                                        } else if (type === "link") {
-                                            $('#taskSubmissionContainer').append(`
-                                    <div class="mb-3">
-                                        <label for="exampleFormControlInput1" class="form-label">Link Tugas</label>
-                                        <input type="url" class="form-control" name="link" id="exampleFormControlInput1" placeholder="Masukan Disini">
-                                        <small class="form-text text-muted">* Masukkan URL yang valid (contoh: https://example.com).</small>
-                                    </div>
-                                `);
-                                        }
-
-                                        $('#taskSubmissionContainer').append(`
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="w-25 join-button" id="submitTaskButton"
-                                        style="background: linear-gradient(90deg, #1e3c72, #2a5298); color: white; font-size: 13px; padding: 13px; border: none; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
-                                        Kirim
-                                    </button>
-                                </div>
-                            `);
-                                    }
-                                },
-                                error: function() {
-                                    showAlert(
-                                        'Terjadi kesalahan saat memeriksa assignment.',
-                                        'error');
+                            } else {
+                                if (task.type === "file") {
+                                    actionArea.append(`<div class="mb-6"><label class="block text-[10px] font-black text-slate-500 uppercase mb-3 tracking-widest ml-1">Archive (ZIP/PDF)</label><input type="file" name="file" class="w-full text-xs font-bold text-slate-400 file:mr-4 file:py-3.5 file:px-6 file:rounded-2xl file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer transition-all"></div>`);
+                                } else {
+                                    actionArea.append(`<div class="mb-6"><label class="block text-[10px] font-black text-slate-500 uppercase mb-3 tracking-widest ml-1">URL Submission</label><input type="url" name="link" class="w-full px-6 py-4.5 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:border-indigo-500 text-sm font-bold text-white" placeholder="https://github.com/..."></div>`);
                                 }
-                            });
-                        } else {
-                            showAlert('Data tidak ditemukan.', 'error');
+                                actionArea.append(`<button type="button" id="submitTaskButton" class="w-full py-4.5 bg-indigo-600 text-white font-black uppercase text-[10px] tracking-[0.2em] rounded-2xl hover:bg-indigo-500 shadow-xl shadow-indigo-500/20 transition-all active:scale-95">Submit Assignment</button>`);
+                            }
                         }
-                    },
-                    error: function() {
-                        showAlert('Terjadi kesalahan saat mengambil data tugas.', 'error');
+                    });
+                }
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        fetchTaskData();
+
+        $(document).on('click', '#submitTaskButton', function() {
+            const btn = $(this);
+            const formData = new FormData($('#submit-task-form')[0]);
+            btn.prop('disabled', true).html('<div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>');
+
+            $.ajax({
+                url: '/api/assigment/post',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function() {
+                    toastr.success('Tugas berhasil dikirim!');
+                    fetchTaskData();
+                },
+                error: () => {
+                    toastr.error('Terjadi kesalahan pengiriman.');
+                    btn.prop('disabled', false).html('Submit Assignment');
+                }
+            });
+        });
+
+        $(document).on('click', '.delete-assignment', function() {
+            if(confirm('Hapus kiriman tugas ini?')) {
+                $.ajax({
+                    url: '/api/assigment/delete/' + $(this).data('id'),
+                    method: 'DELETE',
+                    success: function() {
+                        toastr.success('Tugas dihapus');
+                        fetchTaskData();
                     }
                 });
             }
-            fetchTaskData();
+        });
 
-            $(document).on('click', '.delete-assignment', function() {
-                var assignmentId = $(this).data('id');
+        fetch(`/api/student/course/show/${courseId}`)
+            .then(r => r.json())
+            .then(res => {
+                if (res.success) {
+                    const course = res.data;
+                    $('#class-name1').text(course.name);
+                    $('#class-link').attr('href', `/student/classroom/course/${course.classroom_id}`);
 
-                Swal.fire({
-                    title: 'Apakah Anda yakin?',
-                    text: 'Tugas ini akan dihapus!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Hapus!',
-                    cancelButtonText: 'Batal',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '/api/assigment/delete/' + assignmentId,
-                            method: 'DELETE',
-                            success: function(response) {
-                                if (response.status === 'success') {
-                                    showAlert('Tugas berhasil dihapus', 'success');
-
-                                    $(`.assignment-card[data-assignment-id="${assignmentId}"]`)
-                                        .hide();
-
-                                    fetchTaskData
-                                        ();
-                                } else {
-                                    showAlert('Gagal menghapus tugas', 'error');
-                                }
-                            },
-                            error: function() {
-                                showAlert('Terjadi kesalahan saat menghapus tugas',
-                                    'error');
-                            }
+                    if (course.type === 'link' && course.link) {
+                        const isYoutube = course.link.includes('youtube.com') || course.link.includes('youtu.be');
+                        const videoId = isYoutube ? (new URL(course.link).searchParams.get('v') || course.link.split('/').pop()) : null;
+                        
+                        $('#link').removeClass('hidden').html(isYoutube 
+                            ? `<div class="video-container shadow-2xl shadow-indigo-100"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe></div>`
+                            : `<div class="bg-white p-5 rounded-[3rem] border border-slate-100 shadow-2xl overflow-hidden"><iframe src="${course.link}" class="w-full h-[700px] rounded-[2rem]" frameborder="0"></iframe></div>`
+                        );
+                    } else if (course.type === 'document' && course.document) {
+                        $('#document').removeClass('hidden');
+                        let pdfDoc = null, pageNum = 1;
+                        pdfjsLib.getDocument(`/storage/${course.document}`).promise.then(doc => {
+                            pdfDoc = doc;
+                            $('#total_pages').text(doc.numPages);
+                            renderPage(pageNum);
                         });
-                    }
-                });
-            });
-
-            $(document).on('click', '#submitTaskButton', function() {
-                var formData = new FormData($('#submit-task-form')[0]);
-
-                $.ajax({
-                    url: '/api/assigment/post',
-                    method: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            showAlert('Tugas berhasil dikirim!', 'success');
-                            fetchTaskData();
-                        } else {
-                            showAlert('Gagal mengirim tugas: ' + response.message, 'error');
+                        function renderPage(num) {
+                            pdfDoc.getPage(num).then(page => {
+                                const canvas = document.getElementById('pdf-canvas');
+                                const ctx = canvas.getContext('2d');
+                                const viewport = page.getViewport({ scale: 1.5 });
+                                canvas.height = viewport.height;
+                                canvas.width = viewport.width;
+                                page.render({ canvasContext: ctx, viewport: viewport });
+                                $('#current_page').text(num);
+                            });
                         }
-                    },
-                    error: function() {
-                        showAlert('Terjadi kesalahan saat mengirim tugas.', 'error');
+                        $('#prev').click(() => { if (pageNum > 1) { pageNum--; renderPage(pageNum); } });
+                        $('#next').click(() => { if (pageNum < pdfDoc.numPages) { pageNum++; renderPage(pageNum); } });
+                    } else if (course.type === 'text_course') {
+                        $('#text').html(`<h1 class="text-4xl font-black text-slate-900 mb-8">${course.name}</h1><div class="text-slate-600 font-medium text-lg">${course.text_course}</div>`);
                     }
-                });
+                }
             });
-        });
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const courseId = {{ $id }};
-            fetch(`/api/student/course/show/${courseId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const course = data.data;
-                        const linkDiv = document.getElementById('link');
-                        const documentDiv = document.getElementById('document');
-                        const textDiv = document.getElementById('text');
-                        const classNameElement = document.getElementById('class-name1');
-                        const classLinkElement = document.getElementById('class-link');
-
-                        classNameElement.textContent = course.name;
-                        classLinkElement.href = `/student/classroom/course/${course.classroom_id}`;
-
-                        if (course.type === 'link' && course.link) {
-                            if (course.link.includes('youtube.com') || course.link.includes('youtu.be')) {
-                                const videoId = new URL(course.link).searchParams.get('v') || course.link.split(
-                                    '/').pop();
-                                linkDiv.innerHTML =
-                                    `<iframe width="100%" height="600" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
-                                linkDiv.style.display = 'block';
-                            } else {
-                                linkDiv.innerHTML =
-                                    `<iframe src="${course.link}" style="width: 100%; height: 800px;" frameborder="0"></iframe>`;
-                                linkDiv.style.display = 'block';
-                            }
-                        } else if (course.type === 'document' && course.document) {
-                            documentDiv.style.display = 'block';
-                            const pdfUrl = `/storage/${course.document}`;
-                            let pdfDoc = null;
-                            let pageNum = 1;
-
-                            pdfjsLib.getDocument(pdfUrl).promise.then(doc => {
-                                pdfDoc = doc;
-                                renderPage(pageNum);
-                                document.getElementById('prev').style.display = 'block';
-                                document.getElementById('next').style.display = 'block';
-                            });
-
-                            function renderPage(num) {
-                                pdfDoc.getPage(num).then(page => {
-                                    const viewport = page.getViewport({
-                                        scale: 1
-                                    });
-                                    const canvas = document.getElementById('pdf-canvas');
-                                    const context = canvas.getContext('2d');
-                                    canvas.height = viewport.height;
-                                    canvas.width = viewport.width;
-
-                                    const renderContext = {
-                                        canvasContext: context,
-                                        viewport: viewport
-                                    };
-                                    page.render(renderContext);
-                                });
-                            }
-
-                            document.getElementById('prev').addEventListener('click', () => {
-                                if (pageNum <= 1) return;
-                                pageNum--;
-                                renderPage(pageNum);
-                            });
-
-                            document.getElementById('next').addEventListener('click', () => {
-                                if (pageNum >= pdfDoc.numPages) return;
-                                pageNum++;
-                                renderPage(pageNum);
-                            });
-                        } else if (course.type === 'text_course' && course.text_course) {
-                            textDiv.innerHTML = `
-                        <h3 style="font-size: 1.5em; margin-bottom: 0.5em;">${course.name}</h3>
-                        <p style="font-size: 1.2em; color: #555;">${course.description}</p>
-                        <div style="font-size: 1em; margin-top: 1em;">${course.text_course}</div>
-                    `;
-                        } else {
-                            textDiv.innerHTML = `<p>Tipe materi tidak dikenali.</p>`;
-                        }
-                    } else {
-                        console.error('Error:', data.message);
-                        document.getElementById('text').innerText = data.message;
-                    }
-                })
-                .catch(error => console.error('Error fetching data:', error));
-        });
-    </script>
+    });
+</script>
 @endsection

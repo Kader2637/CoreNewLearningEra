@@ -3,515 +3,279 @@
 @section('title', 'Tentang Kami - New Learning Era')
 
 @section('style')
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 <style>
-    :root {
-        --nl-primary: #1f2937;
-        --nl-accent: #0f766e;
-        --nl-soft: #f3f4f6;
+    body { 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        background-color: #fafafa;
+        overflow-x: hidden;
     }
 
-    .about-hero {
-        padding: 5rem 0 3.5rem;
-        background-color: #ffffff;
+    /* Gradient Text Animation */
+    .text-gradient-flow {
+        background: linear-gradient(to right, #4f46e5, #06b6d4, #4f46e5);
+        background-size: 200% auto;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: textFlow 5s linear infinite;
+    }
+    @keyframes textFlow {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
     }
 
-    @media (min-width: 992px) {
-        .about-hero {
-            padding: 6rem 0 4rem;
-        }
-    }
-
-    .about-badge {
-        border-radius: 999px;
-        background-color: #e5f2ff;
-        color: #1d4ed8;
-        font-size: .8rem;
-    }
-
-    .about-title {
-        font-size: 2.2rem;
-        line-height: 1.3;
-        color: var(--nl-primary);
-    }
-
-    .about-title span {
-        color: #0f766e;
-    }
-
-    .about-subtitle {
-        color: #6b7280;
-        max-width: 520px;
-    }
-
-    .chip-link {
-        border-radius: 999px;
-        font-size: .85rem;
-    }
-
-    .chip-link i {
-        font-size: .9rem;
-    }
-
-    .about-hero-card {
-        border-radius: 1.25rem;
-        background: linear-gradient(135deg, #0f172a, #1e293b);
-        color: #e5e7eb;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, .24);
-        overflow: hidden;
-        position: relative;
-    }
-
-    .about-hero-card::before {
-        content: "";
+    /* Glow Elements */
+    .glow-blob {
         position: absolute;
-        top: -40px;
-        right: -40px;
-        width: 140px;
-        height: 140px;
-        background: radial-gradient(circle, rgba(34, 197, 94, .7), transparent 60%);
-        opacity: .65;
+        filter: blur(90px);
+        z-index: 0;
+        border-radius: 50%;
+        animation: pulseBlob 8s infinite alternate;
+    }
+    @keyframes pulseBlob {
+        0% { transform: scale(1) translate(0, 0); opacity: 0.3; }
+        100% { transform: scale(1.1) translate(20px, -20px); opacity: 0.6; }
     }
 
-    .about-hero-card small {
-        opacity: .85;
+    /* Team Card Hover Effect */
+    .dev-card {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dev-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.8), transparent);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    .dev-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    }
+    .dev-card:hover::before {
+        opacity: 1;
     }
 
-    .about-stat-chip {
-        border-radius: .75rem;
-        background-color: rgba(15, 23, 42, .7);
-        padding: .4rem .7rem;
-        font-size: .75rem;
-    }
-
-    .about-stat-chip strong {
-        color: #f9fafb;
-    }
-
-    .shadow-soft {
-        box-shadow: 0 12px 30px rgba(15, 23, 42, .06);
-    }
-
-    .section-label {
-        text-transform: uppercase;
-        letter-spacing: .14em;
-        font-size: .72rem;
-        color: #9ca3af;
-    }
-
-    .about-card {
-        border-radius: 1rem;
-        background-color: #ffffff;
-        transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-        border: 1px solid #e5e7eb;
-        height: 100%;
-    }
-
-    .about-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 16px 30px rgba(15, 23, 42, .10);
-        border-color: #d1d5db;
-    }
-
-    .timeline-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background-color: #0f766e;
-    }
-
-    .timeline-line {
-        width: 2px;
-        background-color: #e5e7eb;
-        flex-grow: 1;
-    }
-
-    .about-number {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--nl-primary);
-    }
-
-    .about-number-label {
-        font-size: .85rem;
-        color: #6b7280;
-    }
-
-    .about-cta {
-        background: linear-gradient(135deg, #0f766e, #2563eb);
-        border-radius: 1.5rem;
-        color: #f9fafb;
-    }
-
-    .about-cta small {
-        opacity: .9;
-    }
-    .about-card {
-    border-radius: 14px;
-    transition: transform 0.3s ease;
-}
-
-.about-card:hover {
-    transform: translateY(-6px);
-}
-
-/* Dosen */
-.card-dosen {
-    background: #f1f8f4;
-    border: 1px solid #cfe9dc;
-}
-
-/* Mahasiswa */
-.card-mahasiswa {
-    background: #f4f7fb;
-    border: 1px solid #d6e2f1;
-}
-
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 </style>
 @endsection
 
 @section('content')
 
-{{-- HERO TENTANG KAMI --}}
-<section class="about-hero">
-    <div class="container">
-        <div class="row align-items-center g-4 g-lg-5">
-            {{-- Kiri: teks utama --}}
-            <div class="col-lg-7">
-                <span class="about-badge px-3 py-1 d-inline-flex align-items-center gap-2 mb-3">
-                    <i class="bi bi-mortarboard"></i>
-                    Tentang New Learning Era
-                </span>
+{{-- ==================== HERO SECTION ==================== --}}
+<section class="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-white border-b border-slate-100">
+    <div class="glow-blob bg-indigo-200 w-[600px] h-[600px] top-[-10%] left-[-10%]"></div>
+    <div class="glow-blob bg-cyan-100 w-[500px] h-[500px] bottom-[-10%] right-[-5%]" style="animation-delay: -3s;"></div>
 
-                <h1 class="about-title fw-bold mb-3">
-                    Membantu Anda membangun
-                    <span>keterampilan digital</span>
-                    secara terarah dan berkelanjutan.
-                </h1>
-
-                <p class="about-subtitle mb-3">
-                    New Learning Era merupakan platform pembelajaran yang dirancang untuk
-                    mendukung pelajar, mahasiswa, dan profesional muda dalam mempelajari
-                    keterampilan digital yang relevan dengan kebutuhan saat ini.
-                </p>
-
-                <p class="about-subtitle mb-4">
-                    Kami menggabungkan materi terstruktur, praktik langsung, serta
-                    pendampingan mentor agar proses belajar terasa jelas dan terukur,
-                    tanpa mengabaikan kenyamanan dan fleksibilitas Anda.
-                </p>
-
-                <div class="d-flex flex-wrap gap-2 mb-3">
-                    <a href="#visi-misi" class="btn btn-outline-secondary chip-link px-3 py-1">
-                        <i class="bi bi-bullseye me-1"></i> Visi & Misi
-                    </a>
-                    <a href="#cara-kerja" class="btn btn-outline-secondary chip-link px-3 py-1">
-                        <i class="bi bi-diagram-3 me-1"></i> Cara Belajar
-                    </a>
-                    <a href="#tim" class="btn btn-outline-secondary chip-link px-3 py-1">
-                        <i class="bi bi-people me-1"></i> Tim & Mentor
-                    </a>
-                </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-4xl mx-auto">
+            <div data-aos="fade-down" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-widest mb-8 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+                UNIVERSITAS MERDEKA MALANG
             </div>
-
-            {{-- Kanan: kartu statistik --}}
-            <div class="col-lg-5">
-                <div class="about-hero-card p-4 p-md-4 hero-floating position-relative">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div>
-                            <small class="text-uppercase" style="font-size:.72rem;opacity:.8;">
-                                Gambaran singkat
-                            </small>
-                            <h5 class="fw-semibold mb-0 text-white">New Learning Era dalam angka</h5>
-                        </div>
-                        <span class="badge bg-success-subtle text-success rounded-pill">
-                            <i class="bi bi-check-circle me-1"></i> Aktif berjalan
-                        </span>
-                    </div>
-
-                    <div class="row g-3 mb-3">
-                        <div class="col-4">
-                            <div class="about-number text-success">3.200+</div>
-                            <div class="about-number-label text-white">Peserta terdaftar</div>
-                        </div>
-                        <div class="col-4">
-                            <div class="about-number text-success">65+</div>
-                            <div class="about-number-label text-white">Kelas online</div>
-                        </div>
-                        <div class="col-4">
-                            <div class="about-number text-success">4.9/5</div>
-                            <div class="about-number-label text-white">Rata-rata ulasan</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <small class="d-block mb-1">Bidang pembelajaran utama</small>
-                        <div class="d-flex flex-wrap gap-2">
-                            <span class="about-stat-chip">
-                                <i class="bi bi-code-slash me-1 text-teal-300"></i>
-                                Pemrograman & Web
-                            </span>
-                            <span class="about-stat-chip">
-                                <i class="bi bi-brush me-1 text-warning"></i>
-                                Desain & Kreatif
-                            </span>
-                            <span class="about-stat-chip">
-                                <i class="bi bi-translate me-1 text-info"></i>
-                                Bahasa & Karier
-                            </span>
-                        </div>
-                    </div>
-
-                    <small class="d-block" style="opacity:.9;">
-                        Fokus kami adalah menyediakan pengalaman belajar yang terarah, dapat diikuti
-                        secara mandiri, dan tetap memberikan ruang interaksi melalui forum dan sesi
-                        bersama mentor.
-                    </small>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-{{-- VISI & MISI --}}
-<section id="visi-misi">
-    <div class="container">
-        <div class="row g-4 align-items-start">
-            <div class="col-lg-6">
-                <p class="section-label mb-1">Visi</p>
-                <div class="about-card shadow-soft p-4">
-                    <h4 class="fw-bold mb-3">Mendukung lebih banyak individu untuk berkembang melalui pembelajaran digital yang terarah.</h4>
-                    <p class="text-secondary mb-2">
-                        New Learning Era bertujuan untuk menjadi mitra belajar yang dapat diandalkan,
-                        khususnya bagi Anda yang ingin memperkuat kompetensi di bidang teknologi dan
-                        keterampilan pendukung lainnya.
-                    </p>
-                    <p class="text-secondary mb-0">
-                        Kami ingin proses belajar tidak hanya menghasilkan pemahaman konsep,
-                        tetapi juga mendorong peserta untuk berani berkarya dan mengembangkan karier.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <p class="section-label mb-1">Misi</p>
-                <div class="vstack gap-3">
-                    <div class="about-card p-3 d-flex gap-3">
-                        <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center"
-                             style="width:34px;height:34px;">
-                            <i class="bi bi-compass text-primary"></i>
-                        </div>
-                        <div>
-                            <strong>Menyusun jalur belajar yang jelas</strong>
-                            <p class="text-secondary small mb-0">
-                                Menyajikan materi yang tersusun dari dasar hingga tingkat lanjutan,
-                                sehingga peserta memahami tahapan yang perlu ditempuh untuk mencapai tujuan belajar.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="about-card p-3 d-flex gap-3">
-                        <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center"
-                             style="width:34px;height:34px;">
-                            <i class="bi bi-people text-primary"></i>
-                        </div>
-                        <div>
-                            <strong>Menghadirkan pendampingan mentor</strong>
-                            <p class="text-secondary small mb-0">
-                                Memberikan ruang tanya jawab, diskusi, dan umpan balik agar peserta
-                                mendapatkan panduan yang lebih personal selama proses belajar.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="about-card p-3 d-flex gap-3">
-                        <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center"
-                             style="width:34px;height:34px;">
-                            <i class="bi bi-lightbulb text-primary"></i>
-                        </div>
-                        <div>
-                            <strong>Mendorong praktik dan portofolio</strong>
-                            <p class="text-secondary small mb-0">
-                                Setiap jalur belajar diarahkan untuk menghasilkan project nyata, sehingga
-                                peserta memiliki bukti kemampuan yang dapat ditampilkan di CV atau profil profesional.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-{{-- CARA KERJA PLATFORM / TIMELINE --}}
-<section id="cara-kerja">
-    <div class="container">
-        <div class="text-center mb-4">
-            <p class="section-label mb-1">Cara Belajar di New Learning Era</p>
-            <h2 class="fw-bold mb-2">Alur belajar yang sederhana dan terstruktur</h2>
-            <p class="text-secondary mb-0">
-                Kami merancang alur pembelajaran agar mudah dipahami, sehingga Anda dapat fokus pada materi dan latihan.
+            
+            <h1 data-aos="fade-up" data-aos-delay="100" class="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-8">
+                Dibangun oleh Developer, <br />
+                <span class="text-gradient-flow">Untuk Calon Developer.</span>
+            </h1>
+            
+            <p data-aos="fade-up" data-aos-delay="200" class="text-lg md:text-xl text-slate-500 font-medium leading-relaxed mb-10 max-w-3xl mx-auto">
+                New Learning Era adalah platform edukasi digital generasi baru. Kami memadukan arsitektur sistem yang canggih dengan kurikulum praktis untuk mencetak talenta IT berstandar industri.
             </p>
-        </div>
 
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="about-card p-4 text-center">
-                    <div class="mb-3">
-                        <div class="timeline-dot mx-auto mb-2"></div>
-                        <small class="text-secondary">Langkah 1</small>
-                    </div>
-                    <h6 class="fw-semibold mb-2">Pilih jalur dan kelas</h6>
-                    <p class="text-secondary small mb-0">
-                        Tentukan bidang yang ingin dipelajari, lalu pilih kelas sesuai tingkat kemampuan
-                        dan tujuan pengembangan Anda.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="about-card p-4 text-center">
-                    <div class="mb-3">
-                        <div class="timeline-dot mx-auto mb-2"></div>
-                        <small class="text-secondary">Langkah 2</small>
-                    </div>
-                    <h6 class="fw-semibold mb-2">Ikuti materi dan latihan</h6>
-                    <p class="text-secondary small mb-0">
-                        Pelajari video, baca modul pendukung, dan kerjakan latihan maupun kuis yang
-                        disediakan pada setiap modul pembelajaran.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="about-card p-4 text-center">
-                    <div class="mb-3">
-                        <div class="timeline-dot mx-auto mb-2"></div>
-                        <small class="text-secondary">Langkah 3</small>
-                    </div>
-                    <h6 class="fw-semibold mb-2">Bangun project dan raih sertifikat</h6>
-                    <p class="text-secondary small mb-0">
-                        Di akhir pembelajaran, Anda menyelesaikan project sebagai output.
-                        Setelah selesai, Anda memperoleh sertifikat sebagai bukti pencapaian.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-{{-- TIM & MENTOR --}}
-<section id="tim">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-            <div>
-                <p class="section-label mb-1">Tim Pelaksana</p>
-                <h3 class="fw-bold mb-0">Dosen Pembimbing dan Tim Mahasiswa</h3>
-            </div>
-            <span class="text-secondary small">
-                Susunan tim Program Kreativitas Mahasiswa Fakultas Sistem Informasi.
-            </span>
-        </div>
-
-        <div class="row g-4">
-            <!-- Dosen Pembimbing -->
-            <div class="col-md-4">
-                <div class="about-card card-dosen shadow-soft p-4 text-center h-100">
-                    <div class="rounded-circle bg-success-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
-                         style="width:70px;height:70px;">
-                        <i class="bi bi-mortarboard-fill text-success" style="font-size:1.7rem;"></i>
-                    </div>
-                    <h6 class="fw-semibold mb-1">Luthfi Indana, S.Pd., M.Pd</h6>
-                    <small class="text-muted d-block mb-2">Dosen Pembimbing</small>
-                    <p class="text-secondary small mb-0">
-                        Bertugas memberikan bimbingan akademik, arahan metodologis, serta pengawasan terhadap
-                        pelaksanaan Program Kreativitas Mahasiswa agar sesuai dengan ketentuan dan capaian yang ditetapkan.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Ketua Tim -->
-            <div class="col-md-4">
-                <div class="about-card card-mahasiswa shadow-soft p-4 text-center h-100">
-                    <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
-                         style="width:70px;height:70px;">
-                        <i class="bi bi-star-fill text-primary" style="font-size:1.7rem;"></i>
-                    </div>
-                    <h6 class="fw-semibold mb-1">Abdul Kader</h6>
-                    <small class="text-muted d-block mb-2">Ketua Tim</small>
-                    <p class="text-secondary small mb-0">
-                        Bertanggung jawab dalam mengoordinasikan seluruh kegiatan tim, menyusun perencanaan program,
-                        serta memastikan keterlaksanaan PKM sesuai dengan proposal yang telah disetujui.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Anggota -->
-            <div class="col-md-4">
-                <div class="about-card card-mahasiswa shadow-soft p-4 text-center h-100">
-                    <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
-                         style="width:70px;height:70px;">
-                        <i class="bi bi-people-fill text-primary" style="font-size:1.7rem;"></i>
-                    </div>
-                    <h6 class="fw-semibold mb-1">Ezequiel Alaghate Tchuda</h6>
-                    <small class="text-muted d-block mb-2">Anggota Tim</small>
-                    <p class="text-secondary small mb-0">
-                        Berperan dalam pengembangan sistem dan pelaksanaan aspek teknis program sesuai
-                        dengan kebutuhan dan tujuan kegiatan PKM.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="about-card card-mahasiswa shadow-soft p-4 text-center h-100">
-                    <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
-                         style="width:70px;height:70px;">
-                        <i class="bi bi-people-fill text-primary" style="font-size:1.7rem;"></i>
-                    </div>
-                    <h6 class="fw-semibold mb-1">Rio Andhika Permana Putra</h6>
-                    <small class="text-muted d-block mb-2">Anggota Tim</small>
-                    <p class="text-secondary small mb-0">
-                        Bertugas dalam pengolahan data, dokumentasi kegiatan, serta penyusunan laporan
-                        sebagai bagian dari luaran Program Kreativitas Mahasiswa.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="about-card card-mahasiswa shadow-soft p-4 text-center h-100">
-                    <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center mx-auto mb-3"
-                         style="width:70px;height:70px;">
-                        <i class="bi bi-people-fill text-primary" style="font-size:1.7rem;"></i>
-                    </div>
-                    <h6 class="fw-semibold mb-1">Viktorinus Dimas Saputra</h6>
-                    <small class="text-muted d-block mb-2">Anggota Tim</small>
-                    <p class="text-secondary small mb-0">
-                        Mendukung analisis kebutuhan sistem, pengujian fungsional, serta evaluasi hasil
-                        implementasi program dalam rangka pencapaian target PKM.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-{{-- CTA AKHIR --}}
-<section class="pb-5">
-    <div class="container">
-        <div class="about-cta p-4 p-md-5 shadow-soft text-center">
-            <h3 class="fw-bold mb-2">Ingin mengenal New Learning Era lebih jauh?</h3>
-            <p class="mb-3">
-                Anda dapat memulai dengan melihat daftar kelas yang tersedia atau membuat akun terlebih dahulu
-                untuk menyusun rencana belajar sesuai kebutuhan.
-            </p>
-            <div class="d-flex flex-wrap gap-2 justify-content-center mb-3">
-                <a href="{{ url('/kelas') }}" class="btn btn-light btn-pill fw-semibold">
-                    <i class="bi bi-collection-play me-1"></i> Lihat daftar kelas
+            <div data-aos="fade-up" data-aos-delay="300" class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#tim" class="px-8 py-4 rounded-full bg-slate-900 text-white font-bold text-lg hover:bg-indigo-600 transition-all duration-300 shadow-lg hover:shadow-indigo-500/30 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    Temui Tim Developer Kami
                 </a>
-                <a href="{{ url('/register/student') }}" class="btn btn-outline-light btn-pill">
-                    <i class="bi bi-person-plus me-1"></i> Daftar sebagai peserta
+                <a href="#visi" class="px-8 py-4 rounded-full bg-white border border-slate-200 text-slate-800 font-bold text-lg hover:bg-slate-50 transition-all shadow-sm flex items-center justify-center">
+                    Visi & Metodologi
                 </a>
             </div>
-            <small>
-                Jika masih ragu menentukan kelas, Anda tetap dapat membuat akun terlebih dahulu dan menjelajahi materi secara bertahap.
-            </small>
         </div>
     </div>
 </section>
 
+{{-- ==================== VISI & METODOLOGI ==================== --}}
+<section id="visi" class="py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            {{-- Bagian Visi --}}
+            <div data-aos="fade-right">
+                <h2 class="text-indigo-600 font-bold tracking-widest uppercase text-sm mb-3">Visi Kami</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
+                    Menjembatani Jarak Antara Teori dan Praktik Industri.
+                </h3>
+                <p class="text-slate-600 text-lg mb-6 leading-relaxed">
+                    Kami membangun platform ini dengan satu tujuan: memastikan setiap baris kode yang Anda pelajari relevan dengan kebutuhan perusahaan teknologi dunia nyata.
+                </p>
+                <div class="flex gap-4 items-start mb-4">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-lg">Kurikulum Terstruktur</h4>
+                        <p class="text-slate-500 text-sm">Disusun berurutan dari fundamental hingga tahap *deployment*.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 items-start">
+                    <div class="w-10 h-10 rounded-lg bg-cyan-100 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg class="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-lg">Fokus Project-Based</h4>
+                        <p class="text-slate-500 text-sm">Ujian akhirnya adalah membangun portofolio produk nyata yang berfungsi.</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Bagian Alur (Metodologi) --}}
+            <div data-aos="fade-left" class="bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-lg relative">
+                <h4 class="text-xl font-extrabold text-slate-900 mb-8">Alur Pembelajaran</h4>
+                <div class="relative border-l-2 border-slate-100 ml-4 space-y-8">
+                    
+                    <div class="relative pl-8">
+                        <div class="absolute -left-[11px] top-0.5 w-5 h-5 rounded-full bg-slate-900 border-4 border-white shadow-sm"></div>
+                        <h5 class="font-bold text-slate-900">1. Pilih Tech-Stack</h5>
+                        <p class="text-slate-500 text-sm mt-1">Tentukan arah keahlian (Front-End, Back-End, atau Data).</p>
+                    </div>
+                    
+                    <div class="relative pl-8">
+                        <div class="absolute -left-[11px] top-0.5 w-5 h-5 rounded-full bg-indigo-600 border-4 border-white shadow-sm"></div>
+                        <h5 class="font-bold text-slate-900">2. Sesi Interaktif & Code Review</h5>
+                        <p class="text-slate-500 text-sm mt-1">Pelajari modul, kerjakan kuis, dan terima umpan balik teknis.</p>
+                    </div>
+                    
+                    <div class="relative pl-8">
+                        <div class="absolute -left-[11px] top-0.5 w-5 h-5 rounded-full bg-cyan-500 border-4 border-white shadow-sm"></div>
+                        <h5 class="font-bold text-slate-900">3. Build, Deploy, Lulus</h5>
+                        <p class="text-slate-500 text-sm mt-1">Selesaikan proyek akhir, dapatkan sertifikat, dan bersiap untuk karier profesional.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{{-- ==================== TIM DEVELOPER (DARK TECH THEME) ==================== --}}
+<section id="tim" class="py-24 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+            <span class="text-indigo-600 font-bold tracking-widest uppercase text-sm mb-3 block">Engineering Team</span>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Kreator Sistem Ini</h2>
+            <p class="text-slate-500 text-lg font-medium">Tim pengembang dedikatif dari Program Kreativitas Mahasiswa (PKM) Fakultas Sistem Informasi UNMER Malang.</p>
+        </div>
+
+        <div class="flex justify-center mb-12" data-aos="fade-up" data-aos-delay="100">
+            <div class="clean-card w-full max-w-2xl bg-slate-50 border border-slate-200 rounded-3xl p-8 flex flex-col sm:flex-row items-center gap-8 text-center sm:text-left">
+                <div class="w-24 h-24 rounded-2xl bg-slate-200 border border-slate-300 flex items-center justify-center flex-shrink-0">
+                    <span class="text-3xl font-extrabold text-slate-600">LI</span>
+                </div>
+                <div>
+                    <h4 class="text-2xl font-bold text-slate-900 mb-1">Luthfi Indana, S.Pd., M.Pd</h4>
+                    <p class="text-indigo-600 text-xs font-bold uppercase tracking-widest mb-3">Project Advisor / Dosen</p>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Memberikan arahan strategis, validasi metodologi, serta memastikan pengembangan platform memenuhi standar capaian akademis dan industri.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="clean-card bg-white border border-slate-200 rounded-3xl p-8 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-20 h-20 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center mb-6">
+                    <span class="text-2xl font-extrabold text-indigo-600">AK</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 mb-1">Abdul Kader</h4>
+                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-4">Lead Developer & Architect</p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Merancang arsitektur utama sistem, mengelola tim *engineering*, dan memastikan seluruh kode berjalan efisien.
+                </p>
+            </div>
+
+            <div class="clean-card bg-white border border-slate-200 rounded-3xl p-8 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-20 h-20 rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center mb-6">
+                    <span class="text-2xl font-extrabold text-cyan-600">EA</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 mb-1">Ezequiel A. T.</h4>
+                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-4">Full-Stack Developer</p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Bertanggung jawab atas konektivitas *end-to-end*, mengintegrasikan fungsionalitas server ke antarmuka pengguna.
+                </p>
+            </div>
+
+            <div class="clean-card bg-white border border-slate-200 rounded-3xl p-8 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-20 h-20 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-6">
+                    <span class="text-2xl font-extrabold text-emerald-600">RA</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 mb-1">Rio Andhika</h4>
+                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-4">Back-End / API Engineer</p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Membangun logika server, *database management*, dokumentasi API, dan memastikan keamanan data *platform*.
+                </p>
+            </div>
+
+            <div class="clean-card bg-white border border-slate-200 rounded-3xl p-8 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-20 h-20 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center mb-6">
+                    <span class="text-2xl font-extrabold text-orange-600">VD</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 mb-1">Viktorinus D. S.</h4>
+                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-4">Front-End / UI Engineer</p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Menerjemahkan desain menjadi interaktivitas antarmuka (*interface*) tingkat tinggi untuk pengalaman pengguna terbaik.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{{-- ==================== CTA BOTTOM ==================== --}}
+<section class="py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="zoom-in" data-aos-duration="1000">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Siap Untuk Ngoding?</h2>
+        <p class="text-slate-500 text-lg md:text-xl mb-10 leading-relaxed font-medium">
+            Jangan tunda lagi. Bergabunglah dengan platform yang dirancang oleh developer, untuk membantu Anda menjadi bagian dari masa depan industri teknologi.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{{ url('/register/student') }}" class="px-8 py-4 rounded-full bg-slate-900 text-white font-bold text-lg hover:bg-indigo-600 transition-all shadow-xl hover:-translate-y-1">
+                Daftar Akun Gratis
+            </a>
+            <a href="{{ url('/classroom') }}" class="px-8 py-4 rounded-full bg-white border border-slate-200 text-slate-800 font-bold text-lg hover:bg-slate-50 transition-all shadow-sm">
+                Lihat Katalog Kelas
+            </a>
+        </div>
+    </div>
+</section>
+
+@endsection
+
+@section('script')
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    $(document).ready(function () {
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+    });
+</script>
 @endsection
